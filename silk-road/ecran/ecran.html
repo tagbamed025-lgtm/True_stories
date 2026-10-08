@@ -1,0 +1,53 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+html,body{margin:0;background:#000;overflow:hidden}
+#s{width:1280px;height:800px;background:#16181d;font-family:"DejaVu Sans",Arial,sans-serif;color:#d6d8dd;display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:34px 10px 10px;box-sizing:border-box;position:relative}
+.bar{position:absolute;left:0;right:0;top:0;height:26px;background:#2b2e35;display:flex;align-items:center;padding:0 12px;font-size:13px;color:#aab}
+.win{background:#0f1115;border:1px solid #333842;border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+.tt{height:26px;background:#22252c;font-size:12px;display:flex;align-items:center;padding:0 10px;color:#9aa}
+.vid{flex:1;position:relative;background:radial-gradient(circle at 50% 40%,#3a3530,#121010 70%)}
+.head{position:absolute;left:50%;top:22%;width:150px;height:190px;margin-left:-75px;border-radius:48% 48% 42% 42%;background:#6d5a4c}
+.body{position:absolute;left:50%;bottom:0;width:330px;height:230px;margin-left:-165px;border-radius:150px 150px 0 0;background:#24303f}
+.sub{position:absolute;left:20px;right:20px;bottom:18px;text-align:center;font-size:19px;color:#fff;text-shadow:0 2px 4px #000}
+.rec{position:absolute;left:14px;top:12px;font-size:13px;color:#f55}
+.dash{padding:14px;display:flex;flex-direction:column;gap:12px;flex:1}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.k{background:#181b21;border:1px solid #2c313a;border-radius:6px;padding:10px}
+.k i{display:block;font-style:normal;font-size:11px;color:#7f8794;letter-spacing:.08em}
+.k b{font-size:24px;color:#e9ecf1;font-variant-numeric:tabular-nums}
+.k b.g{color:#5fd38a}
+canvas{background:#181b21;border:1px solid #2c313a;border-radius:6px}
+table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+td{padding:5px 6px;border-bottom:1px solid #22262e}
+td.n{color:#5fd38a;text-align:right}
+tr.new td{background:#1d2a22}
+</style></head><body>
+<div id="s">
+ <div class="bar">●&nbsp; ●&nbsp; ●&nbsp;&nbsp;&nbsp;&nbsp; Terminal — Tor Browser</div>
+ <div class="win"><div class="tt">interview.mp4</div><div class="vid"><div class="head"></div><div class="body"></div><div class="rec">● LIVE</div><div class="sub" id="sub"></div></div></div>
+ <div class="win"><div class="tt">admin · dashboard</div><div class="dash">
+   <div class="kpis"><div class="k"><i>VENTES 24 H</i><b id="k1">0</b></div><div class="k"><i>COMMISSION (BTC)</i><b class="g" id="k2">0</b></div><div class="k"><i>UTILISATEURS EN LIGNE</i><b id="k3">0</b></div></div>
+   <canvas id="c" width="590" height="200"></canvas>
+   <table id="tb"></table>
+ </div></div>
+</div>
+<script>
+// Interface fictive et générique (pas une capture réelle) : chiffres inventés pour l'illustration.
+const subs=['« …la liberté, c\'est de pouvoir choisir… »','« …personne ne devrait contrôler ça… »','« …c\'est une expérience économique… »'];
+const items=['Commande #48213','Commande #48214','Commande #48215','Commande #48216','Commande #48217','Commande #48218','Commande #48219','Commande #48220','Commande #48221','Commande #48222'];
+const g=document.getElementById('c').getContext('2d');
+let seed=3; const rnd=i=>{let x=Math.sin(i*99.13+seed)*43758.5;return x-Math.floor(x);};
+window.renderAt=t=>{
+  document.getElementById('sub').textContent=subs[Math.floor(t/2.2)%subs.length];
+  const n=Math.floor(t*1.6);
+  document.getElementById('k1').textContent=(1842+n*3).toLocaleString('fr-FR');
+  document.getElementById('k2').textContent=(12.40+n*0.037).toFixed(3);
+  document.getElementById('k3').textContent=(3911+Math.round(40*Math.sin(t*.7))).toLocaleString('fr-FR');
+  g.clearRect(0,0,590,200); g.strokeStyle='#2a2f38'; for(let y=40;y<200;y+=40){g.beginPath();g.moveTo(0,y);g.lineTo(590,y);g.stroke();}
+  g.strokeStyle='#5fd38a'; g.lineWidth=2.5; g.beginPath();
+  for(let x=0;x<=590;x+=5){const i=x/5+t*12; const y=150-40*rnd(Math.floor(i))-x*.12-12*Math.sin(i*.2); x?g.lineTo(x,y):g.moveTo(x,y);} g.stroke();
+  let h=''; for(let r=0;r<7;r++){const id=n-r; h+=`<tr class="${r===0&&(t*1.6%1)<.5?'new':''}"><td>${items[(id%10+10)%10].replace(/\d+$/,48000+id)}</td><td>${(['00:01','00:02','00:03'][r%3])}</td><td class="n">+${(0.05+rnd(id)*0.4).toFixed(3)} BTC</td></tr>`;}
+  document.getElementById('tb').innerHTML=h;
+};
+window.renderAt(0); window.ready=true;
+</script></body></html>
