@@ -1,49 +1,68 @@
-# BIBLE — TRU Stories (à lire en premier par toute nouvelle discussion Claude)
-
-Mise à jour : 8 octobre 2026.
+# BIBLE — TRU Stories
+Document de référence unique. Toute discussion (projet Claude ou Claude Code) le lit **avant** de répondre. Mise à jour : 9 octobre 2026.
 
 ## 1. La chaîne
-- **TRU Stories** : true crime immersif façon Fern / Netflix. Reconstitutions en 3D stylisée, mêlées à du footage générique et à de vraies archives.
-- Vidéos **courtes, 5 à 6 min maximum**, pour économiser les crédits.
-- Langue : français. Voix off **ElevenLabs, voix « Adrien »**, débit posé. Les tests de voix font **100 caractères maximum, une seule génération** (generations_count = 1).
-- Règle des faits : rien n'est affirmé sans source. Chaque script se termine par une section « Sources ».
+- **TRU Stories** : histoires vraies racontées comme des thrillers Netflix. 3D stylisée + footage + archives. Langue : français.
+- Thèmes : environ 70 % histoire, psychologie, guerre et espionnage, environ 30 % hackers, crime et systèmes qui s'effondrent. L'actualité internationale forte passe aussi.
+- Format : **5 à 6 min maximum** (≈ 600 à 750 mots de voix off). Un Short de 45 à 60 s par vidéo.
+- Vidéos déjà faites (modèles de ton) : `references/scripts_precedents/`
+  - Pablo Escobar : « Le jour où Pablo Escobar a compris que c'était fini »
+  - El Chapo : « L'Évasion Impossible »
+  - Gary McKinnon : « Le hacker qui a piraté les ordinateurs de l'armée américaine »
+  - Ross Ulbricht / Silk Road : en production (`videos/silk-road/`)
 
-## 2. Style de marque (à respecter sur chaque vidéo)
-- Personnages stylisés, pas réalistes : low poly (décimation 0,03 + flat shading).
+## 2. ADN narratif (résumé de `references/prompts/`)
+- **Ouverture in medias res.** On commence dans la tension (un danger, une décision, un compte à rebours), jamais par une date ou une biographie. Une heure précise et un lieu (« 2 décembre 1993. 15 h 17. »).
+- Écriture **au présent**, phrases courtes, pauses (« … »), description visuelle et sonore : le spectateur voit le film.
+- Le **« tu »** est réservé aux passages clés, pour projeter le spectateur.
+- **Structure en remparts** : cold open → qui est cet homme → escalade → point de rupture → conséquence → fin philosophique. Toutes les 20 à 40 s : une révélation, un danger ou une question nouvelle. Des boucles ouvertes et des rappels du cold open.
+- Petits dialogues réalistes (radio, agents, gardiens).
+- Fin : une phrase forte, ironique ou philosophique, et une question laissée ouverte. Jamais de résumé.
+- Interdits : ton scolaire, ton Wikipédia, remplissage, listes à puces dans la narration.
+- **Vérité** : dates, noms et chiffres réels, chaque fait sourcé. Un fait incertain est retiré ou présenté comme « selon… ». Les dialogues reconstitués sont signalés comme tels dans les notes.
+
+## 3. Format du script
+- Code couleur : **[3D]** (jaune) Blender · **[STOCK]** (cyan) footage générique · **[ARCHIVE]** (vert) vraie image · **[CODE]** écrans, cartes, chronologies, titres animés.
+- La voix off est en blocs `>`. « … » = respiration, **[PAUSE]** = 1 s de silence.
+- En fin de script : section **Sources** (liens).
+
+## 4. Voix off
+- ElevenLabs, voix **Adrien** : `voice_id = TTtB1x9U8PF0Vgf20IAP` (français, grave, calme, narration).
+- **Économie de crédits** : un essai fait 100 caractères maximum. Une seule génération par passage (generations_count = 1). On génère par parties (p1, p2…) pour pouvoir refaire un seul passage.
+- Fichiers : `videos/<slug>/voix/p1.mp3…` + `VO_complete.mp3`.
+
+## 5. Style visuel de marque
+- Personnages **low poly stylisés** (décimation 0,03 + flat shading). Jamais réalistes.
 - **Personnage principal en rouge émissif. Tous les autres en blanc lumineux.** Les femmes se reconnaissent à leur silhouette et à leurs cheveux.
-- Décors sombres. Rouge réservé aux moments de rupture. Format 2,39:1, grain léger, flou de profondeur, caméras lentes.
-- Script en code couleur : **jaune = 3D Blender**, **cyan = footage stock**, **vert = archives réelles**.
-- Méthode hybride : **code** (HTML/Three.js capturé en vidéo) pour les écrans, cartes, chronologies, titres et murs d'enquête. **Blender** pour les décors et les personnages. Une vidéo codée peut servir de texture d'écran dans Blender (matériau émissif, ImageTexture en mode MOVIE).
+- Décors sombres. Le rouge est réservé aux moments de rupture. Image en 2,39:1, grain léger, flou de profondeur, caméras lentes.
+- Méthode hybride : **[CODE]** = HTML/Three.js capturé image par image. **[3D]** = Blender piloté par scripts Python. Une vidéo codée peut devenir l'écran d'un objet 3D (matériau émissif, texture MOVIE).
+- Scripts de style : `style/` (`styles_tuto.py`, `distribution.py`).
 
-## 3. Répartition du travail
-- **Mo** télécharge les personnages (Mixamo, MPFB) et les objets (BlenderKit, Poly Haven, Sketchfab), puis rend sur son PC.
-- **Claude** écrit le script, le vérifie, génère la voix, stylise les personnages, construit les scènes Blender en Python (lumières, caméras, animation) et prépare le montage.
-- PC de Mo : NVIDIA Quadro P2000 (OptiX), 32 Go de RAM, Blender 5.2. EEVEE ≈ 7 s par image en 1080p.
+## 6. Assets
+- Inventaire de tout ce qu'on possède : **`ASSETS.md`**. On le consulte avant de demander un téléchargement, et on le met à jour après chaque ajout.
+- Stockage : sur GitHub dans `assets3d/<catégorie>/` (fichier de moins de 50 Mo, à alléger avec `outils/`). Sur Google Drive « TRU_Stories_Assets/ » avec la même arborescence pour les fichiers plus lourds.
+- Sources : Mixamo (personnages + animations : **Without Skin, 30 fps**), BlenderKit, Poly Haven (HDRI, textures), Sketchfab, MPFB.
 
-## 4. Règles techniques
-- Mixamo : personnages en « With Skin », animations en « **Without Skin, 30 fps** ».
-- Fichiers de plus de 25 Mo : lancer `outils/alleger_personnages.py` (dans un fichier Blender VIDE, sinon il efface la scène) pour les personnages, ou `outils/preparer_kit.py` pour un kit d'objets. Sinon, compresser en .7z.
-- Les scripts Blender sont lancés dans l'onglet Scripting → Texte → Ouvrir → ▶ Run Script. Le rendu se lance par le menu Rendu (Ctrl+F12 ne marche pas sur le PC de Mo).
-
-## 5. Projet en cours : Silk Road (arrestation de Ross Ulbricht)
-| Élément | Fichier | État |
+## 7. Chaîne de production (qui fait quoi)
+| Étape | Où | Résultat |
 |---|---|---|
-| Script vérifié (5 min 30) | `silk-road/SCRIPT_V2.md` | ✅ |
-| Script d'origine en couleurs | `silk-road/Script_Silk_Road_Code_Couleur.docx` | ✅ |
-| Découpage plan par plan | `silk-road/DECOUPAGE.md` | ✅ |
-| Voix off Adrien | `silk-road/voix/VO_complete_SilkRoad.mp3` (5:05, dont 30 s de silence au début) + p1 à p6 | ✅ |
-| Écran du portable (vidéo codée) | `silk-road/ecran/ecran.html` → `ecran.mp4`, test Blender `portable_demo.blend` | ✅ |
-| Distribution des personnages | `assets3d/silk-road/personnages/` (Ch31 = Ross en rouge, Ch23 = agent FBI en veste, Ch21 et Ch22 = femmes) | ✅ |
-| Styles de personnages | `style/` (planche_styles.png, distribution.py) | ✅ |
-| Kit d'objets de la bibliothèque | `assets3d/silk-road/objets/kit_bibliotheque.blend` | ⚠️ partiel : il manque étagères, livres, portable et chaises |
+| 1. Idée (proposée par Mo ou veille hebdomadaire) | Projet Claude (chat) | 3 à 5 idées → Mo choisit |
+| 2. Recherche + script vérifié | Projet Claude | `SCRIPT.md` + sources |
+| 3. Voix off Adrien | Projet Claude (ElevenLabs) | p1…pN.mp3 |
+| 4. Découpage + liste d'assets | Projet Claude | `DECOUPAGE.md` + `BON_DE_PRODUCTION.md` |
+| 5. Téléchargements manquants | Mo (ou Claude Code via Blender) | assets dans `assets3d/` |
+| 6. Montage 3D, rendu, assemblage | **Claude Code** sur le PC de Mo | `rendu/<slug>_final.mp4` |
+| 7. Miniature, Short, sous-titres | Claude Code | fichiers dans `videos/<slug>/livrables/` |
 
-### Prochaines étapes, dans l'ordre
-1. Mo envoie le kit d'objets complet (`Sans titre_kit_leger.blend`).
-2. Mo télécharge les animations Mixamo pour Ch31 : marche, assis, tape au clavier, assis en attente, regarde autour, dispute, se lève, lecture, surpris, marche lente.
-3. Personnages en plus : 1 ou 2 hommes (veste, blouson) et une femme aux cheveux longs.
-4. Claude construit la scène de la bibliothèque : d'abord le plan 0.7 (plongée zénithale) et le plan 4.7 (twist des gilets FBI).
-5. Éléments codés : titre, dates, mur d'enquête, chronologie des erreurs. Caler sur la voix off.
-6. Montage : couches de son, étalonnage 2,39:1, sous-titres, miniature, un Short.
+Le **bon de production** (`videos/<slug>/BON_DE_PRODUCTION.md`) fait le lien entre le chat et Claude Code. Modèle : `videos/_MODELE/`.
 
-## 6. Routine hebdomadaire (à configurer)
-Chaque semaine : trouver les grosses affaires de la semaine (ex. le casse du Louvre) et produire un brouillon de script vérifié. Mo doit encore donner le jour, l'heure, le fuseau horaire et les thèmes.
+## 8. Matériel et règles techniques
+- PC de Mo : NVIDIA Quadro P2000 (OptiX), 32 Go de RAM, Windows, Blender 5.2 avec les extensions BlenderKit, MPFB et « MCP for Blender ». EEVEE ≈ 7 s par image en 1080p.
+- Rendu : menu Rendu (Ctrl+F12 ne marche pas). Rendu reprenable, image par image.
+- `outils/alleger_personnages.py` : à lancer **uniquement dans un fichier Blender vide**, sinon il efface la scène. `outils/preparer_kit.py` : pour alléger un kit d'objets.
+
+## 9. Production en cours
+Voir le tableau d'état dans `videos/<slug>/BON_DE_PRODUCTION.md`. Projet actif : **`videos/silk-road/`**.
+
+## 10. Veille hebdomadaire (à activer)
+Une fois par semaine : 3 à 5 affaires internationales marquantes ou histoires oubliées, avec pour chacune un titre, un hook d'une phrase, pourquoi on reste jusqu'au bout, et 2 sources. Jour, heure et fuseau horaire : à fixer par Mo.
