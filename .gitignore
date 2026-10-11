@@ -1,1 +1,4 @@
 *.blend1
+videos/*/3d/*.blend
+videos/*/rendu/plans/
+__pycache__/
