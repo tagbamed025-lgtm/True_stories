@@ -1,4 +1,4 @@
-# Assemble la première minute (cold open + section 1) dans la salle de Glen Park. Usage : python -I montage_minute.py
+# Assemble la première minute (v3 : entrée de 9 s, voix à 0:18) dans la salle de Glen Park. Usage : python -I montage_minute.py
 # Image : plans 3D (rendu/plans/<plan>/, numérotés sur la timeline de 3d/minute.py) + titres/écran (elements/),
 #         grain très léger, vignette, image 2,39:1 dans un 1920×1080.
 # Son : VO_complete (0 → 64 s) + musique de tension (musique.py) + ambiance de salle.
@@ -8,11 +8,11 @@ F = r"C:\ffmpeg\bin\ffmpeg.exe"; HERE = os.path.dirname(os.path.abspath(__file__
 W, H = 1920, 804
 PLANS = os.path.join(V, 'rendu', 'plans'); E = os.path.join(HERE, 'elements')
 # (source, image de début sur la timeline 3D ou None, durée en s) — les plans 3D se suivent sans trou sur la timeline
-SEQ = [('e1_pieds', 1, 3), ('e2_dos', 91, 3), ('e3_salle', 181, 4), ('e4_panneau', 301, 2.5),
-       ('e5_assoit', 376, 3.5), ('e6_visage', 481, 3), ('e7_zenith', 571, 5),
-       ('titre.mp4', None, 3.5), ('date.mp4', None, 3),
-       ('p07_travelling', 916, 5.5), ('p08_epaule', 1081, 6), ('ecran_zoom.mp4', None, 7),
-       ('p09_salle', 1471, 5.4), ('p10_poitrine', 1633, 6.1), ('p11_pousse', 1816, 3.5)]
+SEQ = [('c1_salle', 1, 3), ('c2_panneau', 91, 2), ('c3_visage', 151, 4), ('c4_zenith', 271, 4),
+       ('titre.mp4', None, 3), ('date.mp4', None, 2),
+       ('p07_travelling', 541, 5.5), ('p08_epaule', 706, 6), ('ecran_zoom.mp4', None, 7),
+       ('p09_salle', 1096, 5.4), ('p10_poitrine', 1258, 6.1), ('p11_pousse', 1441, 3.5)]
+DECALAGE_VO = 12.0   # on retire 12 s du silence de tête de la voix : elle démarre à 0:18
 TOTAL = sum(d for _, _, d in SEQ)
 
 def run(a): subprocess.run([F, '-v', 'error', '-y'] + a, check=True)
@@ -30,7 +30,7 @@ vo = os.path.join(V, 'voix', 'VO_complete_SilkRoad.mp3'); musique = os.path.join
 son = os.path.join(HERE, 'tmp', 'son.wav')
 run(['-i', vo, '-i', musique, '-f', 'lavfi', '-i', f'anoisesrc=color=brown:amplitude=0.5:d={TOTAL}',
      '-filter_complex',
-     f"[0]atrim=0:{TOTAL},asetpts=N/SR/TB,aformat=channel_layouts=stereo,volume=1.15,asplit[vo][vosc];"
+     f"[0]atrim={DECALAGE_VO}:{DECALAGE_VO + TOTAL},asetpts=N/SR/TB,aformat=channel_layouts=stereo,volume=1.15,asplit[vo][vosc];"
      "[1]volume=0.55[mus];"
      "[2]lowpass=f=350,volume=0.035,aformat=channel_layouts=stereo[amb];"
      "[mus][vosc]sidechaincompress=threshold=0.05:ratio=4:attack=20:release=400[musd];"   # la musique s'efface sous la voix

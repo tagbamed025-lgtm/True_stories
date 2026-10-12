@@ -61,7 +61,7 @@ def salle():
     for x in (-4.5, 0, 4.5):
         for y in (-2.5, 1.5):
             bpy.ops.mesh.primitive_cylinder_add(vertices=32, radius=.45, depth=.08, location=(x, y, H - .04))
-            o = bpy.context.object; o.data.materials.append(disque); ombre_seule(o)
+            o = bpy.context.object; o.name = 'plafonnier'; o.data.materials.append(disque); ombre_seule(o)
     bpy.ops.object.light_add(type='AREA', location=(0, 0, H - .15)); a = bpy.context.object; a.name = 'plafond_lumiere'
     a.data.shape = 'RECTANGLE'; a.data.size = 12; a.data.size_y = 8; a.data.energy = 380; a.data.color = (1, .88, .7)
     # soleil de 15 h en octobre : bas, chaud, entre par les fenêtres et dessine des bandes sur le sol

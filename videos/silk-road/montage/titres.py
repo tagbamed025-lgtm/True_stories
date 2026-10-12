@@ -59,6 +59,6 @@ def animer(base, duree, nom, entree=.9, sortie=.6):
     subprocess.run([FF, '-v', 'error', '-y', '-framerate', str(FPS), '-i', os.path.join(dossier, '%04d.png'),
                     '-c:v', 'libx264', '-crf', '14', '-pix_fmt', 'yuv420p', os.path.join(E, nom + '.mp4')], check=True)
 
-animer(carton_titre(), 3.5, 'titre')
-animer(carton_date(), 3.0, 'date')
+animer(carton_titre(), 3.0, 'titre')
+animer(carton_date(), 2.0, 'date', entree=.6, sortie=.4)
 print('OK')

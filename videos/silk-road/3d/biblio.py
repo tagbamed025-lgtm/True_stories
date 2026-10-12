@@ -224,6 +224,19 @@ def perso(fichier, couleur, loc, yaw=0, actions=(), ratio=.03):
         elif len(opt) < 2 and nom not in ('Stand To Sit',): st.repeat = 12   # boucle
     return e, arm
 
+def figer(e):
+    """Personnage secondaire statique : on fige la pose en maillage low poly (plus de squelette ni de décimation à recalculer → rendu plus rapide)."""
+    bpy.context.view_layer.update()
+    arm = [c for c in e.children if c.type == 'ARMATURE'][0]
+    meshes = [m for m in arm.children if m.type == 'MESH']
+    bpy.ops.object.select_all(action='DESELECT')
+    for m in meshes: m.select_set(True)
+    bpy.context.view_layer.objects.active = meshes[0]
+    bpy.ops.object.convert(target='MESH')
+    for m in meshes:
+        mw = m.matrix_world.copy(); m.parent = e; m.matrix_world = mw
+    bpy.data.objects.remove(arm)
+
 def camera(loc, cible, lens=35, fstop=None):
     bpy.ops.object.camera_add(location=loc); c = bpy.context.object; bpy.context.scene.camera = c; c.data.lens = lens
     bpy.ops.object.empty_add(location=cible); t = bpy.context.object; t.name = 'cible'
