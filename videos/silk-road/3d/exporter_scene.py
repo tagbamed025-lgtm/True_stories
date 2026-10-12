@@ -8,17 +8,16 @@ sortie = sys.argv[sys.argv.index('--') + 1]
 sc = M.construire()
 
 ROLES = {(M.CHAISE_ROSS): 'Ross'}
-noms = ['Agent_veste_Ch12', 'Agente_dispute_Ch26', 'Agente_Ch02', 'Agent_LargePrint_Ch23',
-        'Lecteur_Ch18', 'Lectrice_Ch22', 'Lecteur_Ch31', 'Lectrice_Ch21']
+noms = ['Agent_veste_Ch12', 'Agente_dispute_Ch26', 'Agente_Ch02', 'Agent_Ch23',
+        'Lecteur_Ch18', 'Lectrice_Ch22', 'Lecteur_Ch31']
 for (f, pos, o, a, d), n in zip(M.AGENTS + M.LECTEURS, noms): ROLES[pos] = n
 ROLES[M.BIBLIOTHECAIRE[1]] = 'Bibliothecaire'
 persos = {}
 for e in [o for o in bpy.data.objects if o.type == 'EMPTY' and o.name.startswith('E_')]:
     p = (round(e.location.x, 2), round(e.location.y, 2))
-    if e.name.startswith('E_Ch31') and e.animation_data and e.animation_data.action: n = 'Ross'
-    else: n = next((v for k, v in ROLES.items() if abs(k[0] - p[0]) < .05 and abs(k[1] - p[1]) < .05), e.name)
+    n = next((v for k, v in ROLES.items() if abs(k[0] - p[0]) < .05 and abs(k[1] - p[1]) < .05), e.name)
     e.name = n; persos[n] = e
-    for c in e.children: c.name = n + '_squelette'
+    for c in e.children: c.name = n + ('_squelette' if c.type == 'ARMATURE' else '_corps')
 # chaises, ordinateurs, livres : nommés d'après la personne la plus proche
 def proche(o):
     return min(persos.items(), key=lambda kv: (kv[1].location.xy - o.location.xy).length)[0]
