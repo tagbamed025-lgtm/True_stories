@@ -11,3 +11,7 @@ videos/*/rendu/*_apercu.mp4
 videos/*/rendu/*.mp4
 !videos/*/rendu/*_final.mp4
 videos/*/montage/elements/_*/
+node_modules/
+videos/*/partie*/brouillon/
+videos/*/partie*/final/
+videos/*/partie*/_*.png

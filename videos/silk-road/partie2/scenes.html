@@ -1,0 +1,123 @@
+<!doctype html>
+<!-- Plans [CODE] de la partie 2 (Qui est cet homme). ?s=silkroad | tor | dpr | compteur — window.renderAt(t) -->
+<html lang="fr"><head><meta charset="utf-8">
+<style>
+  html,body{margin:0;width:100%;height:100%;background:#050607;overflow:hidden;font-family:"Segoe UI",sans-serif;color:#eee}
+  .scene{position:absolute;inset:0;display:none}
+  .serif{font-family:Georgia,serif;font-style:italic}
+  /* --- page Silk Road reconstituée --- */
+  #silkroad{background:#e9e4d6}
+  #sr-page{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;background:#f4f0e4;color:#333;font-family:Verdana,sans-serif}
+  #sr-head{height:110px;background:linear-gradient(#5d7a3e,#3f5a27);display:flex;align-items:center;padding:0 40px;gap:24px;color:#f3efd9}
+  #sr-head h1{font-family:Georgia,serif;font-size:52px;margin:0;font-weight:normal;letter-spacing:1px}
+  #sr-head small{font-size:20px;opacity:.8}
+  #sr-side{position:absolute;left:30px;top:140px;width:300px;font-size:21px;line-height:1.9}
+  #sr-side b{display:block;margin-bottom:8px;color:#3f5a27}
+  #sr-grid{position:absolute;left:380px;top:140px;right:40px;display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+  .sr-card{height:300px;background:#fff;border:1px solid #cfc8b4;padding:14px;box-sizing:border-box}
+  .sr-card i{display:block;height:170px;background:#d9d3c2;filter:blur(6px)}
+  .sr-card p{filter:blur(4px);font-size:18px;margin:12px 0 4px}
+  .sr-card span{color:#3f5a27;font-weight:bold;font-size:20px}
+  #sr-tag{position:absolute;right:40px;bottom:30px;font-size:16px;color:#888}
+  /* --- textes communs --- */
+  .petit{position:absolute;left:0;right:0;text-align:center;font-weight:300;letter-spacing:.35em;font-size:22px;color:#9a9a9a}
+  .grand{position:absolute;left:0;right:0;text-align:center;font-size:84px;font-weight:300}
+  #dpr-carte{position:absolute;left:50%;top:50%;width:620px;height:300px;margin:-150px 0 0 -310px;border:1px solid #333;background:#0d0f11;border-radius:6px}
+  #dpr-avatar{position:absolute;left:36px;top:46px;width:200px;height:200px;border-radius:50%;background:#1a1d20;display:flex;align-items:center;justify-content:center;font-size:120px;color:#444}
+  #dpr-nom{position:absolute;left:270px;top:90px;font-size:30px;color:#bbb}
+  #dpr-champ{position:absolute;left:270px;top:150px;font-size:22px;color:#666}
+  #compteur{font-variant-numeric:tabular-nums}
+</style></head>
+<body>
+<!-- 1. page d'accueil reconstituée (aucune vraie capture) -->
+<div id="silkroad" class="scene"><div id="sr-page">
+  <div id="sr-head"><svg width="90" height="70" viewBox="0 0 90 70"><path fill="#f3efd9" d="M8 62 L12 40 Q14 30 22 30 L30 30 Q34 14 42 16 Q46 26 52 22 Q58 10 66 20 L70 30 Q80 30 84 22 L86 26 Q84 36 74 38 L72 62 L66 62 L65 44 L40 44 L36 62 L30 62 L30 46 Q22 46 18 50 L15 62 Z"/></svg>
+  <div><h1>Silk Road</h1><small>anonymous marketplace</small></div></div>
+  <div id="sr-side"><b>Catégories</b>████████ (412)<br>██████ (1 018)<br>███████████ (236)<br>█████ (781)<br>████████ (95)<br>██████ (310)<br>█████████ (64)</div>
+  <div id="sr-grid"></div>
+  <div id="sr-tag">Reconstitution — interface illustrative</div>
+</div></div>
+<!-- 2. réseau Tor (Three.js) -->
+<div id="tor" class="scene"><canvas id="tor-c"></canvas>
+  <div class="petit" style="top:7%">LE RÉSEAU TOR</div>
+  <div class="petit" id="tor-sous" style="bottom:8%;letter-spacing:.2em;font-size:20px">chaque connexion rebondit · l'adresse réelle disparaît</div></div>
+<!-- 3. personne ne connaît son vrai nom → Dread Pirate Roberts -->
+<div id="dpr" class="scene">
+  <div id="dpr-carte"><div id="dpr-avatar">?</div><div id="dpr-nom">Administrateur</div><div id="dpr-champ">Nom réel : ██████████</div></div>
+  <div class="petit" id="dpr-sur" style="top:28%">ON L'APPELLE SEULEMENT</div>
+  <div class="grand serif" id="dpr-titre" style="top:40%">Dread Pirate Roberts</div>
+</div>
+<!-- 4. compteur 1,2 milliard -->
+<div id="compteur-s" class="scene">
+  <div class="petit" style="top:30%">EN DEUX ANS, SUR SILK ROAD</div>
+  <div class="grand" id="compteur" style="top:39%;font-size:110px">0 $</div>
+  <div class="petit" style="top:66%;letter-spacing:.2em">de ventes · selon le FBI</div>
+</div>
+<script type="importmap">{"imports":{"three":"/outils/capture/node_modules/three/build/three.module.js"}}</script>
+<script type="module">
+import * as THREE from 'three';
+const S = new URLSearchParams(location.search).get('s') || 'silkroad';
+const W = innerWidth, H = innerHeight, k = W / 1920;
+document.getElementById(S === 'compteur' ? 'compteur-s' : S).style.display = 'block';
+const ease = x => x < 0 ? 0 : x > 1 ? 1 : 1 - Math.pow(1 - x, 3);
+const fondu = (t, a, b, d = .5) => Math.min(ease((t - a) / d), 1 - ease((t - b + d) / d));
+
+// --- Silk Road : cartes floutées + lent zoom vers le logo
+const grid = document.getElementById('sr-grid');
+for (let i = 0; i < 8; i++) grid.insertAdjacentHTML('beforeend', `<div class="sr-card"><i></i><p>██████ ████ ██</p><span>฿ ${(0.2 + i * .37).toFixed(2)}</span></div>`);
+const page = document.getElementById('sr-page');
+
+// --- Tor : nœuds blancs sur fond noir, un chemin qui s'allume nœud par nœud, cible rouge au bout
+let renderer, scene, cam, chemin = [], ligne, cible, noeuds = [];
+if (S === 'tor') {
+  renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('tor-c'), antialias: true });
+  renderer.setSize(W, H); renderer.setPixelRatio(1);
+  scene = new THREE.Scene(); scene.background = new THREE.Color(0x050607); scene.fog = new THREE.Fog(0x050607, 8, 22);
+  cam = new THREE.PerspectiveCamera(40, W / H, .1, 100);
+  const rnd = (s => () => (s = (s * 16807) % 2147483647) / 2147483647)(11);
+  const geo = new THREE.IcosahedronGeometry(.09, 0), mat = new THREE.MeshBasicMaterial({ color: 0xd8d8d8 });
+  for (let i = 0; i < 140; i++) {
+    const m = new THREE.Mesh(geo, mat); const r = 2.2 + rnd() * 3.2, a = rnd() * 6.28, b = (rnd() - .5) * 2.2;
+    m.position.set(Math.cos(a) * r, b, Math.sin(a) * r - 1); scene.add(m); noeuds.push(m);
+  }
+  const lg = new THREE.BufferGeometry(); const pos = [];
+  for (const a of noeuds) for (const b of noeuds) if (a.id < b.id && a.position.distanceTo(b.position) < 1.25) pos.push(...a.position.toArray(), ...b.position.toArray());
+  lg.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  scene.add(new THREE.LineSegments(lg, new THREE.LineBasicMaterial({ color: 0x3a3f44 })));
+  chemin = [noeuds[3], noeuds[40], noeuds[77], noeuds[19], noeuds[101]].map(n => n.position.clone());
+  chemin.unshift(new THREE.Vector3(-6, -1.6, 2)); // l'utilisateur
+  ligne = new THREE.Line(new THREE.BufferGeometry(), new THREE.LineBasicMaterial({ color: 0xffffff }));
+  scene.add(ligne);
+  cible = new THREE.Mesh(new THREE.IcosahedronGeometry(.22, 0), new THREE.MeshBasicMaterial({ color: 0xd01818 }));
+  cible.position.copy(chemin[chemin.length - 1]); cible.scale.setScalar(.01); scene.add(cible);
+}
+
+window.renderAt = t => {
+  if (S === 'silkroad') {
+    const z = .74 + .14 * ease(t / 10); page.style.transform = `translate(-50%,-50%) scale(${z * k}) translateY(${90 - 40 * ease(t / 10)}px)`;
+    page.style.opacity = fondu(t, 0, 10.3, .6);
+  }
+  if (S === 'tor') {
+    const a = .15 + t * .05; cam.position.set(Math.sin(a) * 10, 2.2 - t * .05, Math.cos(a) * 10); cam.lookAt(0, 0, -1);
+    const p = Math.min(t / 6, 1) * (chemin.length - 1), i = Math.floor(p), f = p - i, pts = chemin.slice(0, i + 1);
+    if (i < chemin.length - 1) pts.push(chemin[i].clone().lerp(chemin[i + 1], f));
+    ligne.geometry.setFromPoints(pts); cible.scale.setScalar(t > 6 ? ease((t - 6) / .6) : .01);
+    renderer.domElement.style.opacity = fondu(t, 0, 7.9, .5); renderer.render(scene, cam);
+  }
+  if (S === 'dpr') {
+    document.getElementById('dpr-carte').style.opacity = fondu(t, 0, 5.4, .5);
+    document.getElementById('dpr-sur').style.opacity = fondu(t, 5.7, 10.9, .6);
+    const ti = document.getElementById('dpr-titre'); const o = fondu(t, 6.2, 10.9, .9);
+    ti.style.opacity = o; ti.style.filter = `blur(${(1 - ease((t - 6.2) / .9)) * 8}px)`;
+    ti.style.textShadow = `${(1 - o) * 8 + 1.5}px 0 rgba(255,0,0,.5), ${-(1 - o) * 8 - 1.5}px 0 rgba(0,180,255,.5)`;
+  }
+  if (S === 'compteur') {
+    const v = 1.2e9 * ease(Math.min(t / 4.5, 1));
+    document.getElementById('compteur').textContent = (v >= 1e9 ? (v / 1e9).toFixed(1).replace('.', ',') + ' milliard $' : Math.round(v / 1e6) + ' millions $');
+    document.getElementById('compteur-s').style.opacity = fondu(t, 0, 6.5, .5);
+  }
+};
+document.body.style.zoom = 1;
+for (const el of document.querySelectorAll('.petit,.grand,#dpr-carte')) el.style.zoom = k;
+window.ready = true;
+</script></body></html>
