@@ -8,3 +8,6 @@ videos/*/montage/elements/*.txt
 videos/*/montage/elements/_*.png
 *.log
 videos/*/rendu/*_apercu.mp4
+videos/*/rendu/*.mp4
+!videos/*/rendu/*_final.mp4
+videos/*/montage/elements/_*/

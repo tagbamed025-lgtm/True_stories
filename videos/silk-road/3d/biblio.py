@@ -103,7 +103,7 @@ def exterieur(y0, graine=3):
         r_.rotation_euler.z = math.pi/4; r_.scale.y = d / w_; r_.data.materials.append(toit)
 
 _rayon = None
-def rayon_maillage(L=1.2, P=.34, H=2.1, n=5, graine=7):
+def rayon_maillage(L=1.2, P=.34, H=2.1, n=5, graine=7, bois=(.16, .09, .05), livres=None):
     """Un rayonnage bois sombre rempli de livres (un seul maillage, 6 matériaux)."""
     import bmesh, random
     rnd = random.Random(graine); bm = bmesh.new()
@@ -123,11 +123,12 @@ def rayon_maillage(L=1.2, P=.34, H=2.1, n=5, graine=7):
         while x < L/2 - e - .05:
             w = rnd.uniform(.025, .055); h = rnd.uniform(.6, .95) * hmax
             if rnd.random() < .08: x += w; continue                        # trou
-            boite(x, -P/2 + .03 + rnd.uniform(0, .04), z, min(x + w, L/2 - e), P/2 - .02, z + h, 1 + rnd.randrange(5))
+            boite(x, -P/2 + .03 + rnd.uniform(0, .04), z, min(x + w, L/2 - e), P/2 - .02, z + h, 1 + rnd.randrange(len(livres or [0]*5)))
             x += w + .002
     me = bpy.data.meshes.new('rayon'); bm.to_mesh(me); bm.free()
-    for c in [(.16, .09, .05), (.25, .05, .04), (.06, .1, .16), (.32, .27, .18), (.08, .13, .08), (.5, .45, .38)]:
-        me.materials.append(mat('livre%d' % len(me.materials), c, .7))
+    livres = livres or [(.25, .05, .04), (.06, .1, .16), (.32, .27, .18), (.08, .13, .08), (.5, .45, .38)]
+    me.materials.append(mat('bois_rayon%d' % graine, bois, .5))
+    for c in livres: me.materials.append(mat('livre%d_%d' % (graine, len(me.materials)), c, .6))
     return me
 
 def rayon(loc, rot=0):
@@ -220,6 +221,7 @@ def perso(fichier, couleur, loc, yaw=0, actions=(), ratio=.03):
         st.scale = .5; st.extrapolation = 'HOLD' if k == 0 else 'HOLD_FORWARD'  # Mixamo 60 i/s → 30 i/s
         st.blend_in = opt[0] if opt else 0
         if place: st.repeat = 30
+        elif len(opt) < 2 and nom not in ('Stand To Sit',): st.repeat = 12   # boucle
     return e, arm
 
 def camera(loc, cible, lens=35, fstop=None):
