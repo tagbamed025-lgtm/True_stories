@@ -7,3 +7,4 @@ videos/*/montage/elements/*.ttf
 videos/*/montage/elements/*.txt
 videos/*/montage/elements/_*.png
 *.log
+videos/*/rendu/*_apercu.mp4
