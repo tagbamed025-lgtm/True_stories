@@ -29,6 +29,10 @@ Manque souvent : homme en blouson, femme aux cheveux longs, policier ou soldat, 
 | Texting And Walking.fbx / Walking While Texting.fbx | Marche en tapant sur un téléphone | 199 / 241 img | DL\ |
 | Talking On Phone.fbx | Debout, au téléphone | 1166 img (30 i/s) | DL\ |
 | Driving.fbx | Conduite | 301 img | DL\ |
+| Sitting.fbx | Assis — se relève en boucle : n'utiliser qu'une pose figée | 267 img | DL\ |
+| Stand To Sit.fbx | S'asseoir | 135 img | DL\ |
+| Typing.fbx | Taper au clavier, assis | 988 img | DL\ |
+| Typing (1) à (4).fbx | Persos + Typing : (1) Ch02 femme · (2) Ch26 femme en talons · (3) Ch18 homme · (4) Ch12 homme en veste | 50 Mo chacun | DL\ |
 
 **Manquent pour Silk Road** : Typing, Sitting Down, Standing Up, Looking Around, Surprised, Arguing, Reading, Slow Walk. Plan 4.7 : le lever est simulé (fondu Sitting Idle → pose debout) en attendant Standing Up.
 

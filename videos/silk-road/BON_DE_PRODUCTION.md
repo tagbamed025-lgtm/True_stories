@@ -9,7 +9,8 @@
 | Assets réunis | ⚠️ | persos + kit bibliothèque OK (DL\persos\Sans titre_kit_leger.blend) ; animations manquantes : Standing Up, Typing, Sitting Down, Looking Around, Surprised, Arguing, Reading, Slow Walk ; cold open rue/berline absents |
 | Plans [CODE] | 🟡 | ecran/ fait ; restent titre, dates, mur d'enquête, chronologie des erreurs |
 | Plans [3D] | 🟡 | grande salle aérée avec baie vitrée sur Glen Park (3d/biblio.py, salle_lecture.py) ; plans de la 1re minute (3d/plans_minute.py) ; 4.7 testé (3d/plan_4_7.py, ancienne petite salle → à reporter) |
-| Montage 1re minute (aperçu) | 🟡 | rendu/silk-road_minute_apercu.mp4 (montage/montage_minute.py) — en validation par Mo |
+| Minute 1 (0:00 → 0:51,5) | ✅ validée | silk-road_minute_v4.mp4 (rendu ChatGPT) ; scène : `C:\Users\HP\Documents\TRU Stories Blender\silk-road_v4_VALIDE.blend` |
+| Suite (parties 2 à 6) | ⬜ | voir PLAN_SUITE.md |
 | Montage final | ⬜ | rendu/silk-road_final.mp4 |
 | Miniature + Short | ⬜ | livrables/ |
 
