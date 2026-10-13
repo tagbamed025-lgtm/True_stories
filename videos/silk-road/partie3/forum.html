@@ -1,0 +1,46 @@
+<!doctype html>
+<!-- Partie 3, « Première erreur » (22,7 s) : forum de 2011 reconstitué (contenu paraphrasé d'après les pièces du procès).
+     0–1,3 s titre · 1,3 s message de janv. 2011 (« altoid » parle de Silk Road) · 8,5 s message d'oct. 2011 · 20 s l'e-mail s'entoure de rouge -->
+<html lang="fr"><head><meta charset="utf-8">
+<style>
+  html,body{margin:0;width:100%;height:100%;background:#cfd0d2;overflow:hidden;font-family:Verdana,sans-serif}
+  #page{position:absolute;left:50%;top:50%;width:1500px;transform-origin:50% 0;background:#f2f3f5;box-shadow:0 30px 80px rgba(0,0,0,.25)}
+  #entete{background:#2f4f7f;color:#fff;padding:22px 34px;font:bold 34px Verdana}
+  #entete small{font:normal 18px Verdana;opacity:.8;margin-left:18px}
+  .post{display:flex;border-bottom:1px solid #d4d7dd;background:#fff;margin:18px;opacity:0}
+  .auteur{width:230px;padding:24px;background:#e9ecf1;font-size:20px}
+  .auteur b{display:block;color:#2f4f7f;font-size:24px;margin-bottom:8px}
+  .corps{flex:1;padding:24px 30px;font-size:24px;line-height:1.55;color:#222}
+  .date{font-size:17px;color:#888;margin-bottom:12px}
+  #mail{position:relative;display:inline-block}
+  #cadre{position:absolute;left:-10px;right:-10px;top:-6px;bottom:-6px;border:4px solid #d8261c;opacity:0}
+  #note{position:absolute;right:24px;bottom:16px;font-size:15px;color:#999}
+  #titre{position:absolute;inset:0;background:#0b0c0e;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#eee}
+  #titre small{font:300 22px "Segoe UI";letter-spacing:.45em;color:#999;margin-bottom:18px}
+  #titre b{font:italic 84px Georgia;font-weight:normal}
+</style></head><body>
+<div id="page">
+  <div id="entete">Forum · bitcoin<small>discussions</small></div>
+  <div class="post" id="p1"><div class="auteur"><b>altoid</b>Newbie<br>Messages : 2</div>
+    <div class="corps"><div class="date">29 janvier 2011</div>Quelqu'un a vu Silk Road ? Une sorte d'Amazon anonyme…<br>On n'y vend sûrement pas d'objets ordinaires.</div></div>
+  <div class="post" id="p2"><div class="auteur"><b>altoid</b>Newbie<br>Messages : 11</div>
+    <div class="corps"><div class="date">11 octobre 2011</div>Je cherche le meilleur développeur de la communauté bitcoin<br>pour une start-up financée par du capital-risque.<br><br>
+    Envoyez vos réponses à : <span id="mail">rossulbricht at gmail dot com<span id="cadre"></span></span></div></div>
+  <div id="note">Reconstitution — d'après les pièces du procès</div>
+</div>
+<div id="titre"><small>PREMIÈRE ERREUR</small><b>Un pseudo, un forum</b></div>
+<script>
+const Q = new URLSearchParams(location.search), BASE = 22.7, D = +(Q.get('d') || BASE), k = innerWidth / 1920;
+const ease = x => x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x);
+const page = document.getElementById('page');
+window.renderAt = t0 => {
+  const t = t0 * BASE / D;
+  document.getElementById('titre').style.opacity = 1 - ease((t - 1.0) / .4);
+  const z = (.78 + .1 * ease(t / 22.7)) * k, y = -380 * k - 120 * k * ease((t - 8) / 3) - 60 * k * ease((t - 17) / 3);
+  page.style.transform = `translate(-50%, ${y}px) scale(${z})`;
+  document.getElementById('p1').style.opacity = ease((t - 1.5) / .6);
+  document.getElementById('p2').style.opacity = ease((t - 8.5) / .6);
+  document.getElementById('cadre').style.opacity = ease((t - 20) / .3);
+};
+window.renderAt(0); window.ready = true;
+</script></body></html>

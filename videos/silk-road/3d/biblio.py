@@ -174,6 +174,9 @@ def anim(nom, sur_place=False):
         nv = set(bpy.data.objects) - avant
         arm = [o for o in nv if o.type == 'ARMATURE'][0]; act = arm.animation_data.action
         act.name = 'anim_' + nom + ('_place' if sur_place else ''); act.use_fake_user = True
+        import re
+        for fc in courbes(act):   # mixamorig4:Hips (anims téléchargées avec un perso) → mixamorig:Hips
+            if re.search(r'mixamorig\d+:', fc.data_path): fc.data_path = re.sub(r'mixamorig\d+:', 'mixamorig:', fc.data_path)
         if sur_place:
             fcs = [fc for fc in courbes(act) if fc.data_path.endswith('Hips"].location')]
             net = lambda fc: abs(fc.keyframe_points[-1].co[1] - fc.keyframe_points[0].co[1])

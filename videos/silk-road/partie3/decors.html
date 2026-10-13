@@ -1,0 +1,171 @@
+<!doctype html>
+<!-- Décors Three.js de la partie 3, style « maquette » (monde gris clair, seul le rouge ressort, étiquettes noires
+     à bord blanc déchiré) avec les personnages TRU Stories figés (GLB exportés de Blender).
+     ?s=mur&v=1 (« une faille dans l'homme ») | mur&v=2 (les deux fils se rejoignent) | bureau (Gary Alford, IRS)
+     | couloir (agents à la porte de l'appartement, San Francisco) ; &d= durée cible en secondes -->
+<html lang="fr"><head><meta charset="utf-8">
+<style>
+  html,body{margin:0;width:100%;height:100%;background:#cfd0d2;overflow:hidden}
+  canvas{display:block}
+  .tag{position:absolute;transform:translate(-50%,-100%);opacity:0;pointer-events:none}
+  .tag div{background:#111;color:#f2f2f2;font:600 1.45vw Consolas,monospace;padding:.35em .8em;letter-spacing:.03em;
+    outline:.32vw solid #f4f4f4;box-shadow:0 0 0 .45vw rgba(244,244,244,.55),0 .5vw 1.2vw rgba(0,0,0,.25);white-space:nowrap}
+  .tag i{display:block;width:0;height:0;margin:.55vw auto 0;border-left:.7vw solid transparent;border-right:.7vw solid transparent;border-top:.8vw solid #f4f4f4}
+  #titre{position:absolute;left:0;right:0;top:9%;text-align:center;font:300 1.2vw "Segoe UI";letter-spacing:.4em;color:#333;opacity:0}
+</style></head><body>
+<div id="titre"></div>
+<script type="importmap">{"imports":{"three":"/outils/capture/node_modules/three/build/three.module.js","three/addons/":"/outils/capture/node_modules/three/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+const Q = new URLSearchParams(location.search), S = Q.get('s') || 'mur', VAR = +(Q.get('v') || 1);
+const BASE = { mur: VAR === 1 ? 7.55 : 13.4, bureau: 5.9, couloir: 6.7 }[S], D = +(Q.get('d') || BASE);
+const W = innerWidth, H = innerHeight;
+const ease = x => x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x);
+const lerp = (a, b, t) => a + (b - a) * t;
+const GLB = '/assets3d/silk-road/glb/';
+const GRIS = 0xcfd0d2, ROUGE = 0xd8261c;
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(W, H); renderer.setPixelRatio(1);
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = S === 'mur' ? 1.05 : .82;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene(); scene.background = new THREE.Color(GRIS); scene.fog = new THREE.Fog(GRIS, 7, 22);
+const cam = new THREE.PerspectiveCamera(32, W / H, .05, 200);
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, cam));
+const bokeh = new BokehPass(scene, cam, { focus: 3, aperture: .0035, maxblur: .009 });
+composer.addPass(bokeh); composer.addPass(new OutputPass());
+
+// lumière « maquette » : grand ciel doux + soleil rasant qui dessine les ombres
+scene.add(new THREE.HemisphereLight(0xffffff, 0x9a9ca0, 1.1));
+const soleil = new THREE.DirectionalLight(0xfff4e6, 2.2); soleil.position.set(4, 7, 5); soleil.castShadow = true;
+soleil.shadow.mapSize.set(2048, 2048); Object.assign(soleil.shadow.camera, { left: -6, right: 6, top: 6, bottom: -6, near: .5, far: 30 });
+soleil.shadow.radius = 6; soleil.shadow.bias = -.0004; scene.add(soleil);
+
+const mat = (c, r = .9) => new THREE.MeshStandardMaterial({ color: c, roughness: r });
+const BLANC = mat(0xe6e6e6), GRIS2 = mat(0xc4c5c8), GRIS3 = mat(0xa9abaf), SOMBRE = mat(0x55575c, .7);
+function boite(w, h, d, m, x, y, z) {
+  const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); b.position.set(x, y, z); b.castShadow = b.receiveShadow = true; scene.add(b); return b;
+}
+function toile(w, h, dessin) {
+  const c = document.createElement('canvas'); c.width = w; c.height = h; dessin(c.getContext('2d'), w, h);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t;
+}
+function fiche(lignes, { w = 512, h = 340, titre = null, police = '30px Georgia', fond = '#f4f2ec', encre = '#222' } = {}) {
+  return toile(w, h, g => { g.fillStyle = fond; g.fillRect(0, 0, w, h); let y = 62;
+    if (titre) { g.fillStyle = '#c3221a'; g.font = 'bold 32px Consolas'; g.fillText(titre, 30, y); y += 50; }
+    g.fillStyle = encre; g.font = police; for (const l of lignes) { g.fillText(l, 30, y); y += 40; } });
+}
+const loader = new GLTFLoader();
+const charger = n => new Promise(r => loader.load(GLB + n + '.glb', g => { g.scene.traverse(o => { if (o.isMesh) o.castShadow = o.receiveShadow = true; }); r(g.scene); }));
+const image = src => new Promise(r => new THREE.TextureLoader().load(src, t => { t.colorSpace = THREE.SRGBColorSpace; r(t); }));
+
+// étiquettes qui suivent un point 3D
+const TAGS = [];
+function etiquette(texte, pos, t0, t1) {
+  const e = document.createElement('div'); e.className = 'tag'; e.innerHTML = `<div>${texte}</div><i></i>`; document.body.appendChild(e);
+  TAGS.push({ e, pos: new THREE.Vector3(...pos), t0, t1 });
+}
+function titre(texte, t0, t1) { const e = document.getElementById('titre'); e.textContent = texte; TAGS.push({ e, t0, t1 }); }
+
+let CLES = [], anim = () => {};
+function cameraA(t) {
+  let i = 0; while (i < CLES.length - 2 && t > CLES[i + 1].t) i++;
+  const a = CLES[i], b = CLES[i + 1], k = ease((t - a.t) / (b.t - a.t)), c = a.c.map((v, j) => lerp(v, b.c[j], k));
+  cam.position.set(...a.p.map((v, j) => lerp(v, b.p[j], k))); cam.lookAt(...c);
+  bokeh.uniforms.focus.value = cam.position.distanceTo(new THREE.Vector3(...c));
+}
+
+// =================== MUR D'ENQUÊTE (tableau gris, fiches blanches, fils rouges) ===================
+async function mur() {
+  boite(14, .1, 8, GRIS2, 0, 0, 2); boite(14, 6, .2, BLANC, 0, 3, -.2);
+  boite(3.8, 2.3, .06, SOMBRE, 0, 1.65, 0);
+  const pins = {};
+  async function piece(nom, tex, w, h, x, y, rz = 0, rouge = false) {
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshStandardMaterial({ map: tex, roughness: .8 }));
+    m.position.set(x, y, .035); m.rotation.z = rz; m.castShadow = m.receiveShadow = true; scene.add(m);
+    const p = new THREE.Mesh(new THREE.SphereGeometry(.02, 14, 10), mat(ROUGE, .4)); p.position.set(x, y + h / 2 - .05, .06); p.castShadow = true; scene.add(p);
+    pins[nom] = p.position.clone();
+  }
+  await piece('ross', await image('/assets3d/silk-road/archives/portrait_ross.jpg'), .62, .44, 0, 1.75, -.02);
+  await piece('question', fiche(['Qui est', 'Dread Pirate Roberts ?'], { h: 260, police: 'italic 40px Georgia' }), .5, .25, .66, 2.3, .04);
+  if (VAR === 2) {
+    await piece('forum', fiche(['Forum · janv. 2011', 'pseudo « altoid »', 'parle de Silk Road', '', 'Oct. 2011 : même pseudo', '→ rossulbricht@…'], { titre: 'ERREUR 1', h: 420 }), .55, .45, -1.22, 2.05, .03);
+    await piece('ids', fiche(['Juillet 2013', 'colis intercepté', '9 faux papiers', 'même visage'], { titre: 'ERREUR 2', h: 340 }), .55, .37, 1.2, 1.1, -.04);
+    await piece('alford', fiche(['Gary Alford (IRS)', 'retrouve le message'], { police: '30px Consolas', h: 200 }), .48, .19, -1.25, 1.15, -.02);
+    await piece('sept', fiche(['SEPTEMBRE 2013'], { w: 512, h: 120, police: 'bold 46px Consolas', fond: '#111', encre: '#f2f2f2' }), .5, .12, .1, 1.05, .01);
+  }
+  const fils = [];
+  function fil(a, b, t0, t1) {
+    const pa = pins[a], pb = pins[b], mid = pa.clone().lerp(pb, .5); mid.z += .02; mid.y -= .06;
+    const geo = new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(pa, mid, pb), 60, .0045, 6, false);
+    const m = new THREE.Mesh(geo, mat(ROUGE, .5)); m.castShadow = true; scene.add(m); geo.setDrawRange(0, 0); fils.push({ geo, t0, t1, n: geo.index.count });
+  }
+  soleil.position.set(2.5, 5, 6); soleil.target.position.set(0, 1.6, 0); scene.add(soleil.target);
+  if (VAR === 1) {
+    CLES = [{ t: 0, p: [-2.4, 1.2, 5.6], c: [0, 1.6, 0] }, { t: 7.55, p: [-.2, 1.72, 1.35], c: [0, 1.75, 0] }];
+    titre('UNE FAILLE DANS L\'HOMME', 3.6, 7.3);
+  } else {
+    fil('alford', 'forum', 1.2, 3.2); fil('forum', 'sept', 2.5, 5.5); fil('ids', 'sept', 4.0, 7.0); fil('sept', 'ross', 8.0, 10.5);
+    CLES = [{ t: 0, p: [-2.4, 2.0, 3.0], c: [-1.0, 1.7, 0] }, { t: 5, p: [1.9, 1.2, 2.6], c: [.7, 1.1, 0] }, { t: 10.5, p: [.2, 1.45, 3.0], c: [0, 1.45, 0] }, { t: 13.4, p: [0, 1.7, 1.45], c: [0, 1.72, 0] }];
+    etiquette('Ross Ulbricht', [0, 2.05, .05], 10.5, 13.4);
+  }
+  anim = t => { for (const f of fils) f.geo.setDrawRange(0, Math.floor(f.n * ease((t - f.t0) / (f.t1 - f.t0)))); };
+}
+
+// =================== BUREAU DE GARY ALFORD (IRS) — maquette grise, l'écran est la seule source vive ===================
+async function bureau() {
+  boite(12, .1, 10, GRIS2, 0, -.05, 0);
+  boite(12, 3.2, .2, BLANC, 0, 1.6, -1.8); boite(.2, 3.2, 10, BLANC, -3, 1.6, 2);
+  for (let x = -2; x <= 2.6; x += 1.5) boite(.9, 1.6, .05, mat(0xf7f7f7, .3), x + .7, 1.9, -1.69);   // fenêtres
+  boite(1.6, .06, .8, GRIS3, 0, .75, 0);
+  for (const sx of [-.74, .74]) boite(.06, .72, .74, GRIS3, sx, .36, 0);
+  const forum = toile(1024, 640, (g, w, h) => { g.fillStyle = '#e9ecf1'; g.fillRect(0, 0, w, h); g.fillStyle = '#2f4f7f'; g.fillRect(0, 0, w, 70);
+    g.fillStyle = '#fff'; g.font = 'bold 34px Verdana'; g.fillText('Forum · bitcoin', 24, 48); g.fillStyle = '#222'; g.font = '26px Verdana';
+    ['altoid — 11 octobre 2011', '', 'Recherche un développeur', 'pour une start-up bitcoin…', '', 'contact : rossulbricht@gmail.com'].forEach((l, i) => g.fillText(l, 40, 140 + i * 44));
+    g.strokeStyle = '#d8261c'; g.lineWidth = 6; g.strokeRect(30, 140 + 5 * 44 - 34, 640, 50); });
+  const ecran = new THREE.Mesh(new THREE.PlaneGeometry(.62, .38), new THREE.MeshBasicMaterial({ map: forum, toneMapped: false })); ecran.position.set(-.1, 1.13, -.19); scene.add(ecran);
+  boite(.66, .42, .03, SOMBRE, -.1, 1.13, -.215); boite(.06, .3, .06, SOMBRE, -.1, .9, -.22);
+  for (let k = 0; k < 5; k++) boite(.32, .03, .42, BLANC, .5, .8 + k * .032, -.05 + (k % 2) * .02);
+  boite(.48, .06, .48, GRIS3, -.1, .47, .62); boite(.48, .55, .06, GRIS3, -.1, .78, .88);
+  const alford = await charger('alford_assis_tape'); alford.position.set(-.1, 0, .66); alford.rotation.y = Math.PI; scene.add(alford);
+  const lueur = new THREE.PointLight(0x9fc0ff, 2.5, 2.5, 1.5); lueur.position.set(-.1, 1.1, .15); scene.add(lueur);
+  CLES = [{ t: 0, p: [2.1, 1.7, 2.4], c: [-.1, 1.0, .1] }, { t: 5.9, p: [1.0, 1.4, 1.5], c: [-.1, 1.1, -.1] }];
+  etiquette('Gary Alford', [-.1, 1.75, .66], .6, 5.9);
+}
+
+// =================== COULOIR DE L'APPARTEMENT (SAN FRANCISCO) ===================
+async function couloir() {
+  boite(2.4, .1, 12, GRIS2, 0, -.05, -3); boite(.15, 2.8, 12, BLANC, -1.2, 1.4, -3); boite(.15, 2.8, 12, BLANC, 1.2, 1.4, -3);
+  for (const z of [-.6, -5.2]) boite(.05, 2.1, .95, GRIS3, -1.12, 1.05, z);
+  boite(.05, 2.1, .95, GRIS3, 1.12, 1.05, -5.2);
+  // porte de l'appartement, ouverte vers l'intérieur
+  const porte = new THREE.Mesh(new THREE.BoxGeometry(.05, 2.1, .95), GRIS3); porte.geometry.translate(0, 0, .475);
+  porte.position.set(1.15, 1.05, -3.05); porte.rotation.y = -1.1; porte.castShadow = porte.receiveShadow = true; scene.add(porte);
+  boite(2.4, .1, 2.4, GRIS2, 2.4, -.05, -2.6); boite(.15, 2.8, 2.4, BLANC, 3.6, 1.4, -2.6);   // entrée de l'appartement
+  soleil.position.set(-3, 6, 2); soleil.intensity = 1.6;
+  const a1 = await charger('agent_debout_veste'); a1.position.set(.25, 0, -2.05); a1.rotation.y = Math.PI / 2 - .25; scene.add(a1);
+  const a2 = await charger('agent_debout_2'); a2.position.set(-.3, 0, -1.55); a2.rotation.y = Math.PI / 2 - .45; scene.add(a2);
+  const ross = await charger('ross_debout'); ross.position.set(1.0, 0, -2.6); ross.rotation.y = -Math.PI / 2; scene.add(ross);
+  CLES = [{ t: 0, p: [-.9, 1.8, 2.4], c: [.7, 1.3, -2.4] }, { t: 6.7, p: [-.5, 1.65, .7], c: [1.1, 1.45, -2.5] }];
+  etiquette('Agents fédéraux', [-.05, 2.05, -1.8], .5, 6.7); etiquette('Ross Ulbricht', [1.0, 2.0, -2.6], 2.2, 6.7);
+}
+
+await ({ mur, bureau, couloir })[S]();
+const v = new THREE.Vector3();
+window.renderAt = t0 => {
+  const t = t0 * BASE / D; anim(t); cameraA(t); composer.render();
+  for (const g of TAGS) {
+    const o = Math.min(ease((t - g.t0) / .4), 1 - ease((t - g.t1 + .4) / .4)); g.e.style.opacity = o;
+    if (g.pos) { v.copy(g.pos).project(cam); g.e.style.left = ((v.x + 1) / 2 * W) + 'px'; g.e.style.top = ((1 - v.y) / 2 * H) + 'px'; }
+  }
+};
+window.renderAt(0); window.ready = true;
+</script></body></html>

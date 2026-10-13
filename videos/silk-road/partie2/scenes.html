@@ -56,7 +56,8 @@
 <script type="importmap">{"imports":{"three":"/outils/capture/node_modules/three/build/three.module.js"}}</script>
 <script type="module">
 import * as THREE from 'three';
-const S = new URLSearchParams(location.search).get('s') || 'silkroad';
+const Q = new URLSearchParams(location.search), S = Q.get('s') || 'silkroad';
+const BASE = { silkroad: 10.3, tor: 7.9, dpr: 10.9, compteur: 6.5 }[S], D = +(Q.get('d') || BASE);
 const W = innerWidth, H = innerHeight, k = W / 1920;
 document.getElementById(S === 'compteur' ? 'compteur-s' : S).style.display = 'block';
 const ease = x => x < 0 ? 0 : x > 1 ? 1 : 1 - Math.pow(1 - x, 3);
@@ -92,7 +93,8 @@ if (S === 'tor') {
   cible.position.copy(chemin[chemin.length - 1]); cible.scale.setScalar(.01); scene.add(cible);
 }
 
-window.renderAt = t => {
+window.renderAt = t0 => {
+  const t = t0 * BASE / D;   // temps ramené à la durée d'origine
   if (S === 'silkroad') {
     const z = .74 + .14 * ease(t / 10); page.style.transform = `translate(-50%,-50%) scale(${z * k}) translateY(${90 - 40 * ease(t / 10)}px)`;
     page.style.opacity = fondu(t, 0, 10.3, .6);
