@@ -37,6 +37,7 @@ Document de référence unique. Toute discussion (projet Claude ou Claude Code) 
 - Décors sombres. Le rouge est réservé aux moments de rupture. Image en 2,39:1, grain léger, flou de profondeur, caméras lentes.
 - Méthode hybride : **[CODE]** = HTML/Three.js capturé image par image. **[3D]** = Blender piloté par scripts Python. Une vidéo codée peut devenir l'écran d'un objet 3D (matériau émissif, texture MOVIE).
 - Scripts de style : `style/` (`styles_tuto.py`, `distribution.py`).
+- **Style validé (13 oct. 2026, Silk Road)** : ouverture « trailer » ≈ 1 min en Blender, puis alternance de décors **Three.js style maquette grise** (seul le rouge ressort, ombres douces, flou de profondeur) avec nos personnages **figés** (GLB exportés par `videos/silk-road/3d/exporter_glb.py`), footage sombre et désaturé, archives réelles, cartes sobres. Étiquettes de noms noires à bord blanc déchiré. Son : voix + pulsation basse + tic-tac. Blender seulement quand les personnages doivent bouger. Modèles : `outils/capture/capture.js`, `videos/silk-road/partie3/decors.html`.
 
 ## 6. Assets
 - Inventaire de tout ce qu'on possède : **`ASSETS.md`**. On le consulte avant de demander un téléchargement, et on le met à jour après chaque ajout.
