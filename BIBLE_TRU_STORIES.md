@@ -38,6 +38,7 @@ Document de référence unique. Toute discussion (projet Claude ou Claude Code) 
 - Méthode hybride : **[CODE]** = HTML/Three.js capturé image par image. **[3D]** = Blender piloté par scripts Python. Une vidéo codée peut devenir l'écran d'un objet 3D (matériau émissif, texture MOVIE).
 - Scripts de style : `style/` (`styles_tuto.py`, `distribution.py`).
 - **Style validé (13 oct. 2026, Silk Road)** : ouverture « trailer » ≈ 1 min en Blender, puis alternance de décors **Three.js style maquette grise** (seul le rouge ressort, ombres douces, flou de profondeur) avec nos personnages **figés** (GLB exportés par `videos/silk-road/3d/exporter_glb.py`), footage sombre et désaturé, archives réelles, cartes sobres. Étiquettes de noms noires à bord blanc déchiré. Son : voix + pulsation basse + tic-tac. Blender seulement quand les personnages doivent bouger. Modèles : `outils/capture/capture.js`, `videos/silk-road/partie3/decors.html`.
+- **Étalonnage (charte)** : presets ffmpeg dans `outils/etalonnage.py`. Référence validée : `nuit_enquete` (homme devant ses écrans la nuit : désaturé, ombres bleutées, coins sombres). Autres : `tech_froide`, `jour_doux`, `objet_terne`, `souvenir`. Ajouter un preset nommé à chaque nouveau look validé.
 
 ## 6. Assets
 - Inventaire de tout ce qu'on possède : **`ASSETS.md`**. On le consulte avant de demander un téléchargement, et on le met à jour après chaque ajout.
