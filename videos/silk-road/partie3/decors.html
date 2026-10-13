@@ -24,7 +24,7 @@ import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 const Q = new URLSearchParams(location.search), S = Q.get('s') || 'mur', VAR = +(Q.get('v') || 1);
-const BASE = { mur: VAR === 1 ? 7.55 : 13.4, bureau: 5.9, couloir: 6.7 }[S], D = +(Q.get('d') || BASE);
+const BASE = { mur: VAR === 1 ? 7.55 : 13.4, bureau: 5.9, couloir: 6.7, kiernan: 6.7 }[S], D = +(Q.get('d') || BASE);
 const W = innerWidth, H = innerHeight;
 const ease = x => x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x);
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -158,7 +158,29 @@ async function couloir() {
   etiquette('Agents fédéraux', [-.05, 2.05, -1.8], .5, 6.7); etiquette('Ross Ulbricht', [1.0, 2.0, -2.6], 2.2, 6.7);
 }
 
-await ({ mur, bureau, couloir })[S]();
+// =================== THOMAS KIERNAN garde l'ordinateur allumé (partie 4) ===================
+async function kiernan() {
+  boite(12, .1, 10, GRIS2, 0, -.05, 0); boite(12, 3.2, .2, BLANC, 0, 1.6, -2.2);
+  const pied = new THREE.Mesh(new THREE.CylinderGeometry(.05, .05, .72, 16), GRIS3); pied.position.set(0, .36, 0); scene.add(pied);
+  const plateau = new THREE.Mesh(new THREE.CylinderGeometry(.55, .55, .04, 48), GRIS3); plateau.position.set(0, .74, 0); plateau.castShadow = plateau.receiveShadow = true; scene.add(plateau);
+  // portable de Ross, écran allumé : le tableau de bord de Silk Road
+  boite(.34, .02, .24, SOMBRE, 0, .77, .05);
+  const tdb = toile(1024, 640, (g, w, h) => { g.fillStyle = '#10141a'; g.fillRect(0, 0, w, h); g.fillStyle = '#5d7a3e'; g.fillRect(0, 0, w, 64);
+    g.fillStyle = '#eee'; g.font = 'bold 34px Georgia'; g.fillText('Silk Road · administration', 24, 44);
+    g.font = '26px Consolas'; g.fillStyle = '#9fd39f'; ['Comptes vendeurs .... 3 877', 'Messages ........... 1 042', 'Commissions (฿) .... ██████', 'Journal de bord ..... ouvert'].forEach((l, i) => g.fillText(l, 40, 140 + i * 60)); });
+  const ecran = new THREE.Mesh(new THREE.PlaneGeometry(.32, .2), new THREE.MeshBasicMaterial({ map: tdb, toneMapped: false }));
+  ecran.position.set(0, .89, -.06); ecran.rotation.x = -.18; scene.add(ecran);
+  const lueur = new THREE.PointLight(0x9fc0ff, 2.2, 2, 1.5); lueur.position.set(0, .95, .2); scene.add(lueur);
+  const k = await charger('alford_assis_tape'); k.position.set(0, 0, .62); k.rotation.y = Math.PI; scene.add(k);
+  boite(.48, .06, .48, GRIS3, 0, .47, .62); boite(.48, .55, .06, GRIS3, 0, .78, .88);
+  CLES = [{ t: 0, p: [-1.9, 1.5, 2.3], c: [0, .95, .1] }, { t: 6.7, p: [-1.2, 1.3, 1.5], c: [0, .95, 0] }];
+  etiquette('Thomas Kiernan · FBI', [0, 1.42, .62], .5, 6.7);
+  const h = document.getElementById('titre'); h.style.font = '600 1.6vw Consolas'; h.style.letterSpacing = '.1em';
+  const heures = ['15:20', '16:05', '16:50', '17:40', '18:25', '19:10'];
+  TAGS.push({ e: h, t0: .3, t1: 6.7 }); const prev = anim; anim = t => { prev(t); h.textContent = heures[Math.min(5, Math.floor(t / 1.1))]; };
+}
+
+await ({ mur, bureau, couloir, kiernan })[S]();
 const v = new THREE.Vector3();
 window.renderAt = t0 => {
   const t = t0 * BASE / D; anim(t); cameraA(t); composer.render();

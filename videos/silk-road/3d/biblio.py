@@ -20,7 +20,11 @@ def reset():
     return sc
 
 def mat(n, c, r=.6, em=0, emc=None):
-    m = bpy.data.materials.new(n); b = m.node_tree.nodes['Principled BSDF']
+    m = bpy.data.materials.new(n); m.use_nodes = True; nt = m.node_tree
+    b = next((x for x in nt.nodes if x.type == 'BSDF_PRINCIPLED'), None)   # nom du nœud variable selon la langue
+    if b is None:
+        b = nt.nodes.new('ShaderNodeBsdfPrincipled'); out = next((x for x in nt.nodes if x.type == 'OUTPUT_MATERIAL'), None) or nt.nodes.new('ShaderNodeOutputMaterial')
+        nt.links.new(b.outputs[0], out.inputs['Surface'])
     b.inputs['Base Color'].default_value = (*c, 1); b.inputs['Roughness'].default_value = r
     if em:
         b.inputs['Emission Color'].default_value = (*(emc or c), 1); b.inputs['Emission Strength'].default_value = em
