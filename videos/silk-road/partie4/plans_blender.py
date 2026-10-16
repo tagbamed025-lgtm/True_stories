@@ -10,8 +10,8 @@ V = mathutils.Vector
 args = sys.argv[sys.argv.index('--') + 1:]; FINAL = 'final' in args
 sc = bpy.context.scene; FPS = 30 if FINAL else 15
 sc.timeline_markers.clear()   # les repères du .blend imposeraient leurs caméras (le fichier n'est jamais enregistré)
-sc.render.fps = FPS; sc.render.resolution_x, sc.render.resolution_y = (2560, 1072) if FINAL else (1920, 804)   # final en 2K
-sc.render.resolution_percentage = 100 if FINAL else 50; sc.eevee.taa_render_samples = 48 if FINAL else 16
+sc.render.fps = FPS; sc.render.resolution_x, sc.render.resolution_y = (1280, 536) if FINAL else (1920, 804)   # fichier v4 lourd (≈ 47 s/image en 1920) : final rendu en 1280, agrandi en 2K au montage
+sc.render.resolution_percentage = 100 if FINAL else 50; sc.eevee.taa_render_samples = 20 if FINAL else 16
 DL = B.DL + os.sep
 ROSS = V((3.9, 4.35, 0)); TETE = V((3.9, 4.2, 1.1)); LAPTOP = bpy.data.objects['Ordi_Ross']
 B.ROUGE = bpy.data.materials.get('TRU_rouge'); B.BLANC = bpy.data.materials.get('TRU_blanc')

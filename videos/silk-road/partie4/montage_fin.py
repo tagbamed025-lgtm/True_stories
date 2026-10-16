@@ -98,16 +98,16 @@ plan('verdict', 4.2, ['-loop', '1', '-i', carton('c_verdict', 'Verdict', 'Coupab
 t = bas_gauche('t_peine', '29 mai 2015', 'perpétuité · sans libération', True)
 plan('barreaux', 7.3, ['-ss', '1', '-i', os.path.join(DL, '5243246-hd_1920_1080_24fps.mp4'), '-i', t], f"[0]{cadre},{E['tech_froide']}[v];[v][1]overlay=enable='gte(t,1.4)',{base}")
 t = bas_gauche('t_31', 'Ross Ulbricht', '31 ans')
-plan('ross31', 2.7, ['-loop', '1', '-i', os.path.join(DL, 'portrait ross'), '-i', t],
-     f"[0]scale={W*2}:-2,zoompan=z='1.1+0.0008*on':x='iw/2-(iw/zoom/2)':y='ih*0.4-(ih/zoom/2)':d=1:s={W}x{H}:fps={FPS},hue=s=0,eq=contrast=1.1[v];[v][1]overlay,{base}")
+plan('ross31', 2.7, ['-loop', '1', '-i', r'C:/Users/HP/Documents/Remotion/depot/assets3d/silk-road/archives/ross_prison.png', '-i', t],
+     f"[0]scale={W*2}:-2,zoompan=z='1.1+0.0008*on':x='iw/2-(iw/zoom/2)':y='ih*0.4-(ih/zoom/2)':d=1:s={W}x{H}:fps={FPS},eq=saturation=.6:contrast=1.08[v];[v][1]overlay,{base}")
 # ───────── PARTIE 6 · CLÔTURE ─────────
 t = bas_gauche('t_10ans', 'Pendant', 'plus de dix ans')
-plan('prison', 4.1, ['-ss', '12', '-i', os.path.join(DL, '5243246-hd_1920_1080_24fps.mp4'), '-i', t], f"[0]{cadre},{E['tech_froide']},hue=s=0[v];[v][1]overlay,{base}")
+plan('prison', 4.1, ['-loop', '1', '-i', r'C:/Users/HP/Documents/Remotion/depot/assets3d/silk-road/archives/ross_codetenus.png', '-i', t], f"[0]scale={W*2}:-2,zoompan=z='1.05+0.0009*on':x='iw*0.3-(iw/zoom/2)':y='ih*0.62-(ih/zoom/2)':d=1:s={W}x{H}:fps={FPS},eq=saturation=.55:brightness=-.05[v];[v][1]overlay,{base}")
 t = bas_gauche('t_grace', '21 janvier 2025', 'grâce présidentielle')
 plan('grace', 7.1, ['-loop', '1', '-i', os.path.join(DL, 'Screenshot 2026-10-12 223305.png'), '-i', t],
      f"[0]scale={W}:-2,pad={W}:{H*2}:0:(oh-ih)/3:color=white,zoompan=z='1.0+0.0007*on':x='iw/2-(iw/zoom/2)':y='ih*0.33-(ih/zoom/2)':d=1:s={W}x{H}:fps={FPS}[v];[v][1]overlay=enable='gte(t,0.8)',{base}")
 t = bas_gauche('t_libre', 'Ross Ulbricht', 'libre')
-plan('libre', 4.0, ['-loop', '1', '-i', os.path.join(DL, 'Screenshot 2026-10-12 223252.png'), '-i', t],
+plan('libre', 4.0, ['-loop', '1', '-i', r'C:/Users/HP/Documents/Remotion/depot/assets3d/silk-road/archives/ross_libre.png', '-i', t],
      f"[0]scale={W*2}:-2,zoompan=z='1.0+0.0008*on':x='iw/2-(iw/zoom/2)':y='ih*0.45-(ih/zoom/2)':d=1:s={W}x{H}:fps={FPS},{E['souvenir']}[v];[v][1]overlay,{base}")
 # « Mais une question reste : un empire bâti pour être invisible est tombé à cause d'une seconde d'inattention. »
 blender('table_vide', 7.5)

@@ -31,7 +31,7 @@ def plan(nom, d, entree, vf):
 # Calé sur les phrases réelles (p2.mp3 = VO_complete 66,0 → 103,7 s), à partir de 63,5 s (fin de la minute validée).
 # 1 · « Il s'appelle Ross Ulbricht. Vingt-neuf ans. »
 t = texte('t_ross', 'Ross Ulbricht', '29 ans')
-plan('portrait', 5.9, ['-loop', '1', '-i', os.path.join(DL, 'portrait ross'), '-i', t],
+plan('portrait', 5.9, ['-loop', '1', '-i', r'C:/Users/HP/Documents/Remotion/depot/assets3d/silk-road/archives/ross_carreaux.png', '-i', t],
      f"[0]scale={W*2}:-2,zoompan=z='1.0+0.0006*on':x='iw/2-(iw/zoom/2)':y='ih*0.42-(ih/zoom/2)':d=1:s={W}x{H}:fps={FPS},eq=saturation=.85:contrast=1.05[v];[v][1]overlay,fade=in:d=1.2,{base}")
 # 2 · « Diplômé en physique, passionné d'économie. » : campus (vidéo verticale sur fond flouté)
 t = texte('t_etudes', 'Diplômé en', 'physique · économie')
