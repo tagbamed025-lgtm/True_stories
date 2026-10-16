@@ -3,7 +3,8 @@
 # Prérequis : plans Blender de la partie 4 rendus en final (partie4/rendre.sh final).
 # 1) captures Three.js / HTML en 2560×1072, 30 i/s ; 2) montages finaux des parties 2, 3, fin ; 3) assemblage avec la minute v4.
 set -e
-cd "$(dirname "$0")"; R=../..; CAP="node $R/outils/capture/capture.js"; F=/c/ffmpeg/bin/ffmpeg
+cd "$(dirname "$0")"; R=../..; F=/c/ffmpeg/bin/ffmpeg
+CAP="node outils/capture/capture.js"   # chemin relatif à la racine du dépôt (on y fait cd $R)
 P2=videos/silk-road/partie2; P3=videos/silk-road/partie3; P4=videos/silk-road/partie4
 mkdir -p partie2/final partie3/final partie4/final
 ( cd $R

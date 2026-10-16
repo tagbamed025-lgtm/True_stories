@@ -10,7 +10,9 @@
 | Plans [CODE] | 🟡 | ecran/ fait ; restent titre, dates, mur d'enquête, chronologie des erreurs |
 | Plans [3D] | 🟡 | grande salle aérée avec baie vitrée sur Glen Park (3d/biblio.py, salle_lecture.py) ; plans de la 1re minute (3d/plans_minute.py) ; 4.7 testé (3d/plan_4_7.py, ancienne petite salle → à reporter) |
 | Minute 1 (0:00 → 0:51,5) | ✅ validée | silk-road_minute_v4.mp4 (rendu ChatGPT) ; scène : `C:\Users\HP\Documents\TRU Stories Blender\silk-road_v4_VALIDE.blend` |
-| Suite (parties 2 à 6) | ⬜ | voir PLAN_SUITE.md |
+| Suite (parties 2 à 6) | ✅ | partie2/, partie3/, partie4/ (montage_fin.py) |
+| **Vidéo finale 2K** | ✅ 16 oct. 2026 | rendu/silk-road_final.mp4 (4:58, 2560×1440, 563 Mo, non versionnée) — `final_2k.sh` |
+| Miniature | 🟡 v1 | livrables/miniature_silk-road.png |
 | Montage final | ⬜ | rendu/silk-road_final.mp4 |
 | Miniature + Short | ⬜ | livrables/ |
 
