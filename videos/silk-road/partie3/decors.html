@@ -26,6 +26,7 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
+const T = window.T || (x => x);
 const Q = new URLSearchParams(location.search), S = Q.get('s') || 'mur', VAR = +(Q.get('v') || 1);
 const BASE = { mur: VAR === 1 ? 7.55 : 13.4, bureau: 5.9, couloir: 6.7, kiernan: 6.7, mini: 1 }[S], D = +(Q.get('d') || BASE);
 const W = innerWidth, H = innerHeight;
@@ -63,8 +64,8 @@ function toile(w, h, dessin) {
 }
 function fiche(lignes, { w = 512, h = 340, titre = null, police = '30px Georgia', fond = '#f4f2ec', encre = '#222' } = {}) {
   return toile(w, h, g => { g.fillStyle = fond; g.fillRect(0, 0, w, h); let y = 62;
-    if (titre) { g.fillStyle = '#c3221a'; g.font = 'bold 32px Consolas'; g.fillText(titre, 30, y); y += 50; }
-    g.fillStyle = encre; g.font = police; for (const l of lignes) { g.fillText(l, 30, y); y += 40; } });
+    if (titre) { g.fillStyle = '#c3221a'; g.font = 'bold 32px Consolas'; g.fillText(T(titre), 30, y); y += 50; }
+    g.fillStyle = encre; g.font = police; for (const l of lignes) { g.fillText(T(l), 30, y); y += 40; } });
 }
 const loader = new GLTFLoader();
 const charger = n => new Promise(r => loader.load(GLB + n + '.glb', g => { g.scene.traverse(o => { if (o.isMesh) o.castShadow = o.receiveShadow = true; }); r(g.scene); }));
@@ -73,10 +74,10 @@ const image = src => new Promise(r => new THREE.TextureLoader().load(src, t => {
 // étiquettes qui suivent un point 3D
 const TAGS = [];
 function etiquette(texte, pos, t0, t1, style = '') {
-  const e = document.createElement('div'); e.className = 'tag' + (style ? ' ' + style : '') + (S === 'mini' ? ' mini' : ''); e.innerHTML = `<div>${texte}</div><i></i>`; document.body.appendChild(e);
+  const e = document.createElement('div'); e.className = 'tag' + (style ? ' ' + style : '') + (S === 'mini' ? ' mini' : ''); e.innerHTML = `<div>${T(texte)}</div><i></i>`; document.body.appendChild(e);
   TAGS.push({ e, pos: new THREE.Vector3(...pos), t0, t1 });
 }
-function titre(texte, t0, t1) { const e = document.getElementById('titre'); e.textContent = texte; TAGS.push({ e, t0, t1 }); }
+function titre(texte, t0, t1) { const e = document.getElementById('titre'); e.textContent = T(texte); TAGS.push({ e, t0, t1 }); }
 
 let CLES = [], anim = () => {};
 function cameraA(t) {
@@ -133,8 +134,8 @@ async function bureau() {
   boite(1.6, .06, .8, GRIS3, 0, .75, 0);
   for (const sx of [-.74, .74]) boite(.06, .72, .74, GRIS3, sx, .36, 0);
   const forum = toile(1024, 640, (g, w, h) => { g.fillStyle = '#e9ecf1'; g.fillRect(0, 0, w, h); g.fillStyle = '#2f4f7f'; g.fillRect(0, 0, w, 70);
-    g.fillStyle = '#fff'; g.font = 'bold 34px Verdana'; g.fillText('Forum · bitcoin', 24, 48); g.fillStyle = '#222'; g.font = '26px Verdana';
-    ['altoid — 11 octobre 2011', '', 'Recherche un développeur', 'pour une start-up bitcoin…', '', 'contact : rossulbricht@gmail.com'].forEach((l, i) => g.fillText(l, 40, 140 + i * 44));
+    g.fillStyle = '#fff'; g.font = 'bold 34px Verdana'; g.fillText(T('Forum · bitcoin'), 24, 48); g.fillStyle = '#222'; g.font = '26px Verdana';
+    ['altoid — 11 octobre 2011', '', 'Recherche un développeur', 'pour une start-up bitcoin…', '', 'contact : rossulbricht@gmail.com'].forEach((l, i) => g.fillText(T(l), 40, 140 + i * 44));
     g.strokeStyle = '#d8261c'; g.lineWidth = 6; g.strokeRect(30, 140 + 5 * 44 - 34, 640, 50); });
   const ecran = new THREE.Mesh(new THREE.PlaneGeometry(.62, .38), new THREE.MeshBasicMaterial({ map: forum, toneMapped: false })); ecran.position.set(-.1, 1.13, -.19); scene.add(ecran);
   boite(.66, .42, .03, SOMBRE, -.1, 1.13, -.215); boite(.06, .3, .06, SOMBRE, -.1, .9, -.22);
@@ -171,8 +172,8 @@ async function kiernan() {
   // portable de Ross, écran allumé : le tableau de bord de Silk Road
   boite(.34, .02, .24, SOMBRE, 0, .77, .05);
   const tdb = toile(1024, 640, (g, w, h) => { g.fillStyle = '#10141a'; g.fillRect(0, 0, w, h); g.fillStyle = '#5d7a3e'; g.fillRect(0, 0, w, 64);
-    g.fillStyle = '#eee'; g.font = 'bold 34px Georgia'; g.fillText('Silk Road · administration', 24, 44);
-    g.font = '26px Consolas'; g.fillStyle = '#9fd39f'; ['Comptes vendeurs .... 3 877', 'Messages ........... 1 042', 'Commissions (฿) .... ██████', 'Journal de bord ..... ouvert'].forEach((l, i) => g.fillText(l, 40, 140 + i * 60)); });
+    g.fillStyle = '#eee'; g.font = 'bold 34px Georgia'; g.fillText(T('Silk Road · administration'), 24, 44);
+    g.font = '26px Consolas'; g.fillStyle = '#9fd39f'; ['Comptes vendeurs .... 3 877', 'Messages ........... 1 042', 'Commissions (฿) .... ██████', 'Journal de bord ..... ouvert'].forEach((l, i) => g.fillText(T(l), 40, 140 + i * 60)); });
   const ecran = new THREE.Mesh(new THREE.PlaneGeometry(.32, .2), new THREE.MeshBasicMaterial({ map: tdb, toneMapped: false }));
   ecran.position.set(0, .89, -.06); ecran.rotation.x = -.18; scene.add(ecran);
   const lueur = new THREE.PointLight(0x9fc0ff, 2.2, 2, 1.5); lueur.position.set(0, .95, .2); scene.add(lueur);

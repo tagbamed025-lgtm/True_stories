@@ -5,6 +5,9 @@ import os, subprocess, numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 HERE = os.path.dirname(os.path.abspath(__file__)); E = os.path.join(HERE, 'elements'); FF = r"C:\ffmpeg\bin\ffmpeg.exe"
 W, H, FPS = 1920, 804, 30
+LANG = os.environ.get('TRU_LANG'); import json as _j
+_TR = _j.load(open(os.path.join(HERE, '..', f'trad_{LANG}.json'), encoding='utf8')) if LANG else {}
+T = lambda s: _TR.get(s, s); SUF = '_' + LANG if LANG else ''
 FONTS = 'C:/Windows/Fonts/'
 SANS = lambda s: ImageFont.truetype(FONTS + 'segoeuisl.ttf', s)      # Segoe UI Semilight
 FIN = lambda s: ImageFont.truetype(FONTS + 'segoeuil.ttf', s)        # Segoe UI Light
@@ -30,14 +33,14 @@ def centre(draw, y, s, f, couleur, espace=0):
 def carton_titre():
     im = Image.new('RGB', (W, H)); d = ImageDraw.Draw(im)
     centre(d, 300, 'TRU STORIES', FIN(22), (150, 150, 150), espace=9)
-    ligne_mixte(d, 430, ["l'empire", 'à', 'un', 'milliard'], 92)
-    centre(d, 505, 'piégé dans une bibliothèque', SERIF(40), (200, 200, 200))
+    ligne_mixte(d, 430, [T(w) for w in ["l'empire", 'à', 'un', 'milliard']], 92)
+    centre(d, 505, T('piégé dans une bibliothèque'), SERIF(40), (200, 200, 200))
     return im
 
 def carton_date():
     im = Image.new('RGB', (W, H)); d = ImageDraw.Draw(im)
-    centre(d, 360, 'San Francisco  ·  Glen Park', FIN(28), (170, 170, 170))
-    centre(d, 450, '1er octobre 2013', SANS(76), (240, 240, 240))
+    centre(d, 360, T('San Francisco  ·  Glen Park'), FIN(28), (170, 170, 170))
+    centre(d, 450, T('1er octobre 2013'), SANS(76), (240, 240, 240))
     return im
 
 def animer(base, duree, nom, entree=.9, sortie=.6):
@@ -59,6 +62,6 @@ def animer(base, duree, nom, entree=.9, sortie=.6):
     subprocess.run([FF, '-v', 'error', '-y', '-framerate', str(FPS), '-i', os.path.join(dossier, '%04d.png'),
                     '-c:v', 'libx264', '-crf', '14', '-pix_fmt', 'yuv420p', os.path.join(E, nom + '.mp4')], check=True)
 
-animer(carton_titre(), 3.0, 'titre')
-animer(carton_date(), 2.0, 'date', entree=.6, sortie=.4)
+animer(carton_titre(), 3.0, 'titre' + SUF)
+animer(carton_date(), 2.0, 'date' + SUF, entree=.6, sortie=.4)
 print('OK')

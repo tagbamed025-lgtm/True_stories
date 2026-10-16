@@ -115,7 +115,7 @@ window.renderAt = t0 => {
   }
   if (S === 'compteur') {
     const v = 1.2e9 * ease(Math.min(t / 4.5, 1));
-    document.getElementById('compteur').textContent = (v >= 1e9 ? (v / 1e9).toFixed(1).replace('.', ',') + ' milliard $' : Math.round(v / 1e6) + ' millions $');
+    document.getElementById('compteur').textContent = (window.TRAD ? (v >= 1e9 ? '$' + (v / 1e9).toFixed(1) + ' billion' : '$' + Math.round(v / 1e6) + ' million') : (v >= 1e9 ? (v / 1e9).toFixed(1).replace('.', ',') + ' milliard $' : Math.round(v / 1e6) + ' millions $'));
     document.getElementById('compteur-s').style.opacity = fondu(t, 0, 6.5, .5);
   }
 };

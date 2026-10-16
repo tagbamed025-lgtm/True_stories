@@ -6,7 +6,13 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'
 from etalonnage import ETALONNAGE as E, FINITION
 F = r"C:\ffmpeg\bin\ffmpeg.exe"; HERE = os.path.dirname(os.path.abspath(__file__)); V = os.path.join(HERE, '..')
 FINAL = 'final' in sys.argv; W, H, FPS = (2560, 1072, 30) if FINAL else (960, 402, 15)   # final en 2K
-DOS = os.path.join(HERE, 'final' if FINAL else 'brouillon'); os.makedirs(DOS, exist_ok=True)
+LANG = os.environ.get('TRU_LANG')   # TRU_LANG=en → textes traduits (trad_en.json), sorties *_EN
+import json as _j
+_TR = _j.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', f'trad_{LANG}.json'), encoding='utf8')) if LANG else {}
+T = lambda s: _TR.get(s, s)
+SUF = '_' + LANG.upper() if LANG else ''
+PNG = os.path.join(HERE, 'final' if FINAL else 'brouillon')   # images Blender (communes aux langues)
+DOS = PNG + (('_' + LANG) if LANG else ''); os.makedirs(DOS, exist_ok=True)
 DL = r"C:\Users\HP\Downloads\TRU Stories"
 V4 = r"C:\Users\HP\Documents\Codex\2026-10-12\files-mentioned-by-the-user-silk\outputs\production_v4\silk-road_minute_v4.mp4"
 ECRAN = os.path.join(V, 'montage', 'elements', 'ecran_zoom.mp4')
@@ -18,9 +24,11 @@ def police(n, s): return ImageFont.truetype('C:/Windows/Fonts/' + n, max(10, int
 def calque(nom, dessin):
     im = Image.new('RGBA', (W, H), (0, 0, 0, 0)); dessin(ImageDraw.Draw(im)); p = os.path.join(DOS, nom + '.png'); im.save(p); return p
 def bas_gauche(nom, petit, grand, rouge=False):
+    petit, grand = T(petit), T(grand)
     return calque(nom, lambda d: (d.text((int(120 * k), H - int(190 * k)), ' '.join(petit.upper()), font=police('segoeuil.ttf', 24), fill=(215, 215, 215, 235)),
                                   d.text((int(118 * k), H - int(150 * k)), grand, font=police('segoeuisl.ttf', 62), fill=(225, 50, 40, 255) if rouge else (245, 245, 245, 255))))
 def carton(nom, petit, grand, sous=None):
+    petit, grand, sous = T(petit), T(grand), (T(sous) if sous else sous)
     def dessin(d):
         d.rectangle((0, 0, W, H), fill=(11, 12, 14, 255))
         d.text((W / 2, H * .38), ' '.join(petit.upper()), font=police('segoeuil.ttf', 24), fill=(150, 150, 150, 255), anchor='ms')
@@ -32,6 +40,7 @@ def etiquettes(nom, plan):
     def dessin(d):
         f = police('consolab.ttf', 30)
         for texte, x, y in ETIQ.get(plan, []):
+            texte = T(texte)
             cx, cy = x * W, y * H - 46 * k; tw = d.textlength(texte, font=f); pad = 16 * k
             r = (cx - tw / 2 - pad, cy - 26 * k, cx + tw / 2 + pad, cy + 26 * k)
             d.rectangle((r[0] - 6 * k, r[1] - 6 * k, r[2] + 6 * k, r[3] + 6 * k), fill=(244, 244, 244, 255))
@@ -39,6 +48,7 @@ def etiquettes(nom, plan):
             d.polygon([(cx - 12 * k, r[3] + 6 * k), (cx + 12 * k, r[3] + 6 * k), (cx, r[3] + 22 * k)], fill=(244, 244, 244, 255))
     return calque(nom, dessin)
 def liste(nom, lignes):
+    lignes = [(T(a), b) for a, b in lignes]
     """Une ligne de la liste (✓ blanc / ✗ rouge) — calques cumulés."""
     def dessin(d):
         for i, (txt, ok) in enumerate(lignes):
@@ -55,7 +65,7 @@ def plan(nom, d, entree, vf):
     run(entree + ['-t', str(d), '-filter_complex', vf, '-an', '-c:v', 'libx264', '-crf', '18', '-pix_fmt', 'yuv420p', out]); plans.append((out, d))
 def blender(nom, d, calques=()):
     """Plan rendu par plans_blender.py (images PNG) + calques éventuels (étiquettes), avec leurs fenêtres d'affichage ENABLE[nom]."""
-    src = ['-framerate', str(FPS), '-i', os.path.join(DOS, nom, '%04d.png')] + sum((['-i', c] for c in calques), [])
+    src = ['-framerate', str(FPS), '-i', os.path.join(PNG, nom, '%04d.png')] + sum((['-i', c] for c in calques), [])
     vf, cur = f"[0]{cadre}", None
     for j, en in enumerate(ENABLE.get(nom, [''] * len(calques))):
         vf += f"[a{j}];[a{j}][{j + 1}]overlay" + (f"={en}" if en else '')
@@ -116,7 +126,7 @@ plan('fin', 5.0, ['-loop', '1', '-i', carton('c_fin', 'TRU STORIES', 'Un empire 
 liste_f = os.path.join(DOS, 'liste_fin.txt'); open(liste_f, 'w').write(''.join(f"file '{p}'\n" for p, _ in plans))
 TOTAL = sum(d for _, d in plans)
 vo = os.path.join(V, 'voix', 'VO_complete_SilkRoad.mp3'); mus = os.path.join(V, 'montage', 'elements', 'musique.wav')
-sortie = os.path.join(V, 'rendu', 'silk-road_fin' + ('' if FINAL else '_brouillon') + '.mp4')
+sortie = os.path.join(V, 'rendu', 'silk-road_fin' + ('' if FINAL else '_brouillon') + SUF + '.mp4')
 run(['-f', 'concat', '-safe', '0', '-i', liste_f, '-i', vo, '-i', mus, '-filter_complex',
      f"[1]atrim={VO0},asetpts=N/SR/TB,aformat=channel_layouts=stereo,volume=1.15,apad,asplit[vo][sc];"
      f"[2]atrim=18:48,asetpts=N/SR/TB,aloop=loop=4:size=1440000,atrim=0:{TOTAL},volume=0.45,afade=t=out:st={TOTAL - 4}:d=4[m];"

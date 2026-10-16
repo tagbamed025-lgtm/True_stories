@@ -45,7 +45,7 @@ const J = document.getElementById('lignes');
 [['2010', "je commence à travailler sur un projet…"], ['2011 · janv.', "le site est en ligne"], ['2011 · mars', "premières ventes"],
  ['2011 · juin', "un article parle de nous, l'afflux arrive"], ['2012', "le site grandit plus vite que prévu"], ['2012', "████████ ██████ ███"],
  ['2013 · mars', "████ █████████ ██ ████"], ['2013 · sept.', "████████████ ████ ███"], ['…', '']].forEach(([d, t], i) =>
-  J.insertAdjacentHTML('beforeend', `<div${i === 3 ? ' class="surl"' : ''}><b>${d.padEnd(13)}</b> ${t}</div>`));
+  J.insertAdjacentHTML('beforeend', `<div${i === 3 ? ' class="surl"' : ''}><b>${(window.T ? T(d) : d).padEnd(13)}</b> ${window.T ? T(t) : t}</div>`));
 const fen = id => document.getElementById(id);
 function camera(t) {   // cadrages successifs (x, y, zoom) sur l'écran 1920×1080
   const c = [[0, [960, 420, 1.0]], [1.3, [960, 440, 1.03]], [2.7, [620, 420, 1.28]], [4.1, [1340, 470, 1.28]], [5.8, [960, 380, 1.08]], [9.3, [960, 420, 1.16]]];
