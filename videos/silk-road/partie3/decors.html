@@ -11,6 +11,9 @@
   .tag div{background:#111;color:#f2f2f2;font:600 1.45vw Consolas,monospace;padding:.35em .8em;letter-spacing:.03em;
     outline:.32vw solid #f4f4f4;box-shadow:0 0 0 .45vw rgba(244,244,244,.55),0 .5vw 1.2vw rgba(0,0,0,.25);white-space:nowrap}
   .tag i{display:block;width:0;height:0;margin:.55vw auto 0;border-left:.7vw solid transparent;border-right:.7vw solid transparent;border-top:.8vw solid #f4f4f4}
+   
+  .tag.mini div{font:900 3.4vw 'Segoe UI Black','Segoe UI',sans-serif;padding:.12em .42em;outline-width:.45vw}
+  .tag.rouge div{background:#d8261c}
   #titre{position:absolute;left:0;right:0;top:9%;text-align:center;font:300 1.2vw "Segoe UI";letter-spacing:.4em;color:#333;opacity:0}
 </style></head><body>
 <div id="titre"></div>
@@ -24,7 +27,7 @@ import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 const Q = new URLSearchParams(location.search), S = Q.get('s') || 'mur', VAR = +(Q.get('v') || 1);
-const BASE = { mur: VAR === 1 ? 7.55 : 13.4, bureau: 5.9, couloir: 6.7, kiernan: 6.7 }[S], D = +(Q.get('d') || BASE);
+const BASE = { mur: VAR === 1 ? 7.55 : 13.4, bureau: 5.9, couloir: 6.7, kiernan: 6.7, mini: 1 }[S], D = +(Q.get('d') || BASE);
 const W = innerWidth, H = innerHeight;
 const ease = x => x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x);
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -69,8 +72,8 @@ const image = src => new Promise(r => new THREE.TextureLoader().load(src, t => {
 
 // étiquettes qui suivent un point 3D
 const TAGS = [];
-function etiquette(texte, pos, t0, t1) {
-  const e = document.createElement('div'); e.className = 'tag'; e.innerHTML = `<div>${texte}</div><i></i>`; document.body.appendChild(e);
+function etiquette(texte, pos, t0, t1, style = '') {
+  const e = document.createElement('div'); e.className = 'tag' + (style ? ' ' + style : '') + (S === 'mini' ? ' mini' : ''); e.innerHTML = `<div>${texte}</div><i></i>`; document.body.appendChild(e);
   TAGS.push({ e, pos: new THREE.Vector3(...pos), t0, t1 });
 }
 function titre(texte, t0, t1) { const e = document.getElementById('titre'); e.textContent = texte; TAGS.push({ e, t0, t1 }); }
@@ -182,7 +185,40 @@ async function kiernan() {
   TAGS.push({ e: h, t0: .3, t1: 6.7 }); const prev = anim; anim = t => { prev(t); h.textContent = heures[Math.min(5, Math.floor(t / 1.1))]; };
 }
 
-await ({ mur, bureau, couloir, kiernan })[S]();
+// =================== MINIATURE YouTube (style diorama : puits de lumière, rouge = Ross, grosses étiquettes) ===================
+async function mini() {
+  scene.background = new THREE.Color(0x0b0c10); scene.fog = new THREE.Fog(0x0b0c10, 9, 18);
+  scene.children.filter(o => o.isHemisphereLight).forEach(o => o.intensity = .25); soleil.intensity = .35;
+  const solM = new THREE.MeshStandardMaterial({ color: 0xe9eaee, roughness: .85 });
+  const sol = new THREE.Mesh(new THREE.CircleGeometry(9, 96), solM); sol.rotation.x = -Math.PI / 2; sol.receiveShadow = true; scene.add(sol);
+  const spot = new THREE.SpotLight(0xffffff, 140, 18, .55, .75, 1.2); spot.position.set(.6, 7.5, 2.2); spot.target.position.set(0, 0, 0);
+  spot.castShadow = true; spot.shadow.mapSize.set(4096, 4096); spot.shadow.radius = 5; spot.shadow.bias = -.0003; scene.add(spot, spot.target);
+  // table ronde + portable allumé
+  const pied = new THREE.Mesh(new THREE.CylinderGeometry(.05, .05, .72, 16), GRIS3); pied.position.set(0, .36, 0); pied.castShadow = true; scene.add(pied);
+  const plateau = new THREE.Mesh(new THREE.CylinderGeometry(.55, .55, .04, 64), mat(0xd9dade, .6)); plateau.position.set(0, .74, 0); plateau.castShadow = plateau.receiveShadow = true; scene.add(plateau);
+  boite(.34, .02, .24, SOMBRE, 0, .77, -.05);
+  const ecr = new THREE.Mesh(new THREE.PlaneGeometry(.32, .2), new THREE.MeshBasicMaterial({ color: 0x9fd0ff, toneMapped: false })); ecr.position.set(0, .89, .04); ecr.rotation.x = .18; ecr.rotation.y = Math.PI; scene.add(ecr);
+  const lueur = new THREE.PointLight(0x8fbfff, 3, 2.2, 1.5); lueur.position.set(0, 1.0, -.25); scene.add(lueur);
+  boite(.48, .06, .48, GRIS3, 0, .47, -.62); boite(.48, .55, .06, GRIS3, 0, .78, -.88);
+  const ross = await charger('ross_assis_tape'); ross.position.set(0, 0, -.62); scene.add(ross);
+  // étagère « Science Fiction » derrière
+  for (let k = 0; k < 2; k++) { boite(1.0, 1.95, .36, BLANC, -1.9 + k * 1.02, .975, -2.2);
+    for (let r = 0; r < 5; r++) for (let b = 0; b < 14; b++) boite(.05, .28, .26, mat([0x9ea0a6, 0xb9bbc0, 0x7d8086][(b + r + k) % 3], .8), -2.34 + k * 1.02 + b * .064, .2 + r * .37, -2.15); }
+  if (VAR === 1) {   // A : le cercle des agents
+    for (const [n, x, z] of [['agent_debout_veste', 1.25, .55], ['agente_debout', -1.2, .7], ['agent_debout_2', 1.35, -1.05], ['agent_debout_veste', -1.3, -.95]]) {
+      const a = await charger(n); a.position.set(x, 0, z); a.lookAt(0, 0, -.4); a.rotateY(Math.PI); scene.add(a); }
+    CLES = [{ t: 0, p: [2.5, 3.2, 3.4], c: [0, .85, -.25] }, { t: 1, p: [2.5, 3.2, 3.4], c: [0, .85, -.25] }];
+    etiquette('1 MILLIARD $', [0, 1.45, -.62], -1, 9, 'rouge'); etiquette('FBI', [-1.2, 1.95, .7], -1, 9); etiquette('FBI', [1.35, 1.95, -1.05], -1, 9);
+  } else {           // B : la fausse dispute derrière lui
+    const f = await charger('agente_debout'); f.position.set(-1.05, 0, -1.55); f.rotation.y = Math.PI / 2 + .3; scene.add(f);
+    const h = await charger('agent_debout_veste'); h.position.set(-.35, 0, -1.75); h.rotation.y = -Math.PI / 2 - .2; scene.add(h);
+    CLES = [{ t: 0, p: [2.4, 2.9, 3.6], c: [-.35, 1.15, -.9] }, { t: 1, p: [2.4, 2.9, 3.6], c: [-.35, 1.15, -.9] }];
+    etiquette('DARK WEB', [.15, 1.35, -.55], -1, 9, 'rouge'); etiquette('FBI', [-.75, 2.0, -1.65], -1, 9);
+  }
+  bokeh.uniforms.aperture.value = .0012;
+}
+
+await ({ mur, bureau, couloir, kiernan, mini })[S]();
 const v = new THREE.Vector3();
 window.renderAt = t0 => {
   const t = t0 * BASE / D; anim(t); cameraA(t); composer.render();
