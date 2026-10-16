@@ -10,7 +10,7 @@ V = mathutils.Vector
 args = sys.argv[sys.argv.index('--') + 1:]; FINAL = 'final' in args
 sc = bpy.context.scene; FPS = 30 if FINAL else 15
 sc.timeline_markers.clear()   # les repères du .blend imposeraient leurs caméras (le fichier n'est jamais enregistré)
-sc.render.fps = FPS; sc.render.resolution_x, sc.render.resolution_y = 1920, 804
+sc.render.fps = FPS; sc.render.resolution_x, sc.render.resolution_y = (2560, 1072) if FINAL else (1920, 804)   # final en 2K
 sc.render.resolution_percentage = 100 if FINAL else 50; sc.eevee.taa_render_samples = 48 if FINAL else 16
 DL = B.DL + os.sep
 ROSS = V((3.9, 4.35, 0)); TETE = V((3.9, 4.2, 1.1)); LAPTOP = bpy.data.objects['Ordi_Ross']
@@ -91,7 +91,16 @@ def p_table_vide():  # partie 6 : « Mais une question reste… » — la table 
     camera('table_vide', [(1, (2.4, 1.9, 1.5), (3.9, 3.8, .8)), (N, (2.9, 2.6, 1.35), (3.9, 3.85, .8))], 35, 2.8)
     return []
 
-PLANS = {'agents': (7.1, p_agents), 'dispute': (7.7, p_dispute), 'retourne': (5.0, p_retourne), 'saisie': (6.1, p_saisie),
+def p_miniature():   # miniature YouTube 16:9 : Ross (rouge) cerné par les agents FBI debout, contre-plongée, écran allumé
+    p_debout(); [bpy.data.objects.remove(o) for o in bpy.data.objects if o.name.startswith(('CAM4_', 'cible'))]
+    camera('miniature', [(1, (4.0, 1.9, 1.42), (3.92, 4.2, 1.12)), (N, (4.0, 1.9, 1.42), (3.92, 4.2, 1.12))], 30, 5.6)
+    sc.render.resolution_x, sc.render.resolution_y, sc.render.resolution_percentage = 2560, 1440, 100
+    sc.eevee.taa_render_samples = 96
+    bpy.ops.object.light_add(type='AREA', location=(3.9, 3.55, 1.0)); l = bpy.context.object; l.data.color = (.45, .65, 1)
+    l.data.energy = 60; l.data.size = .35; l.rotation_euler = (math.radians(-80), 0, 0)   # lueur bleue de l'écran sur Ross
+    return []
+
+PLANS = {'miniature': (0.1, p_miniature), 'agents': (7.1, p_agents), 'dispute': (7.7, p_dispute), 'retourne': (5.0, p_retourne), 'saisie': (6.1, p_saisie),
          'debout': (5.8, p_debout), 'cercle': (3.4, p_cercle), 'table_vide': (7.5, p_table_vide)}
 nom = args[0]; duree, fonc = PLANS[nom]; N = round(duree * FPS) + 2
 sc.frame_start, sc.frame_end = 1, N

@@ -4,7 +4,7 @@
 import subprocess, os, sys
 from PIL import Image, ImageDraw, ImageFont
 F = r"C:\ffmpeg\bin\ffmpeg.exe"; HERE = os.path.dirname(os.path.abspath(__file__)); V = os.path.join(HERE, '..')
-FINAL = 'final' in sys.argv; W, H, FPS = (1920, 804, 30) if FINAL else (960, 402, 15)
+FINAL = 'final' in sys.argv; W, H, FPS = (2560, 1072, 30) if FINAL else (960, 402, 15)   # final en 2K
 DOS = os.path.join(HERE, 'final' if FINAL else 'brouillon'); os.makedirs(DOS, exist_ok=True)
 DL = r"C:\Users\HP\Downloads\TRU Stories"
 STOCK = {'colis': '10472351-hd_1920_1080_25fps.mp4', 'bitcoin': '7634144-hd_1920_1080_25fps.mp4',

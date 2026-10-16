@@ -5,7 +5,7 @@ from PIL import Image, ImageDraw, ImageFont
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'outils'))
 from etalonnage import ETALONNAGE as E, FINITION
 F = r"C:\ffmpeg\bin\ffmpeg.exe"; HERE = os.path.dirname(os.path.abspath(__file__)); V = os.path.join(HERE, '..')
-FINAL = 'final' in sys.argv; W, H, FPS = (1920, 804, 30) if FINAL else (960, 402, 15)
+FINAL = 'final' in sys.argv; W, H, FPS = (2560, 1072, 30) if FINAL else (960, 402, 15)   # final en 2K
 DOS = os.path.join(HERE, 'final' if FINAL else 'brouillon'); os.makedirs(DOS, exist_ok=True)
 DL = r"C:\Users\HP\Downloads\TRU Stories"
 V4 = r"C:\Users\HP\Documents\Codex\2026-10-12\files-mentioned-by-the-user-silk\outputs\production_v4\silk-road_minute_v4.mp4"
@@ -88,11 +88,9 @@ blender('debout', 5.8)
 # « L'homme le plus recherché du dark web vient d'être arrêté… »
 blender('cercle', 3.4)
 # « … dans le rayon science-fiction. » : le panneau (v4)
-plan('panneau', 2.5, ['-ss', '3.0', '-t', '2', '-i', V4], f"[0]{v4crop},setpts=1.25*PTS,{base}")
+plan('panneau', 2.5, ['-ss', '3.0', '-t', '1.2', '-i', V4], f"[0]{v4crop},setpts=2.1*PTS,{base}")
 # « Sur l'écran, tout est là. Les comptes, les messages, le journal de bord de Silk Road. »
-mots = [bas_gauche('w1', 'Sur l\'écran', 'les comptes'), bas_gauche('w2', 'Sur l\'écran', 'les messages'), bas_gauche('w3', 'Sur l\'écran', 'le journal de bord', True)]
-plan('ecran', 9.3, ['-i', ECRAN] + sum((['-i', m] for m in mots), []),
-     f"[0]{cadre},setpts=1.33*PTS,eq=brightness=-.06[v];[v][1]overlay=enable='between(t,2.7,4.1)'[a];[a][2]overlay=enable='between(t,4.1,5.8)'[b];[b][3]overlay=enable='gte(t,5.8)',fade=out:st=8.5:d=0.8,{base}")
+plan('ecran', 9.3, ['-i', os.path.join(DOS, 'preuves.mp4')], f"[0]{cadre},{base}")   # motion design (preuves.html) calé sur la voix
 # ───────── PARTIE 5 · LE PROCÈS ─────────
 t = bas_gauche('t_ny', 'New York', 'février 2015')
 plan('tribunal', 3.6, ['-ss', '2', '-i', os.path.join(DL, 'fb3d1c70e4969f2df7555cfe4095c753.mp4'), '-i', t], f"[0]{cadre},{E['nuit_enquete']}[v];[v][1]overlay,{base}")

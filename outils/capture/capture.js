@@ -15,7 +15,7 @@ const serveur = http.createServer((req, res) => {
   fs.createReadStream(f).pipe(res);
 }).listen(0, '127.0.0.1', async () => {
   const port = serveur.address().port;
-  const b = await chromium.launch({ channel: 'msedge', args: ['--enable-gpu-rasterization', '--ignore-gpu-blocklist'] });
+  const b = await chromium.launch({ channel: 'msedge', ignoreDefaultArgs: ['--headless=old'], args: ['--headless=new', '--enable-gpu-rasterization', '--ignore-gpu-blocklist'] });   // Edge récent : plus d'ancien mode headless
   const p = await b.newPage({ viewport: { width: +W, height: +H } });
   p.on('console', m => m.type() === 'error' && console.error('page:', m.text()));
   await p.goto(`http://127.0.0.1:${port}/${page_.replace(/\\/g, '/')}`);
