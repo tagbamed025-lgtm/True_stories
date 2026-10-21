@@ -32,6 +32,7 @@ Manque souvent : homme en blouson, femme aux cheveux longs, policier ou soldat, 
 | Sitting.fbx | Assis — se relève en boucle : n'utiliser qu'une pose figée | 267 img | DL\ |
 | Stand To Sit.fbx | S'asseoir | 135 img | DL\ |
 | Typing.fbx | Taper au clavier, assis | 988 img | DL\ |
+| Idle, Standing Idle, Standing Arguing, Yelling, Stand Up, Picking Up (Object).fbx | Poses debout, dispute, saisie (os `mixamorig4:`, renommés à l'import) | 45 Mo chacun | DL\ |
 | Typing (1) à (4).fbx | Persos + Typing : (1) Ch02 femme · (2) Ch26 femme en talons · (3) Ch18 homme · (4) Ch12 homme en veste | 50 Mo chacun | DL\ |
 
 **Manquent pour Silk Road** : Typing, Sitting Down, Standing Up, Looking Around, Surprised, Arguing, Reading, Slow Walk. Plan 4.7 : le lever est simulé (fondu Sitting Idle → pose debout) en attendant Standing Up.
@@ -43,6 +44,10 @@ Manque souvent : homme en blouson, femme aux cheveux longs, policier ou soldat, 
 | Sans titre.blend (72 Mo) | Même kit, non allégé (+ .blend1, bibliotheque_recup.7z/.blend1 = sauvegardes) | DL\persos\ |
 | kit_bibliotheque.blend | tasse, lampe de bureau, table (partiel, ancien) | assets3d/silk-road/objets/ |
 | Rayonnage rempli de livres | généré par script (`rayon_maillage()` dans videos/silk-road/3d/biblio.py) | code |
+| silk-road_v4_VALIDE.blend (34 Mo) | Scène finale salle de Glen Park, chaises corrigées, persos figés, caméras par plan | Drive : TRU_Stories_Assets/videos/silk-road/3d/ (+ local Documents\TRU Stories Blender\) |
+| Salle de Glen Park (code) | murs crème, piliers, fenêtres à stores, panneau « Science Fiction », rue de SF | videos/silk-road/3d/glenpark.py |
+| FBI.fbx (+ FBI_D2.png) | Agent FBI tactique texturé, squelette Biped (pas Mixamo), échelle ×100 à l'import ; licence à vérifier | assets3d/silk-road/fbi_soldier_src/ (non utilisé) |
+| GLB figés pour Three.js | alford_assis_tape, agent_debout_veste, agent_debout_2, agente_debout, ross_assis_tape, ross_debout | assets3d/silk-road/glb/ (générés par videos/silk-road/3d/exporter_glb.py) |
 | kenney_car-kit.zip / kenney_watercraft-pack.zip | Kits Kenney voitures et bateaux (low poly) | DL\ |
 
 ## Décors, véhicules, bâtiments, HDRI
@@ -58,7 +63,22 @@ Manque pour Silk Road (cold open) : rue en pente, façades, berline sombre, port
 ## Divers (DL\)
 blenderkit-v3.21.3.zip (extension), Scene_ThreeJS.zip, Charte_documentaire_3D_V1.pdf, Apercu_Blender.mp4, Le_dernier_message.mp4, « True Story _ test d'ouverture.html », tutoriel « Easy Characters are META » (.zip/.7z/.tar, 3 copies).
 
+## Archives (photos réelles) et footage
+| Fichier | Contenu | Emplacement |
+|---|---|---|
+| portrait_ross.jpg, ross_carreaux.png, ross_prison(2,3).png, ross_codetenus.png, ross_libre.png | Photos de Ross Ulbricht (presse, FreeRoss) — usage éditorial, créditer | assets3d/silk-road/archives/ |
+| Screenshot 2026-10-12 2232…2237 | article « Finally Ross is free », faux papiers (GX 402), bannières « Seized » | DL\ |
+| Footage Pexels (9 clips) | colis, rue de SF, homme devant écrans la nuit, serveurs, barreaux, bitcoin, campus, marteau, balance | DL\ (noms numériques, ex. 10472351-hd…mp4) |
+
+## Livrables Silk Road (Drive)
+Vidéos finales FR/EN, reels, miniatures, .blend validé : Drive `TRU_Stories_Assets/videos/silk-road/` — détail et liens dans videos/silk-road/BON_DE_PRODUCTION.md.
+
 ## Éléments codés réutilisables
+| outils/capture/capture.js | capture image par image d'une page HTML/Three.js → MP4 (Edge ; `?lang=en` = traduction) |
+| outils/etalonnage.py | presets d'étalonnage ffmpeg (nuit_enquete validé) |
+| videos/silk-road/partie3/decors.html | décors Three.js « maquette grise », étiquettes, miniatures diorama (`?s=mini`) — modèle à copier |
+| videos/silk-road/livrables/reels.py | découpe de reels 9:16 avec accroche |
+| videos/silk-road/trad_en.json + final_en.sh + montage_en.py | fabrication de la version anglaise |
 | Fichier | Contenu |
 |---|---|
 | videos/silk-road/ecran/ecran.html → ecran.mp4 | écran de portable : interview + tableau de bord (modifiable) |
