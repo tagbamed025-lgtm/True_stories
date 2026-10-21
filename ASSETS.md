@@ -74,12 +74,12 @@ blenderkit-v3.21.3.zip (extension), Scene_ThreeJS.zip, Charte_documentaire_3D_V1
 Vidéos finales FR/EN, reels, miniatures, .blend validé : Drive `TRU_Stories_Assets/videos/silk-road/` — détail et liens dans videos/silk-road/BON_DE_PRODUCTION.md.
 
 ## Éléments codés réutilisables
+| Fichier | Contenu |
+|---|---|
 | outils/capture/capture.js | capture image par image d'une page HTML/Three.js → MP4 (Edge ; `?lang=en` = traduction) |
 | outils/etalonnage.py | presets d'étalonnage ffmpeg (nuit_enquete validé) |
 | videos/silk-road/partie3/decors.html | décors Three.js « maquette grise », étiquettes, miniatures diorama (`?s=mini`) — modèle à copier |
 | videos/silk-road/livrables/reels.py | découpe de reels 9:16 avec accroche |
 | videos/silk-road/trad_en.json + final_en.sh + montage_en.py | fabrication de la version anglaise |
-| Fichier | Contenu |
-|---|---|
 | videos/silk-road/ecran/ecran.html → ecran.mp4 | écran de portable : interview + tableau de bord (modifiable) |
 | videos/silk-road/3d/biblio.py + salle_lecture.py | salle de lecture de Glen Park (tables, persos stylisés, rayonnages) pour tous les plans bibliothèque |
