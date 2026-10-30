@@ -22,18 +22,17 @@
 | Reels EN | ⬜ | à faire (relancer reels.py sur la vidéo EN avec accroches anglaises) |
 | Sous-titres (.srt) FR/EN | ⬜ | à faire (transcription ElevenLabs disponible pour FR p4-p6) |
 
-## Livrables sur Google Drive
-Dossier : **Google Drive › Mon Drive › `TRU_Stories_Assets/videos/silk-road/`** (copiés le 21 oct. 2026 via Google Drive pour ordinateur, `G:\Mon Drive\…`). Liens de partage : à copier depuis drive.google.com (clic droit › Partager › Copier le lien) et à coller ici.
-| Fichier | Chemin Drive | Lien |
-|---|---|---|
-| Vidéo finale FR publiée (CapCut, 4K) | rendu/silk-road_final_CapCut_publiee.mp4 | _à coller_ |
-| Vidéo finale FR (2K, notre montage) | rendu/silk-road_final.mp4 | _à coller_ |
-| Vidéo finale EN (2K) | rendu/silk-road_FULL_EN.mp4 | _à coller_ |
-| Reels FR ×4 | livrables/reels/reel_1…4.mp4 | _à coller_ |
-| Miniatures A/B + 1280 | livrables/miniature_3d_1.png, miniature_3d_2.png, miniature_finale_1280.jpg | _à coller_ |
-| Scène Blender validée (chaises corrigées) | 3d/silk-road_v4_VALIDE.blend | _à coller_ |
+## Livrables (copies de référence sur GitHub)
+Pas de Drive (espace insuffisant). Copies légères versionnées dans le dépôt :
+| Fichier | Contenu |
+|---|---|
+| videos/silk-road/archive_video/silk-road_FR_publiee_1080p.mp4 (44 Mo) | vidéo FR publiée (montage CapCut de Mo), 1080p |
+| videos/silk-road/archive_video/silk-road_EN_1080p.mp4 (40 Mo) | version anglaise complète, 1080p |
+| videos/silk-road/archive_video/reel_1…4.mp4 (15-19 Mo) | 4 reels 9:16 FR |
+| videos/silk-road/livrables/miniature_3d_1.png, miniature_3d_2.png | miniatures A/B |
+| assets3d/silk-road/scenes/silk-road_v4_VALIDE.blend (34 Mo) | scène Blender validée de la salle de Glen Park |
 
-Restent uniquement en local (PC de Mo, régénérables par les scripts) : morceaux `rendu/_*.mp4`, brouillons, images PNG de `partie4/final/`, `silk-road_EN.mp4` (EN calée sur le montage CapCut, textes FR).
+Masters haute qualité (PC de Mo uniquement) : `Downloads\TRU Stories\Modifier et finale\Ross ulbrich.mp4` (FR 4K publiée), `rendu/silk-road_final.mp4` (FR 2K), `rendu/silk-road_FULL_EN.mp4` (EN 2K). Une copie avait aussi été déposée sur `G:\Mon Drive\TRU_Stories_Assetsideos\silk-road\` (peut être supprimée pour libérer de l'espace).
 
 ## Publication
 **FR** — Titre A : *Le FBI a simulé une dispute pour l'arrêter* · Titre B : *Comment le FBI a piégé le roi du dark web dans une bibliothèque*. A/B : miniature 1 (cercle FBI) + titre B ; miniature 2 (dispute) + titre A.

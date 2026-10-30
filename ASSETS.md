@@ -44,7 +44,7 @@ Manque souvent : homme en blouson, femme aux cheveux longs, policier ou soldat, 
 | Sans titre.blend (72 Mo) | Même kit, non allégé (+ .blend1, bibliotheque_recup.7z/.blend1 = sauvegardes) | DL\persos\ |
 | kit_bibliotheque.blend | tasse, lampe de bureau, table (partiel, ancien) | assets3d/silk-road/objets/ |
 | Rayonnage rempli de livres | généré par script (`rayon_maillage()` dans videos/silk-road/3d/biblio.py) | code |
-| silk-road_v4_VALIDE.blend (34 Mo) | Scène finale salle de Glen Park, chaises corrigées, persos figés, caméras par plan | Drive : TRU_Stories_Assets/videos/silk-road/3d/ (+ local Documents\TRU Stories Blender\) |
+| silk-road_v4_VALIDE.blend (34 Mo) | Scène finale salle de Glen Park, chaises corrigées, persos figés, caméras par plan | assets3d/silk-road/scenes/ (+ local Documents\TRU Stories Blender\) |
 | Salle de Glen Park (code) | murs crème, piliers, fenêtres à stores, panneau « Science Fiction », rue de SF | videos/silk-road/3d/glenpark.py |
 | FBI.fbx (+ FBI_D2.png) | Agent FBI tactique texturé, squelette Biped (pas Mixamo), échelle ×100 à l'import ; licence à vérifier | assets3d/silk-road/fbi_soldier_src/ (non utilisé) |
 | GLB figés pour Three.js | alford_assis_tape, agent_debout_veste, agent_debout_2, agente_debout, ross_assis_tape, ross_debout | assets3d/silk-road/glb/ (générés par videos/silk-road/3d/exporter_glb.py) |
@@ -70,8 +70,8 @@ blenderkit-v3.21.3.zip (extension), Scene_ThreeJS.zip, Charte_documentaire_3D_V1
 | Screenshot 2026-10-12 2232…2237 | article « Finally Ross is free », faux papiers (GX 402), bannières « Seized » | DL\ |
 | Footage Pexels (9 clips) | colis, rue de SF, homme devant écrans la nuit, serveurs, barreaux, bitcoin, campus, marteau, balance | DL\ (noms numériques, ex. 10472351-hd…mp4) |
 
-## Livrables Silk Road (Drive)
-Vidéos finales FR/EN, reels, miniatures, .blend validé : Drive `TRU_Stories_Assets/videos/silk-road/` — détail et liens dans videos/silk-road/BON_DE_PRODUCTION.md.
+## Livrables Silk Road
+Vidéos FR/EN 1080p et reels : `videos/silk-road/archive_video/` ; scène validée : `assets3d/silk-road/scenes/silk-road_v4_VALIDE.blend` (détail dans videos/silk-road/BON_DE_PRODUCTION.md).
 
 ## Éléments codés réutilisables
 | Fichier | Contenu |
