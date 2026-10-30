@@ -1,0 +1,1038 @@
+[
+{
+"p": 1,
+"i": 0,
+"deb": 0.0,
+"fin": 2.21,
+"txt": "Vingt-neuf octobre deux mille vingt-six."
+},
+{
+"p": 1,
+"i": 1,
+"deb": 2.21,
+"fin": 2.21,
+"txt": "Vingt heures cinq, temps universel."
+},
+{
+"p": 1,
+"i": 2,
+"deb": 2.21,
+"fin": 4.84,
+"txt": "Quelque part dans le monde."
+},
+{
+"p": 1,
+"i": 3,
+"deb": 4.84,
+"fin": 4.84,
+"txt": "Une rue vide."
+},
+{
+"p": 1,
+"i": 4,
+"deb": 4.84,
+"fin": 6.97,
+"txt": "Tard dans la nuit."
+},
+{
+"p": 1,
+"i": 5,
+"deb": 6.97,
+"fin": 8.79,
+"txt": "Une voiture passe, lentement."
+},
+{
+"p": 1,
+"i": 6,
+"deb": 8.79,
+"fin": 10.34,
+"txt": "Ses phares glissent sur les façades endormies."
+},
+{
+"p": 1,
+"i": 7,
+"deb": 10.34,
+"fin": 10.34,
+"txt": "Troisième étage."
+},
+{
+"p": 1,
+"i": 8,
+"deb": 10.34,
+"fin": 12.83,
+"txt": "Une seule fenêtre est allumée."
+},
+{
+"p": 1,
+"i": 9,
+"deb": 12.83,
+"fin": 12.83,
+"txt": "Pas une lampe…"
+},
+{
+"p": 1,
+"i": 10,
+"deb": 12.83,
+"fin": 15.94,
+"txt": "la lueur d'un écran."
+},
+{
+"p": 1,
+"i": 11,
+"deb": 15.94,
+"fin": 15.94,
+"txt": "Un homme est assis dans le noir."
+},
+{
+"p": 1,
+"i": 12,
+"deb": 15.94,
+"fin": 17.84,
+"txt": "Ou dix hommes."
+},
+{
+"p": 1,
+"i": 13,
+"deb": 17.84,
+"fin": 17.84,
+"txt": "Personne ne le sait encore."
+},
+{
+"p": 1,
+"i": 14,
+"deb": 17.84,
+"fin": 19.83,
+"txt": "Des lignes de code défilent."
+},
+{
+"p": 1,
+"i": 15,
+"deb": 19.83,
+"fin": 21.26,
+"txt": "Leur reflet bleu sur son visage."
+},
+{
+"p": 1,
+"i": 16,
+"deb": 21.26,
+"fin": 23.23,
+"txt": "Pas de musique."
+},
+{
+"p": 1,
+"i": 17,
+"deb": 23.23,
+"fin": 23.23,
+"txt": "Pas un bruit."
+},
+{
+"p": 1,
+"i": 18,
+"deb": 23.23,
+"fin": 25.58,
+"txt": "Seulement le claquement des touches."
+},
+{
+"p": 1,
+"i": 19,
+"deb": 25.58,
+"fin": 29.54,
+"txt": "Dans un coin de l'écran, un nom que des millions de personnes connaissent : Binance."
+},
+{
+"p": 1,
+"i": 20,
+"deb": 29.54,
+"fin": 29.54,
+"txt": "Il tape une dernière commande…"
+},
+{
+"p": 1,
+"i": 21,
+"deb": 29.54,
+"fin": 29.54,
+"txt": "Entrée."
+},
+{
+"p": 1,
+"i": 22,
+"deb": 29.54,
+"fin": 32.0,
+"txt": "Vingt minutes plus tard…"
+},
+{
+"p": 1,
+"i": 23,
+"deb": 32.0,
+"fin": 36.08,
+"txt": "plus de six milliards de dollars auront quitté la plus grande plateforme crypto du monde."
+},
+{
+"p": 1,
+"i": 24,
+"deb": 36.08,
+"fin": 37.33,
+"txt": "Le plus gros vol de l'histoire de la crypto."
+},
+{
+"p": 1,
+"i": 25,
+"deb": 37.33,
+"fin": 37.33,
+"txt": "Et cette nuit-là…"
+},
+{
+"p": 1,
+"i": 26,
+"deb": 37.33,
+"fin": 39.73,
+"txt": "presque personne ne comprend ce qui se passe."
+},
+{
+"p": 2,
+"i": 27,
+"deb": 39.73,
+"fin": 39.73,
+"txt": "Rembobine."
+},
+{
+"p": 2,
+"i": 28,
+"deb": 39.73,
+"fin": 44.28,
+"txt": "Vingt heures vingt."
+},
+{
+"p": 2,
+"i": 29,
+"deb": 44.28,
+"fin": 44.28,
+"txt": "Une transaction étrange arrive jusqu'à un portefeuille de Binance."
+},
+{
+"p": 2,
+"i": 30,
+"deb": 44.28,
+"fin": 45.95,
+"txt": "Son nom : Binance quatorze."
+},
+{
+"p": 2,
+"i": 31,
+"deb": 45.95,
+"fin": 48.29,
+"txt": "Un hot wallet."
+},
+{
+"p": 2,
+"i": 32,
+"deb": 48.29,
+"fin": 51.91,
+"txt": "Le coffre qui doit rester ouvert, connecté, pour que chaque client puisse retirer son argent à tout moment."
+},
+{
+"p": 2,
+"i": 33,
+"deb": 51.91,
+"fin": 56.55,
+"txt": "Problème pour le pirate : chaque ordre envoyé par ce portefeuille porte un numéro."
+},
+{
+"p": 2,
+"i": 34,
+"deb": 56.55,
+"fin": 56.55,
+"txt": "Et il en envoie sans arrêt."
+},
+{
+"p": 2,
+"i": 35,
+"deb": 56.55,
+"fin": 59.49,
+"txt": "Impossible de savoir quel numéro sera le bon."
+},
+{
+"p": 2,
+"i": 36,
+"deb": 59.49,
+"fin": 59.49,
+"txt": "Alors il n'en devine pas un."
+},
+{
+"p": 2,
+"i": 37,
+"deb": 59.49,
+"fin": 60.93,
+"txt": "Il en envoie cinquante."
+},
+{
+"p": 2,
+"i": 38,
+"deb": 60.93,
+"fin": 60.93,
+"txt": "Dans une seule transaction."
+},
+{
+"p": 2,
+"i": 39,
+"deb": 60.93,
+"fin": 64.09,
+"txt": "Quarante-neuf tombent dans le vide."
+},
+{
+"p": 2,
+"i": 40,
+"deb": 64.09,
+"fin": 65.73,
+"txt": "Une seule suffit…"
+},
+{
+"p": 2,
+"i": 41,
+"deb": 65.73,
+"fin": 65.73,
+"txt": "Vingt heures vingt-quatre."
+},
+{
+"p": 2,
+"i": 42,
+"deb": 65.73,
+"fin": 67.15,
+"txt": "Cent soixante-sept mille ETH."
+},
+{
+"p": 2,
+"i": 43,
+"deb": 67.15,
+"fin": 67.15,
+"txt": "Soixante-trois autres cryptos."
+},
+{
+"p": 2,
+"i": 44,
+"deb": 67.15,
+"fin": 71.5,
+"txt": "Plus d'un milliard six cents millions de dollars de Tether."
+},
+{
+"p": 2,
+"i": 45,
+"deb": 71.5,
+"fin": 72.7,
+"txt": "Une seule transaction."
+},
+{
+"p": 2,
+"i": 46,
+"deb": 72.7,
+"fin": 74.57,
+"txt": "Personne, chez Binance, ne l'a autorisée."
+},
+{
+"p": 2,
+"i": 47,
+"deb": 74.57,
+"fin": 76.2,
+"txt": "Puis dix blockchains se vident."
+},
+{
+"p": 2,
+"i": 48,
+"deb": 76.2,
+"fin": 76.2,
+"txt": "Bitcoin."
+},
+{
+"p": 2,
+"i": 49,
+"deb": 76.2,
+"fin": 76.2,
+"txt": "Tron."
+},
+{
+"p": 2,
+"i": 50,
+"deb": 76.2,
+"fin": 76.2,
+"txt": "Solana."
+},
+{
+"p": 2,
+"i": 51,
+"deb": 76.2,
+"fin": 78.79,
+"txt": "XRP."
+},
+{
+"p": 3,
+"i": 52,
+"deb": 78.79,
+"fin": 79.49,
+"txt": "Binance."
+},
+{
+"p": 3,
+"i": 53,
+"deb": 79.49,
+"fin": 83.02,
+"txt": "Environ cent quarante-quatre milliards de dollars d'actifs, selon DefiLlama."
+},
+{
+"p": 3,
+"i": 54,
+"deb": 83.02,
+"fin": 84.98,
+"txt": "Son fondateur, CZ, ne la dirige plus."
+},
+{
+"p": 3,
+"i": 55,
+"deb": 84.98,
+"fin": 84.98,
+"txt": "Mais il en reste l'actionnaire majoritaire."
+},
+{
+"p": 3,
+"i": 56,
+"deb": 84.98,
+"fin": 88.28,
+"txt": "Cette forteresse a déjà été touchée."
+},
+{
+"p": 3,
+"i": 57,
+"deb": 88.28,
+"fin": 90.3,
+"txt": "Mai deux mille dix-neuf : sept mille bitcoins disparaissent d'un hot wallet."
+},
+{
+"p": 3,
+"i": 58,
+"deb": 90.3,
+"fin": 93.67,
+"txt": "Quarante millions de dollars."
+},
+{
+"p": 3,
+"i": 59,
+"deb": 93.67,
+"fin": 93.67,
+"txt": "CZ envisage de faire reculer la blockchain Bitcoin."
+},
+{
+"p": 3,
+"i": 60,
+"deb": 93.67,
+"fin": 95.89,
+"txt": "Puis renonce."
+},
+{
+"p": 3,
+"i": 61,
+"deb": 95.89,
+"fin": 97.87,
+"txt": "Il avait pourtant créé un fonds de secours : le SAFU."
+},
+{
+"p": 3,
+"i": 62,
+"deb": 97.87,
+"fin": 100.05,
+"txt": "Et une phrase mal orthographiée, devenue légende : « Funds are SAFU."
+},
+{
+"p": 3,
+"i": 63,
+"deb": 100.05,
+"fin": 100.05,
+"txt": "»"
+},
+{
+"p": 3,
+"i": 64,
+"deb": 100.05,
+"fin": 104.63,
+"txt": "Sept ans plus tard : environ cent cinquante fois plus d'argent."
+},
+{
+"p": 4,
+"i": 65,
+"deb": 104.63,
+"fin": 106.7,
+"txt": "Vingt heures trente-deux : un chercheur on-chain lance l'alerte."
+},
+{
+"p": 4,
+"i": 66,
+"deb": 106.7,
+"fin": 109.79,
+"txt": "L'adresse du pirate a été financée par Tornado Cash."
+},
+{
+"p": 4,
+"i": 67,
+"deb": 109.79,
+"fin": 109.79,
+"txt": "Un service fait pour effacer les traces."
+},
+{
+"p": 4,
+"i": 68,
+"deb": 109.79,
+"fin": 115.9,
+"txt": "Vingt et une heures quinze : CZ écrit sur X : « Ça ressemble bien à un piratage de Binance."
+},
+{
+"p": 4,
+"i": 69,
+"deb": 115.9,
+"fin": 115.9,
+"txt": "»"
+},
+{
+"p": 4,
+"i": 70,
+"deb": 115.9,
+"fin": 115.9,
+"txt": "Binance, elle, hésite."
+},
+{
+"p": 4,
+"i": 71,
+"deb": 115.9,
+"fin": 118.03,
+"txt": "Son message officiel est modifié deux fois en treize minutes."
+},
+{
+"p": 4,
+"i": 72,
+"deb": 118.03,
+"fin": 120.98,
+"txt": "Dans l'ombre, des centaines d'employés se battent pour reprendre la main."
+},
+{
+"p": 4,
+"i": 73,
+"deb": 120.98,
+"fin": 124.64,
+"txt": "Vers deux heures du matin, heure de Paris, Binance reprend le contrôle de Binance quatorze."
+},
+{
+"p": 4,
+"i": 74,
+"deb": 124.64,
+"fin": 125.4,
+"txt": "Trop tard."
+},
+{
+"p": 5,
+"i": 75,
+"deb": 125.4,
+"fin": 127.69,
+"txt": "Alors, une course commence."
+},
+{
+"p": 5,
+"i": 76,
+"deb": 127.69,
+"fin": 127.69,
+"txt": "Pas de police."
+},
+{
+"p": 5,
+"i": 77,
+"deb": 127.69,
+"fin": 129.21,
+"txt": "Pas de commando."
+},
+{
+"p": 5,
+"i": 78,
+"deb": 129.21,
+"fin": 129.21,
+"txt": "Des émetteurs de stablecoins."
+},
+{
+"p": 5,
+"i": 79,
+"deb": 129.21,
+"fin": 134.18,
+"txt": "Dans l'heure, Tether gèle près d'un milliard de dollars d'USDT."
+},
+{
+"p": 5,
+"i": 80,
+"deb": 134.18,
+"fin": 134.18,
+"txt": "Puis plus d'un milliard et demi."
+},
+{
+"p": 5,
+"i": 81,
+"deb": 134.18,
+"fin": 137.63,
+"txt": "Circle bloque environ huit cent vingt-trois millions d'USDC."
+},
+{
+"p": 5,
+"i": 82,
+"deb": 137.63,
+"fin": 142.76,
+"txt": "Le pirate, lui, ne s'arrête pas : il dépose soixante millions d'USDT sur Aave pour emprunter quarante-quatre millions de dollars d'ETH."
+},
+{
+"p": 5,
+"i": 83,
+"deb": 142.76,
+"fin": 144.57,
+"txt": "Vers vingt-deux heures quinze, Binance coupe tout."
+},
+{
+"p": 5,
+"i": 84,
+"deb": 144.57,
+"fin": 144.57,
+"txt": "Dépôts."
+},
+{
+"p": 5,
+"i": 85,
+"deb": 144.57,
+"fin": 144.57,
+"txt": "Retraits."
+},
+{
+"p": 5,
+"i": 86,
+"deb": 144.57,
+"fin": 149.72,
+"txt": "Après minuit, la cofondatrice Yi He promet : Binance couvrira toutes les pertes."
+},
+{
+"p": 5,
+"i": 87,
+"deb": 149.72,
+"fin": 153.4,
+"txt": "Puis, vendredi, CZ écrit qu'une salariée enceinte a passé la nuit à travailler, avec des centaines d'autres."
+},
+{
+"p": 5,
+"i": 88,
+"deb": 153.4,
+"fin": 155.07,
+"txt": "Et : « Ça fait mal, mais on survivra."
+},
+{
+"p": 5,
+"i": 89,
+"deb": 155.07,
+"fin": 155.07,
+"txt": "»…"
+},
+{
+"p": 5,
+"i": 90,
+"deb": 155.07,
+"fin": 157.79,
+"txt": "Bilan : environ trois milliards gelés."
+},
+{
+"p": 5,
+"i": 91,
+"deb": 157.79,
+"fin": 157.79,
+"txt": "Il en manque…"
+},
+{
+"p": 5,
+"i": 92,
+"deb": 157.79,
+"fin": 159.0,
+"txt": "trois."
+},
+{
+"p": 6,
+"i": 93,
+"deb": 159.0,
+"fin": 162.43,
+"txt": "Pendant ce temps, les marchés paniquent."
+},
+{
+"p": 6,
+"i": 94,
+"deb": 162.43,
+"fin": 164.7,
+"txt": "Plus de six cents millions de dollars de paris à l'effet de levier sont liquidés en une heure."
+},
+{
+"p": 6,
+"i": 95,
+"deb": 164.7,
+"fin": 164.7,
+"txt": "Le bitcoin tombe à son plus bas depuis six semaines."
+},
+{
+"p": 6,
+"i": 96,
+"deb": 164.7,
+"fin": 170.97,
+"txt": "Un analyste de Standard Chartered prévient : la baisse peut continuer tant que le flou demeure."
+},
+{
+"p": 7,
+"i": 97,
+"deb": 170.97,
+"fin": 170.97,
+"txt": "Mais comment ?"
+},
+{
+"p": 7,
+"i": 98,
+"deb": 170.97,
+"fin": 173.77,
+"txt": "Binance parle d'un détail presque banal : l'ordinateur portable d'un ingénieur DevOps."
+},
+{
+"p": 7,
+"i": 99,
+"deb": 173.77,
+"fin": 177.36,
+"txt": "Compromis."
+},
+{
+"p": 7,
+"i": 100,
+"deb": 177.36,
+"fin": 177.36,
+"txt": "On ne sait ni son nom, ni comment."
+},
+{
+"p": 7,
+"i": 101,
+"deb": 177.36,
+"fin": 177.36,
+"txt": "Un e-mail ?"
+},
+{
+"p": 7,
+"i": 102,
+"deb": 177.36,
+"fin": 180.28,
+"txt": "Un fichier ?"
+},
+{
+"p": 7,
+"i": 103,
+"deb": 180.28,
+"fin": 180.28,
+"txt": "Une faille ?"
+},
+{
+"p": 7,
+"i": 104,
+"deb": 180.28,
+"fin": 180.28,
+"txt": "Personne ne l'a dit."
+},
+{
+"p": 7,
+"i": 105,
+"deb": 180.28,
+"fin": 184.18,
+"txt": "Cet ordinateur aurait ouvert l'accès à un conteneur de service."
+},
+{
+"p": 7,
+"i": 106,
+"deb": 184.18,
+"fin": 187.32,
+"txt": "Et de là, des retraits non autorisés ont été soumis."
+},
+{
+"p": 7,
+"i": 107,
+"deb": 187.32,
+"fin": 187.32,
+"txt": "Binance n'a trouvé aucune preuve de fuite de clé privée."
+},
+{
+"p": 7,
+"i": 108,
+"deb": 187.32,
+"fin": 190.39,
+"txt": "Alors qui a signé les cinquante autorisations ?"
+},
+{
+"p": 7,
+"i": 109,
+"deb": 190.39,
+"fin": 194.52,
+"txt": "Les ordres seraient passés par le propre circuit de Binance."
+},
+{
+"p": 7,
+"i": 110,
+"deb": 194.52,
+"fin": 194.52,
+"txt": "Comme s'ils étaient légitimes."
+},
+{
+"p": 7,
+"i": 111,
+"deb": 194.52,
+"fin": 195.9,
+"txt": "Maintenant, imagine."
+},
+{
+"p": 7,
+"i": 112,
+"deb": 195.9,
+"fin": 195.9,
+"txt": "Un matin ordinaire."
+},
+{
+"p": 7,
+"i": 113,
+"deb": 195.9,
+"fin": 195.9,
+"txt": "Un café."
+},
+{
+"p": 7,
+"i": 114,
+"deb": 195.9,
+"fin": 199.44,
+"txt": "Tu ouvres ton ordinateur, comme mille fois avant."
+},
+{
+"p": 7,
+"i": 115,
+"deb": 199.44,
+"fin": 199.44,
+"txt": "Et quelque part, quelqu'un attendait ce geste."
+},
+{
+"p": 8,
+"i": 116,
+"deb": 199.44,
+"fin": 205.12,
+"txt": "Février deux mille vingt-cinq."
+},
+{
+"p": 8,
+"i": 117,
+"deb": 205.12,
+"fin": 205.12,
+"txt": "Bybit."
+},
+{
+"p": 8,
+"i": 118,
+"deb": 205.12,
+"fin": 205.12,
+"txt": "Un milliard et demi de dollars."
+},
+{
+"p": 8,
+"i": 119,
+"deb": 205.12,
+"fin": 206.67,
+"txt": "Là aussi, tout commence par l'ordinateur d'un développeur."
+},
+{
+"p": 8,
+"i": 120,
+"deb": 206.67,
+"fin": 210.68,
+"txt": "Un faux projet, présenté comme un simulateur d'investissement, selon l'enquête de Safe."
+},
+{
+"p": 8,
+"i": 121,
+"deb": 210.68,
+"fin": 214.23,
+"txt": "À l'époque, CZ demandait : comment ont-ils piraté cette machine ?"
+},
+{
+"p": 8,
+"i": 122,
+"deb": 214.23,
+"fin": 214.23,
+"txt": "Un virus ?"
+},
+{
+"p": 8,
+"i": 123,
+"deb": 214.23,
+"fin": 214.75,
+"txt": "De l'ingénierie sociale ?"
+},
+{
+"p": 8,
+"i": 124,
+"deb": 214.75,
+"fin": 219.2,
+"txt": "Aujourd'hui, c'est à Binance de répondre."
+},
+{
+"p": 8,
+"i": 125,
+"deb": 219.2,
+"fin": 221.48,
+"txt": "Richard Teng nuance déjà : ce n'est pas une attaque « en un clic »."
+},
+{
+"p": 8,
+"i": 126,
+"deb": 221.48,
+"fin": 221.48,
+"txt": "D'autres points de brèche ont été découverts."
+},
+{
+"p": 9,
+"i": 127,
+"deb": 221.48,
+"fin": 225.99,
+"txt": "Reviens à la fenêtre allumée."
+},
+{
+"p": 9,
+"i": 128,
+"deb": 225.99,
+"fin": 225.99,
+"txt": "Qui était derrière l'écran ?"
+},
+{
+"p": 9,
+"i": 129,
+"deb": 225.99,
+"fin": 228.38,
+"txt": "TRM Labs désigne TraderTraitor, l'unité d'élite des hackers nord-coréens, avec un haut niveau de confiance."
+},
+{
+"p": 9,
+"i": 130,
+"deb": 228.38,
+"fin": 231.95,
+"txt": "Le même groupe que le FBI avait désigné pour Bybit."
+},
+{
+"p": 9,
+"i": 131,
+"deb": 231.95,
+"fin": 235.62,
+"txt": "ZachXBT retrouve, à la même adresse, l'argent de Binance et celui d'un piratage de Bitget en septembre."
+},
+{
+"p": 9,
+"i": 132,
+"deb": 235.62,
+"fin": 235.62,
+"txt": "Binance, elle, n'a rien confirmé."
+},
+{
+"p": 9,
+"i": 133,
+"deb": 235.62,
+"fin": 241.42,
+"txt": "En deux mille vingt-deux, les renseignements sud-coréens estimaient à un virgule un milliard ce que ces hackers avaient volé en cinq ans."
+},
+{
+"p": 9,
+"i": 134,
+"deb": 241.42,
+"fin": 245.24,
+"txt": "Cette nuit, en vingt minutes : près de six fois plus."
+},
+{
+"p": 10,
+"i": 135,
+"deb": 245.24,
+"fin": 248.01,
+"txt": "Binance a mis de côté plus de six milliards pour rembourser."
+},
+{
+"p": 10,
+"i": 136,
+"deb": 248.01,
+"fin": 249.64,
+"txt": "Les retraits doivent reprendre sous quarante-huit heures."
+},
+{
+"p": 10,
+"i": 137,
+"deb": 249.64,
+"fin": 249.64,
+"txt": "Le rapport complet est promis."
+},
+{
+"p": 10,
+"i": 138,
+"deb": 249.64,
+"fin": 253.5,
+"txt": "Mais regarde ce que ça révèle."
+},
+{
+"p": 10,
+"i": 139,
+"deb": 253.5,
+"fin": 253.5,
+"txt": "Des milliards de dollars."
+},
+{
+"p": 10,
+"i": 140,
+"deb": 253.5,
+"fin": 255.44,
+"txt": "Des années de sécurité."
+},
+{
+"p": 10,
+"i": 141,
+"deb": 255.44,
+"fin": 256.48,
+"txt": "Une forteresse mondiale."
+},
+{
+"p": 10,
+"i": 142,
+"deb": 256.48,
+"fin": 257.84,
+"txt": "Et, peut-être, un seul ordinateur portable…"
+},
+{
+"p": 10,
+"i": 143,
+"deb": 257.84,
+"fin": 259.54,
+"txt": "Quelque part, une rue vide."
+},
+{
+"p": 10,
+"i": 144,
+"deb": 259.54,
+"fin": 260.83,
+"txt": "Une voiture passe, lentement."
+},
+{
+"p": 10,
+"i": 145,
+"deb": 260.83,
+"fin": 263.21,
+"txt": "Une fenêtre est encore allumée."
+},
+{
+"p": 10,
+"i": 146,
+"deb": 263.21,
+"fin": 263.21,
+"txt": "Et toi…"
+},
+{
+"p": 10,
+"i": 147,
+"deb": 263.21,
+"fin": 265.4,
+"txt": "sais-tu qui tient la porte de ton argent ?"
+}
+]
