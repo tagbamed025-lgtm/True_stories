@@ -18,3 +18,8 @@ videos/*/partie*/_*.png
 videos/*/partie*/tests/
 videos/*/livrables/reels/*.mp4
 videos/*/livrables/_*
+videos/*/rendu/_en/
+videos/*/rendu/*.mp4
+videos/*/partie*/final*/
+videos/*/partie*/brouillon*/
+videos/*/montage/elements/_*
