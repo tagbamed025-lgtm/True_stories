@@ -3,11 +3,14 @@
      Format 1920×804 (2,39:1). Style Silk Road : fond quasi noir, texte fin centré, petites légendes espacées, sérif italique pour les mots forts, rouge réservé aux ruptures. -->
 <html lang="fr"><head><meta charset="utf-8">
 <style>
-  html,body{margin:0;width:1920px;height:804px;background:#050607;overflow:hidden;font-family:"Segoe UI","Inter",system-ui,sans-serif;color:#e8e8e8}
+  @font-face{font-family:"TRU Titre";src:local("Georgia Bold Italic"),local("Georgia-BoldItalic"),url(polices/GelasioBoldItalic.ttf);font-weight:700;font-style:italic}
+  @font-face{font-family:"TRU Texte";src:local("Segoe UI Light"),local("SegoeUI-Light"),url(polices/OpenSansLight.ttf);font-weight:300}
+  @font-face{font-family:"TRU Texte";src:local("Segoe UI"),local("SegoeUI"),url(polices/OpenSans.ttf);font-weight:400}
+  html,body{margin:0;width:1920px;height:804px;background:#050607;overflow:hidden;font-family:"TRU Texte",sans-serif;font-weight:300;color:#e8e8e8}
   .sc{position:absolute;inset:0;display:none}
   .petit{position:absolute;left:0;right:0;text-align:center;font-weight:300;letter-spacing:.35em;font-size:22px;color:#8a8f96;text-transform:uppercase}
   .grand{position:absolute;left:0;right:0;text-align:center;font-size:96px;font-weight:200;font-variant-numeric:tabular-nums}
-  .serif{font-family:Georgia,"Times New Roman",serif;font-style:italic}
+  .serif{font-family:"TRU Titre",Georgia,serif;font-style:italic;font-weight:700}
   .mono{font-family:"JetBrains Mono","DejaVu Sans Mono",Consolas,monospace}
   .rouge{color:#ff2d2d}.bleu{color:#7fa3ff}.vert{color:#3fdc7a}.gris{color:#5d636b}
   .ligne{position:absolute;background:#2a2f36}
@@ -25,6 +28,13 @@
 </style></head><body>
 <div id="vignette"></div><div id="grain"></div>
 
+<!-- 0a · titre (après le cold open) -->
+<div class="sc" id="titre"><div class="petit" style="top:300px;font-size:15px;letter-spacing:.5em">tru stories</div>
+  <div class="grand serif" id="ti-t" style="top:335px;font-size:92px">20 minutes</div>
+  <div class="grand serif" id="ti-s" style="top:470px;font-size:30px;font-weight:400;color:#cfd3d8">le jour où Binance a été vidé</div></div>
+<!-- 0b · date -->
+<div class="sc" id="date"><div class="grand" id="da-t" style="top:350px;font-size:58px;font-weight:300;color:#d8dbe0">29 octobre 2026</div>
+  <div class="petit" id="da-s" style="top:450px">20:05 utc</div></div>
 <!-- 1 · horodatage du cold open -->
 <div class="sc" id="horodatage"><div class="grand mono" id="h-txt" style="top:330px;font-size:72px;letter-spacing:.06em"></div>
   <div class="petit" id="h-sous" style="top:450px">quelque part dans le monde</div></div>
@@ -34,7 +44,7 @@
 
 <!-- 6 · écran du pirate : le nom BINANCE apparaît -->
 <div class="sc" id="ecran"><div class="mono" id="e-code" style="position:absolute;left:120px;top:80px;right:120px;font-size:22px;line-height:1.55;color:#2f8a52;white-space:pre"></div>
-  <div class="grand" id="e-nom" style="top:330px;font-size:120px;letter-spacing:.3em;font-weight:300;color:#fff">BINANCE</div></div>
+  <div class="grand" id="e-nom" style="top:320px;font-size:130px;letter-spacing:.3em;font-weight:400;color:#fff">BINANCE</div></div>
 
 <!-- 8 · montant + titre -->
 <div class="sc" id="montant"><div class="grand" id="m-val" style="top:250px;font-size:150px"></div>
@@ -166,6 +176,8 @@ let rnd=s=>()=>((s=Math.imul(s^s>>>15,1|s)+0x6D2B79F5)>>>0)/4294967296;
 // code qui défile sur l'écran du pirate
 const LIGNES=["import { signer, relay } from './ops'","const target = hotwallets.find(w => w.label === 'BINANCE_14')","const window = range(18914775, 18914824)","const auths = window.map(n => signer.authorize(target, n))","await relay.fund(3, '0.1 ETH')   // tornado","const tx = buildType4({ to: target, authorizationList: auths })","await relay.broadcast(tx)","// 10 chains queued : btc eth trx sol xrp bnb arb avax op base","watch(target).on('delegated', sweep)","function sweep(){ return target.call('sweep()') }"];
 const SC={
+ titre(t){fade($('ti-t'),P(t,0,.15)*(1-P(t,2.6,3.2)));fade($('ti-s'),P(t,.5,1.1)*(1-P(t,2.6,3.2)));fade(document.querySelector('#titre .petit'),P(t,.2,.8)*(1-P(t,2.6,3.2)))},
+ date(t){fade($('da-t'),P(t,0,.8));fade($('da-s'),P(t,.6,1.4))},
  horodatage(t){const s="29.10.2026 — 20:05 UTC";$('h-txt').textContent=s.slice(0,Math.floor(cl(t/1.6)*s.length));fade($('h-sous'),P(t,1.8,2.6))},
  avertissement(t){fade($('avertissement').firstElementChild,P(t,0,.5)*(1-P(t,2.5,3)))},
  ecran(t){const n=Math.floor(t*6);$('e-code').textContent=LIGNES.slice(0,Math.min(LIGNES.length,n)).join('\n');fade($('e-code'),1-P(t,2.6,3.4)*.7);fade($('e-nom'),P(t,2.6,3.6))},
