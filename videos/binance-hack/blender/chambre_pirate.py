@@ -50,8 +50,21 @@ box('sommier',(1.75,-1.85,.18),(1.5,2.1,.36),BOIS); box('matelas',(1.75,-1.85,.4
 box('tete_lit',(2.52,-1.85,.75),(.06,1.5,1.1),BOIS)
 box('couverture',(1.6,-1.85,.55),(1.15,2.02,.06),COUV,(0,math.radians(1.5),0))
 box('oreiller1',(2.25,-2.3,.6),(.35,.55,.12),OREILLER); box('oreiller2',(2.25,-1.4,.6),(.35,.55,.12),OREILLER)
-box('table_nuit',(2.3,-.6,.27),(.45,.4,.54),BOIS); cyl('lampe_chevet',(2.3,-.6,.65),.1,.22,mat('abat',(.8,.7,.5),.8,(1,.65,.35),3),16)
-bpy.ops.object.light_add(type='POINT',location=(2.3,-.6,.85)); lc=bpy.context.object; lc.data.energy=25; lc.data.color=(1,.6,.3); lc.data.shadow_soft_size=.3
+OBJ='assets3d/binance/binance_objets.blend'
+with bpy.data.libraries.load(OBJ) as (A,B): B.collections=['Night Stand Modern','Duck Silicone Night Light']
+def poser(col,pos,rotz,haut=None):
+    sc.collection.children.link(col); objs=list(col.all_objects); bpy.context.view_layer.update()
+    pts=[o.matrix_world@Vector(c) for o in objs if o.type=='MESH' and not o.hide_render for c in o.bound_box]
+    mi=Vector((min(p.x for p in pts),min(p.y for p in pts),min(p.z for p in pts))); ma=Vector((max(p.x for p in pts),max(p.y for p in pts),max(p.z for p in pts)))
+    pv=bpy.data.objects.new('pv_'+col.name,None); sc.collection.objects.link(pv)
+    for o in objs:
+        if o.parent is None: o.parent=pv; o.location-=Vector(((mi.x+ma.x)/2,(mi.y+ma.y)/2,mi.z))
+    if haut: k=haut/(ma.z-mi.z); pv.scale=(k,k,k)
+    pv.location=pos; pv.rotation_euler.z=math.radians(rotz); return ma.z-mi.z
+h=poser(B.collections[0],(2.25,-.6,0),-90,.55)
+poser(B.collections[1],(2.25,-.6,.55),200,.16)
+cyl('lampe_chevet',(2.25,-.45,.66),.0,.0,mat('x',(0,0,0)),3)
+bpy.ops.object.light_add(type='POINT',location=(2.25,-.6,.78)); lc=bpy.context.object; lc.data.energy=12; lc.data.color=(1,.6,.3); lc.data.shadow_soft_size=.3
 box('tapis_sol',(.6,-1.2,.005),(2.2,1.6,.01),mat('tapis',(.22,.08,.06),.95))
 box('poster1',(1.2,-3.0+.06,1.6),(.6,.02,.85),mat('poster1',(.05,.08,.12),.6,(.15,.3,.6),.4))
 box('poster2',(2.0,-3.0+.06,1.7),(.45,.02,.6),mat('poster2',(.12,.05,.05),.6,(.5,.1,.08),.3))
@@ -120,5 +133,5 @@ def cam(n,loc,tgt,lens):
     c.data.dof.use_dof=True; c.data.dof.focus_distance=d.length; c.data.dof.aperture_fstop=2.8; return c
 sc.render.engine='CYCLES'; sc.cycles.device='CPU'; sc.cycles.samples=32; sc.cycles.use_denoising=True
 sc.render.resolution_x=1920; sc.render.resolution_y=804; sc.render.resolution_percentage=50
-for n,loc,tgt,lens in [('large',(-1.9,-2.5,1.7),Vector((.4,.6,.9)),24),('contrechamp',(-.75,1.55,1.25),Vector((.4,-.9,.95)),30),('dos',(.55,-.35,1.45),Vector((0,1.7,1.05)),40),('clavier',(.35,.95,1.05),Vector((0,1.32,.78)),45)]:
-    sc.camera=cam(n,loc,tgt,lens); sc.render.filepath=f'videos/binance-hack/blender/chambre_v7_{n}.png'; bpy.ops.render.render(write_still=True); print('RENDU',n)
+for n,loc,tgt,lens in [('large',(-1.9,-2.5,1.7),Vector((.4,.6,.9)),24),('contrechamp',(-.75,1.55,1.25),Vector((.4,-.9,.95)),30),('dos',(.55,-.35,1.45),Vector((0,1.7,1.05)),40),('chevet',(1.0,-1.2,.9),Vector((2.25,-.6,.55)),40)]:
+    sc.camera=cam(n,loc,tgt,lens); sc.render.filepath=f'videos/binance-hack/blender/tests/chambre_v8_{n}.png'; bpy.ops.render.render(write_still=True); print('RENDU',n)

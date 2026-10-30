@@ -76,6 +76,13 @@ Les versions lourdes `Ch21/22/23/31_nonPBR.fbx` (50 Mo) ne sont pas versionnées
 | kenney_car-kit.zip | Kit Kenney : voitures, camions, police, taxi (low poly) |
 | kenney_watercraft-pack.zip | Kit Kenney : bateaux |
 
+## Objets réalistes (BlenderKit, choisis par Mo) → `assets3d/binance/`
+| Fichier | Contenu |
+|---|---|
+| binance_objets.blend (26 Mo, textures réduites à 512 px) | Collections : **Volvo S90** (berline noire), **Moon** (lune texturée), **Night Stand Modern**, **Night stand ESMEE**, **Duck Silicone Night Light** |
+| planche_assets_binance.png | Photo de tous les objets du fichier complet de Mo |
+Fichier complet (135 Mo, PC de Mo) : `Downloads\tru stories\Binance pirate other asset\Sans titre.blend` — contient aussi : bus Neoplan, Generic Sport Sedan (rouge), Toyota GR GT, 2× Volvo P1800, Vespa, scooter, moto, homme barbu réaliste, immeuble low poly, pâté d'immeubles. Trop lourd pour être ouvert en entier dans le cloud : importer **par collection** (`bpy.data.libraries.load(..., B.collections=[nom])`).
+
 ## HDRI
 Aucun pour l'instant (Poly Haven si besoin).
 

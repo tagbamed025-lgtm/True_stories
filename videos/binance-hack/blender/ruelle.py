@@ -1,4 +1,5 @@
-import bpy, math
+import bpy, math, sys
+ROT_SENS=float(sys.argv[-1]) if sys.argv[-1].replace('.','').replace('-','').isdigit() else 0.0
 from mathutils import Vector as V
 bpy.ops.wm.open_mainfile(filepath='assets3d/decors/ruelle.blend')
 sc=bpy.context.scene
@@ -63,25 +64,44 @@ for y in (-14,-20,4):                             # climatiseurs
 LIGNE=bpy.data.materials.new('ligne'); _,_,b=nodes(LIGNE); b.inputs['Base Color'].default_value=(.6,.58,.5,1); b.inputs['Roughness'].default_value=.6
 for y in range(-34,35,6): cube((0,y,.003),(.08,1.4,.003),LIGNE)
 # 4. voiture : tout le modèle (carrosserie + roues) bouge ensemble, plus grande, matériaux d'origine
-avant=set(bpy.data.objects)
-bpy.ops.import_scene.gltf(filepath='assets3d/vehicules/car_quaternius.glb')
-neufs=[o for o in bpy.data.objects if o not in avant]
+OBJ='assets3d/binance/binance_objets.blend'
+with bpy.data.libraries.load(OBJ) as (A,B): B.collections=['Volvo S90','Moon']
+for c in B.collections: sc.collection.children.link(c)
+volvo=bpy.data.collections['Volvo S90']; neufs=list(volvo.all_objects)
 pivot=bpy.data.objects.new('voiture',None); sc.collection.objects.link(pivot)
 for o in neufs:
     if o.parent is None: o.parent=pivot
 bpy.context.view_layer.update()
-pts=[o.matrix_world@V(c) for o in neufs if o.type=='MESH' for c in o.bound_box]
+pts=[o.matrix_world@V(c) for o in neufs if o.type=='MESH' and not o.hide_render for c in o.bound_box]
 lx=max(p.x for p in pts)-min(p.x for p in pts); ly=max(p.y for p in pts)-min(p.y for p in pts); zmin=min(p.z for p in pts)
-k=4.8/max(lx,ly); pivot.scale=(k,k,k)
-pivot.rotation_euler.z = (math.radians(90) if lx>ly else 0)+math.pi
-pivot.location=(2.3,-30,-zmin*k)
-pivot.keyframe_insert('location',frame=1); pivot.location.y=6; pivot.keyframe_insert('location',frame=240)
-for fc in pivot.animation_data.action.fcurves if pivot.animation_data and hasattr(pivot.animation_data.action,'fcurves') else []:
-    for kp in fc.keyframe_points: kp.interpolation='LINEAR'
-for x in (-.55,.55):
-    bpy.ops.object.light_add(type='SPOT'); ph=bpy.context.object; ph.data.energy=1800; ph.data.color=(1,.93,.7); ph.data.spot_size=math.radians(50); ph.data.spot_blend=.5
-    ph.parent=pivot; ph.location=(x/k,-2.5/k,.75/k); ph.rotation_euler=(math.radians(80),0,0)
-print('VOITURE',round(lx,2),round(ly,2),'k',round(k,2))
+cx=(max(p.x for p in pts)+min(p.x for p in pts))/2; cy=(max(p.y for p in pts)+min(p.y for p in pts))/2
+for o in neufs:
+    if o.parent==pivot: o.location-=V((cx,cy,zmin))
+k=1.0
+pivot.rotation_euler.z=(math.radians(90) if lx>ly else 0)+ROT_SENS
+pivot.location=(2.3,-30,0)
+# animation : pivot.location.y de -30 (image 1) à 6 (image 240) — posée par plan pour les tests
+for x in (-.6,.6):
+    bpy.ops.object.light_add(type='SPOT'); ph=bpy.context.object; ph.data.energy=1800; ph.data.color=(1,.93,.75); ph.data.spot_size=math.radians(50); ph.data.spot_blend=.5
+    ph.parent=pivot; ph.location=(x,2.4,.7); ph.rotation_euler=(math.radians(-80),0,0)
+# la lune, haute et lointaine, au-dessus de la rue
+moon=bpy.data.collections['Moon'].all_objects[0]
+moon.location=(-30,-90,45); moon.scale=(9,9,9)
+bpy.ops.object.light_add(type='AREA',location=(-20,-70,40)); _l=bpy.context.object; _l.data.energy=60000; _l.data.size=6; _l.rotation_euler=(0,0,0); _l.rotation_euler=(V((-30,-90,45))-V((-20,-70,40))).to_track_quat('-Z','Y').to_euler()
+for m in moon.data.materials:
+    if m and m.use_nodes:
+        b=m.node_tree.nodes.get('Principled BSDF')
+        if b: b.inputs['Emission Strength'].default_value=0.0; b.inputs['Emission Color'].default_value=(.85,.88,1,1)
+# ciel : dégradé nuit + lueur de ville à l'horizon + étoiles
+w=sc.world; w.use_nodes=True; nt=w.node_tree; nt.nodes.clear()
+out=nt.nodes.new('ShaderNodeOutputWorld'); bg=nt.nodes.new('ShaderNodeBackground'); tc=nt.nodes.new('ShaderNodeTexCoord'); sep=nt.nodes.new('ShaderNodeSeparateXYZ')
+ramp=nt.nodes.new('ShaderNodeValToRGB'); ramp.color_ramp.elements[0].position=0.0; ramp.color_ramp.elements[0].color=(.09,.07,.09,1); ramp.color_ramp.elements[1].position=.35; ramp.color_ramp.elements[1].color=(.006,.009,.02,1)
+vor=nt.nodes.new('ShaderNodeTexVoronoi'); vor.inputs['Scale'].default_value=420; mr=nt.nodes.new('ShaderNodeMapRange'); mr.inputs['From Min'].default_value=0.0; mr.inputs['From Max'].default_value=0.018; mr.inputs['To Min'].default_value=1.2; mr.inputs['To Max'].default_value=0
+add=nt.nodes.new('ShaderNodeMix'); add.data_type='RGBA'; add.blend_type='ADD'; add.inputs['Factor'].default_value=1
+nt.links.new(tc.outputs['Generated'],sep.inputs[0]); nt.links.new(sep.outputs['Z'],ramp.inputs[0])
+nt.links.new(tc.outputs['Generated'],vor.inputs[0]); nt.links.new(vor.outputs['Distance'],mr.inputs[0])
+nt.links.new(ramp.outputs[0],add.inputs[6]); nt.links.new(mr.outputs[0],add.inputs[7]); nt.links.new(add.outputs[2],bg.inputs[0]); nt.links.new(bg.outputs[0],out.inputs[0]); bg.inputs[1].default_value=1
+print('VOITURE',round(lx,2),round(ly,2))
 # 5. rendu
 sc.render.engine='CYCLES'; sc.cycles.device='CPU'; sc.cycles.samples=32; sc.cycles.use_denoising=True
 sc.render.resolution_x=1920; sc.render.resolution_y=804; sc.render.resolution_percentage=50
@@ -90,6 +110,6 @@ sc.view_settings.view_transform='AgX'; sc.view_settings.look='AgX - Medium High 
 cam=bpy.data.objects['Camera']
 def vise(loc,tgt,lens):
     cam.location=loc; cam.rotation_mode='XYZ'; cam.rotation_euler=(V(tgt)-V(loc)).to_track_quat('-Z','Y').to_euler(); cam.data.lens=lens
-for nom,f,loc,tgt,lens in [('voiture_passe',95,(6.2,-22.5,1.0),(2.3,-15.5,0.8),30),('montee_fenetre',140,(3.0,-10.5,1.5),(-6.9,-10.0,8.4),24)]:
-    vise(loc,tgt,lens); sc.frame_set(f); sc.render.filepath=f'videos/binance-hack/blender/v4_{nom}.png'; bpy.ops.render.render(write_still=True); print('RENDU',nom,flush=True)
-bpy.ops.wm.save_as_mainfile(filepath='videos/binance-hack/blender/ruelle_binance.blend')
+for nom,f,loc,tgt,lens in [('rue_large',150,(5.6,-3,1.5),(-2,-16,1.8),26),('ciel_lune',110,(3,-6,1.6),(-12,-40,10),24),('voiture_passe',110,(6.8,-18.5,1.1),(2.3,-12.5,0.7),30),('montee_fenetre',140,(3.0,-10.5,1.5),(-6.9,-10.0,8.4),24)]:
+    vise(loc,tgt,lens); sc.frame_set(f); pivot.animation_data_clear() if False else None; pivot.location=(2.3,{'rue_large':-9.0,'ciel_lune':-22.0,'voiture_passe':-13.0,'montee_fenetre':-60}[nom],0); sc.render.filepath=f'videos/binance-hack/blender/tests/v5_{nom}.png'; bpy.ops.render.render(write_still=True); print('RENDU',nom,flush=True)
+
