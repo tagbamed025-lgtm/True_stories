@@ -4,6 +4,7 @@
 import os, subprocess, shutil
 from playwright.sync_api import sync_playwright
 ANIM = '/home/claude/anim'; CODE = '/home/claude/true_stories/videos/binance-hack/code/plans.html'
+HACK = '/home/claude/true_stories/videos/binance-hack/code/ecran_hacker.html'
 VOIX = '/home/claude/voix/vo_complete.mp3'; MUS = ANIM + '/musique.wav'
 W, H, FPS = 1280, 536, 24; TMP = ANIM + '/seg'; os.makedirs(TMP, exist_ok=True)
 def ff(*a): subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', *a], check=True)
@@ -18,20 +19,20 @@ TL = [
  (3.5, 5.5, '3d', ('B_passe', 0, .45, False)),
  (5.5, 8.0, '3d', ('C_montee', 0, 1, False)),
  (8.0, 10.5, '3d', ('D_dos', 0, 1, False)),
- (10.5, 12.0, 'code', ('ecran', 1.6, 3.4)),
+ (10.5, 12.0, 'hack', (1.5, 3.6, (0, 138, 1920, 804), (0, 138, 1920, 804))),
  (12.0, 13.0, '3d', ('F_entree', 0, 1, False)),
  (13.0, 16.2, 'code', ('titre', 0, 3.2)),
  (16.2, 22.4, 'code', ('date', 0, 6.2)),
- (22.4, 27.83, '3d', ('A_entree', 0, 1, False)),
- (27.83, 33.22, '3d', ('B_passe', 0, .45, False)),
+ (22.4, 27.83, '3d', ('I_dessus', 0, .5, False)),
+ (27.83, 33.22, '3d', ('I_dessus', .5, 1, False)),
  (33.22, 37.44, '3d', ('C_montee', 0, 1, False)),
  (37.44, 40.57, '3d', ('G_large', 0, .5, False)),
  (40.57, 43.9, '3d', ('G_large', 0, 1, True)),
  (43.9, 46.88, '3d', ('G_large', .5, 1, False)),
- (46.88, 49.4, 'code', ('ecran', 0, 2.4)),
+ (46.88, 49.4, 'hack', (0, 2.6, (0, 138, 1920, 804), (300, 160, 1500, 628))),
  (49.4, 54.6, '3d', ('D_dos', 0, 1, False)),
  (54.6, 57.13, '3d', ('F_entree', 0, .5, False)),
- (57.13, 63.37, 'code', ('ecran', 0, 4.2)),
+ (57.13, 63.37, 'hack', (2.4, 8.8, (0, 138, 1920, 804), (10, 46, 640, 268))),
  (63.37, 66.3, '3d', ('D_dos', .3, 1, True)),
  (66.3, 67.5, 'noir', ()),
  (67.5, 69.0, '3d', ('F_entree', .3, 1, False)),
@@ -56,6 +57,18 @@ def seg_3d(i, d, plan, u0, u1, envers):
     ff('-framerate', '8', '-i', f'{lst}/%04d.png', '-vf', vf, '-frames:v', str(round(d * FPS)), '-r', str(FPS), '-c:v', 'libx264', '-crf', '17', out)
     return out
 
+def seg_hack(i, d, pg, t0, t1, c0, c1):
+    rep = f'{TMP}/{i:02d}_hack'; shutil.rmtree(rep, ignore_errors=True); os.makedirs(rep)
+    n = max(1, round(d * FPS)); pg.set_viewport_size({'width': 1920, 'height': 1080})
+    for k in range(n):
+        u = k / max(1, n - 1); e = u * u * (3 - 2 * u); t = t0 + (t1 - t0) * u
+        x, y, w, h = [a + (b - a) * e for a, b in zip(c0, c1)]
+        pg.goto(f'file://{HACK}?t={t:.3f}'); pg.wait_for_function('window.FRAME_PRET===true')
+        pg.screenshot(path=f'{rep}/{k:04d}.jpg', type='jpeg', quality=92, clip={'x': x, 'y': y, 'width': w, 'height': h})
+    pg.set_viewport_size({'width': 1920, 'height': 804})
+    out = f'{TMP}/{i:02d}.mp4'
+    ff('-framerate', str(FPS), '-i', f'{rep}/%04d.jpg', '-vf', f'scale={W}:{H}:flags=lanczos,format=yuv420p', '-c:v', 'libx264', '-crf', '17', out); return out
+
 def seg_code(i, d, pg, scene, t0, t1):
     rep = f'{TMP}/{i:02d}_code'; shutil.rmtree(rep, ignore_errors=True); os.makedirs(rep)
     n = max(1, round(d * FPS))
@@ -73,6 +86,7 @@ with sync_playwright() as p:
         d = (round(b * FPS) - round(a * FPS)) / FPS
         if typ == 'noir': morceaux.append(seg_noir(i, d))
         elif typ == '3d': morceaux.append(seg_3d(i, d, *par))
+        elif typ == 'hack': morceaux.append(seg_hack(i, d, pg, *par))
         else: morceaux.append(seg_code(i, d, pg, *par))
         print('SEG', i, typ, par[0] if par else '', round(d, 2), flush=True)
     br.close()
@@ -89,5 +103,5 @@ ff('-i', f'{TMP}/image.mp4', '-i', f'{TMP}/voix.wav', '-i', MUS, '-filter_comple
    "[1]asplit[va][vb];[2]volume=0.55[m];[m][va]sidechaincompress=threshold=0.03:ratio=4:attack=20:release=400[md];[vb][md]amix=inputs=2:normalize=0,alimiter=limit=0.95[a];"
    "[0]noise=alls=2:allf=t,vignette=PI/6[v]",
    '-map', '[v]', '-map', '[a]', '-c:v', 'libx264', '-crf', '19', '-preset', 'medium', '-c:a', 'aac', '-b:a', '192k', '-t', '85',
-   '/home/claude/anim/binance_ouverture_v2.mp4')
+   '/home/claude/anim/binance_ouverture_v3.mp4')
 print('FINI')

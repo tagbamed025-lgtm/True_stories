@@ -1,0 +1,94 @@
+<!doctype html>
+<!-- TRU Stories · Binance · écran du pirate (interface illustrative, aucune vraie capture).
+     Sert (1) de plan plein écran capturé image par image et (2) de texture du moniteur 3D.
+     Usage : ecran_hacker.html?t=<secondes>  (window.renderAt(t)) — sans paramètre : lecture en boucle.
+     Chronologie : 0–2,5 s préparation · 2,5–5 s les 50 autorisations · ~5 s « 1/50 MATCH » · 5–8 s la vidéange démarre · 8 s+ « BINANCE 14 » vidé. -->
+<html lang="fr"><head><meta charset="utf-8">
+<style>
+  @font-face{font-family:"Mono";src:local("Consolas"),local("DejaVu Sans Mono")}
+  @font-face{font-family:"TRU Texte";src:local("Segoe UI"),url(polices/OpenSans.ttf)}
+  html,body{margin:0;width:1920px;height:1080px;background:#06090e;overflow:hidden;color:#cdd6e4;font:14px/1.45 "Mono",monospace}
+  .bar{position:absolute;left:0;right:0;top:0;height:36px;background:#0b111a;border-bottom:1px solid #18222f;display:flex;align-items:center;gap:18px;padding:0 16px;font-size:13px;color:#7d8aa0}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block;margin-right:6px}
+  .pane{position:absolute;border:1px solid #17212d;background:#080d14;border-radius:6px;overflow:hidden}
+  .ph{height:28px;background:#0c131d;border-bottom:1px solid #17212d;display:flex;align-items:center;padding:0 10px;gap:10px;font-size:12px;color:#8b97ab;letter-spacing:.06em;text-transform:uppercase}
+  .g{color:#3fdc7a}.r{color:#ff3b30}.y{color:#f0b90b}.b{color:#6fa8ff}.d{color:#4a5568}.w{color:#eef3fb}
+  pre{margin:0;padding:10px 12px;white-space:pre;font:inherit}
+  .bn{font-family:"TRU Texte",sans-serif}
+  .kpi{font:300 46px/1 "TRU Texte",sans-serif;color:#eef3fb;font-variant-numeric:tabular-nums}
+  .grid{display:grid;grid-template-columns:repeat(10,1fr);gap:5px;padding:10px}
+  .cell{height:30px;border:1px solid #1d2a38;border-radius:3px;font-size:10px;display:flex;align-items:center;justify-content:center;color:#3c4a5c}
+  .chain{display:flex;align-items:center;gap:10px;padding:3px 12px;font-size:13px}
+  .chain .bar2{flex:1;height:8px;background:#121a25;border-radius:4px;overflow:hidden}
+  .chain .bar2 i{display:block;height:100%;background:#ff3b30}
+  #alerte{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border:2px solid #ff3b30;background:rgba(40,4,4,.92);padding:22px 46px;font:600 40px "Mono",monospace;color:#ff3b30;letter-spacing:.1em;opacity:0;box-shadow:0 0 60px rgba(255,59,48,.35)}
+  .scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 3px)}
+</style></head><body>
+<div class="bar"><span><i class="dot" style="background:#ff5f56"></i><i class="dot" style="background:#ffbd2e"></i><i class="dot" style="background:#27c93f"></i></span>
+  <span>root@node-7 : ~/ops/sweep</span><span class="d">|</span><span>tunnel <span class="g">● 4 relais</span></span><span class="d">|</span><span>tor <span class="g">● actif</span></span>
+  <span style="margin-left:auto" id="horloge">20:20:41 UTC</span></div>
+
+<!-- cible : Binance -->
+<div class="pane" style="left:16px;top:52px;width:620px;height:300px">
+  <div class="ph"><span class="y">●</span> cible</div>
+  <div style="display:flex;align-items:center;gap:22px;padding:18px 20px">
+    <img src="img/binance_icone.png" style="width:120px;height:120px">
+    <div><img src="img/binance_horizontal.png" style="height:44px;display:block"><div class="d" style="margin-top:10px">hot wallet · ethereum</div>
+      <div class="w" style="font-size:22px;margin-top:4px">BINANCE 14</div><div class="d">0x28C6c062…bf21d60</div></div></div>
+  <div style="display:flex;gap:30px;padding:0 20px">
+    <div><div class="d">solde estimé</div><div class="kpi" id="solde">2 512 000 000 $</div></div>
+    <div><div class="d">nonce courant</div><div class="kpi b" id="nonce" style="font-size:34px;margin-top:8px">18 914 790</div></div></div>
+</div>
+
+<!-- terminal -->
+<div class="pane" style="left:652px;top:52px;width:740px;height:620px"><div class="ph"><span class="g">●</span> terminal</div><pre id="term"></pre></div>
+
+<!-- autorisations -->
+<div class="pane" style="left:1408px;top:52px;width:496px;height:620px"><div class="ph"><span class="b">●</span> autorisations eip-7702 · 50 nonces</div>
+  <div class="grid" id="grille"></div>
+  <div style="padding:6px 14px" class="d">fenêtre 18 914 775 → 18 914 824</div>
+  <div style="padding:2px 14px;font-size:20px" id="match" class="d">en attente…</div></div>
+
+<!-- chaînes -->
+<div class="pane" style="left:16px;top:368px;width:620px;height:304px"><div class="ph"><span class="r">●</span> 10 blockchains · sorties</div><div id="chaines" style="padding-top:6px"></div></div>
+
+<!-- flux de transactions -->
+<div class="pane" style="left:16px;top:688px;width:1888px;height:376px"><div class="ph"><span class="y">●</span> mempool · transactions sortantes</div><pre id="flux" style="font-size:13px"></pre></div>
+
+<div id="alerte">1 / 50 AUTORISATION ACCEPTÉE</div>
+<div class="scan"></div>
+<script>
+const $=id=>document.getElementById(id), cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)), P=(t,a,b)=>cl((t-a)/(b-a));
+let rnd=s=>()=>((s=Math.imul(s^s>>>15,1|s)+0x6D2B79F5)>>>0)/4294967296;
+const fr=n=>Math.round(n).toLocaleString('fr-FR');
+const GAGNANT=15;
+$('grille').innerHTML=Array.from({length:50},(_,i)=>`<div class="cell" id="c${i}">${18914775+i}`.slice(0,-4)+`<span>${String(18914775+i).slice(-3)}</span></div>`).join('');
+const CH=["BTC","ETH","TRX","SOL","XRP","BNB","ARB","AVAX","OP","BASE"];
+const TERM=[
+ ["d","$ ./sweep --target BINANCE_14 --chain eth"],["g","[+] contexte de signature chargé ........ ok"],["g","[+] relais financé  (3 × 0,1 ETH via tornado)"],
+ ["w","[*] fenêtre de nonces : 18914775 → 18914824"],["w","[*] construction de la transaction type-4"],["d","    auth[00] nonce 18914775  sig 0x8f3a…e1"],
+ ["d","    auth[01] nonce 18914776  sig 0x1c9b…77"],["d","    auth[02] nonce 18914777  sig 0xa04d…3f"],["d","    …"],["d","    auth[49] nonce 18914824  sig 0x6e21…c0"],
+ ["w","[*] diffusion …"],["b","[?] attente d'inclusion — le portefeuille émet toujours"],["r","[!] 1/50 autorisation acceptée — délégation active"],
+ ["w","$ call sweep()"],["y","    ETH      167 464,00"],["y","    USDT   1 615 000 000"],["y","    + 63 jetons ERC-20"],["g","[+] transaction confirmée · 20:24:06 UTC"],["w","[*] file : btc trx sol xrp bnb arb avax op base"]];
+function renderAt(t){
+  const r=rnd(Math.floor(t*6)+3);
+  $('horloge').textContent=`20:${String(20+Math.floor(t/2.2)).padStart(2,'0')}:${String(Math.floor(41+t*7)%60).padStart(2,'0')} UTC`;
+  const n=Math.min(TERM.length,Math.floor(t*2.6));
+  $('term').innerHTML=TERM.slice(0,n).map(([c,l])=>`<span class="${c}">${l}</span>`).join('\n')+(Math.floor(t*2)%2?'\n<span class="w">█</span>':'');
+  const nonce=18914775+Math.floor(P(t,0,5)*49); $('nonce').textContent=fr(nonce);
+  for(let i=0;i<50;i++){const c=$('c'+i),k=P(t,2.5+i*.045,2.6+i*.045);
+    if(t>=5.1&&i===GAGNANT){c.style.background='#3a0b0b';c.style.borderColor='#ff3b30';c.style.color='#ff6b61'}
+    else if(t>=5.1){c.style.background='#0b1119';c.style.borderColor='#141c27';c.style.color='#26313f'}
+    else if(k>0){c.style.background='#0e2033';c.style.borderColor='#2e5a86';c.style.color='#8fb7e6'}
+    else{c.style.background='';c.style.borderColor='#1d2a38';c.style.color='#3c4a5c'}}
+  $('match').innerHTML=t<5.1?'<span class="d">en attente…</span>':'<span class="r">MATCH · nonce 18 914 790 · 49 rejetées</span>';
+  $('alerte').style.opacity=cl((t-5.1)/.2)*(1-cl((t-6.6)/.4));
+  $('solde').textContent=fr(2512000000*(1-P(t,6,9)*.995))+' $'; $('solde').style.color=t>6?'#ff3b30':'#eef3fb';
+  $('chaines').innerHTML=CH.map((c,i)=>{const v=P(t,6+i*.35,6.8+i*.35);return `<div class="chain"><span style="width:52px" class="${v>0?'r':'w'}">${c}</span><div class="bar2"><i style="width:${v*100}%"></i></div><span style="width:70px;text-align:right" class="${v>=1?'r':'d'}">${v>=1?'VIDÉ':v>0?'sortie':'ouvert'}</span></div>`}).join('');
+  let f='';for(let i=0;i<18;i++){const h=Math.floor(r()*1e16).toString(16).padStart(14,'0');const a=(r()*900+10).toFixed(2);
+    const out=t>6&&r()<.7;f+=`<span class="d">0x${h}…</span>  <span class="${out?'r':'b'}">${out?'→ 0x7c86…6ca0':'→ client '+Math.floor(r()*99999)}</span>  <span class="${out?'y':'w'}">${out?(r()*4e6).toFixed(0)+' USDT':a+' ETH'}</span>  <span class="d">nonce ${nonce-i}</span>\n`}
+  $('flux').innerHTML=f; window.FRAME_PRET=true;
+}
+const q=new URLSearchParams(location.search);
+if(q.has('t')) renderAt(+q.get('t')); else {const t0=performance.now();(function b(){renderAt((performance.now()-t0)/1000%10);requestAnimationFrame(b)})()}
+</script></body></html>

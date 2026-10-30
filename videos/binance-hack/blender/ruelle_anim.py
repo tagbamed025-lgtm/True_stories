@@ -133,6 +133,7 @@ PLANS={
  # nom : durée(s), voiture (y début, y fin), caméra (pos début, pos fin), cible (début, fin), focale
  'A_entree':(2.7,(-34,-22),((5.8,-6,0.45),(5.6,-6.6,0.5)),((0,-26,0.8),(1,-21,0.9)),30),
  'B_passe':(2.0,(-20,-9),((5.2,-8.0,0.75),(5.0,-8.2,0.75)),('VOITURE',),24),
+ 'I_dessus':(8.0,(-14,14),((0,0,0),(0,0,0)),('DESSUS',),30),
  'C_montee':(2.5,(10,10),((3.2,-12.5,1.4),(3.0,-11.2,3.4)),((-6.9,-10.6,2.0),(-6.9,-10.0,8.4)),24),
 }
 PHARE_M=bpy.data.materials.new('phare_glow'); PHARE_M.use_nodes=True; _b=PHARE_M.node_tree.nodes['Principled BSDF']; _b.inputs['Emission Color'].default_value=(1,.95,.8,1); _b.inputs['Emission Strength'].default_value=60
@@ -147,7 +148,12 @@ def place_phares():
         g.location=(p.x+sx,p.y+2.42,.72); l.location=(p.x+sx,p.y+2.5,.72); l.rotation_euler=(math.radians(-90+8),0,0)
 for o in list(pivot.children):
     if o.type=='LIGHT': o.data.energy=0
+if os.environ.get('SEUL','').find('I_dessus')>=0:
+    for o in [o for o in bpy.data.objects if o.type=='MESH' and o.location.x<-4.2 and o.parent is None]:
+        c=o.copy(); c.data=o.data; sc.collection.objects.link(c); c.location.x=-o.location.x+0.3; c.rotation_euler.z=-o.rotation_euler.z
+        if c.name.startswith('bras'): c.location.x=-o.location.x
 cam=bpy.data.objects['Camera']
+cam.animation_data_clear(); cam.data.dof.focus_object=None; cam.data.dof.aperture_fstop=4.0
 for c in cam.constraints: cam.constraints.remove(c)
 for nom,(d,(y0,y1),(p0,p1),cible,lens) in PLANS.items():
     t0,t1=(cible[0],cible[0]) if len(cible)==1 else cible
@@ -159,8 +165,12 @@ for nom,(d,(y0,y1),(p0,p1),cible,lens) in PLANS.items():
         if os.path.exists(out): continue
         u=f/max(1,n-1); e=ease(u)
         pivot.location=(2.3,y0+(y1-y0)*u,0); place_phares()
-        p=lerp(p0,p1,e); t=(pivot.location.x,pivot.location.y,0.8) if t0=='VOITURE' else lerp(t0,t1,e); cam.location=p; cam.rotation_mode='XYZ'
-        cam.rotation_euler=(V(t)-V(p)).to_track_quat('-Z','Y').to_euler()
+        if t0=='DESSUS':
+            px,py=pivot.location.x,pivot.location.y; p=(px+2.5-1.5*u,py-9+2*u,15-2*u); t=(px-.5,py+4,0)
+        else:
+            p=lerp(p0,p1,e); t=(pivot.location.x,pivot.location.y,0.8) if t0=='VOITURE' else lerp(t0,t1,e)
+        cam.location=p; cam.rotation_mode='XYZ'
+        cam.rotation_euler=(V(t)-V(p)).to_track_quat('-Z','Y').to_euler(); cam.data.dof.focus_distance=(V((pivot.location.x,pivot.location.y,.8))-V(p)).length if t0 in ('VOITURE','DESSUS') else (V(t)-V(p)).length
         bpy.context.view_layer.update()
         sc.render.filepath=out; bpy.ops.render.render(write_still=True); print('IMG',nom,f,flush=True)
 print('FINI_RUELLE')

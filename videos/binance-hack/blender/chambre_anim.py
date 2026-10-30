@@ -14,7 +14,7 @@ def img_mat(n,path,force=1.4):
     m=bpy.data.materials.new(n); m.use_nodes=True; nt=m.node_tree; b=nt.nodes['Principled BSDF']
     t=nt.nodes.new('ShaderNodeTexImage'); t.image=bpy.data.images.load(path)
     nt.links.new(t.outputs[0],b.inputs['Base Color']); nt.links.new(t.outputs[0],b.inputs['Emission Color']); b.inputs['Emission Strength'].default_value=force; return m
-ECRAN=img_mat('ecran_hack','/home/claude/ecrans/ecran.png'); ECRAN2=img_mat('ecran_hex','/home/claude/ecrans/ecran2.png'); LED=mat('led',(0,.2,0),.5,(.1,1,.3),15); RIDEAU=mat('rideau',(.12,.12,.16))
+ECRAN=img_mat('ecran_hack','/home/claude/ecrans/ecran_hacker_tex.png',1.6); ECRAN2=img_mat('ecran_hex','/home/claude/ecrans/ecran2.png'); LED=mat('led',(0,.2,0),.5,(.1,1,.3),15); RIDEAU=mat('rideau',(.12,.12,.16))
 NUIT=mat('nuit',(.02,.03,.06),.1,(.1,.18,.4),1.5)
 def box(n,p,s,m,r=(0,0,0)):
     bpy.ops.mesh.primitive_cube_add(location=p,rotation=r); o=bpy.context.object; o.name=n; o.scale=[x/2 for x in s]; o.data.materials.append(m); return o
@@ -144,6 +144,7 @@ PLANS={
  'H_contre':(3.0,((-1.25,1.85,1.32),(-1.1,1.75,1.25)),((.35,-.7,1.0),(.3,-.7,1.0)),32,0),
 }
 for nom,(d,(p0,p1),(t0,t1),lens,entree) in PLANS.items():
+    if os.environ.get('SEUL') and nom not in os.environ['SEUL'].split(','): continue
     os.makedirs(f'/home/claude/anim/{nom}',exist_ok=True); n=int(round(d*FPS)); CAM.data.lens=lens
     for f in range(n):
         out=f'/home/claude/anim/{nom}/{f:04d}.png'
