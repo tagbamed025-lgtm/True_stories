@@ -30,15 +30,37 @@ def dalle(n,p,w,h,m,rz=0):
 box('ecran_c',(0,1.75,1.12),(.84,.03,.5),NOIR); dalle('dalle_c',(0,1.73,1.12),.8,.45,ECRAN); box('pied_e',(0,1.8,.85),(.05,.05,.2),NOIR)
 box('ecran_g',(-.85,1.68,1.1),(.66,.03,.41),NOIR,(0,0,math.radians(22))); dalle('dalle_g',(-.855,1.664,1.1),.62,.37,ECRAN2,22)
 box('ecran_d',(.85,1.68,1.1),(.62,.03,.38),NOIR,(0,0,math.radians(-22)))
-box('clavier',(0,1.32,.78),(.46,.15,.025),NOIR)
+box('clavier',(0,1.32,.772),(.46,.155,.018),mat('clav',(.07,.07,.08),.35))
+TOUCHE=mat('touche',(.16,.16,.18),.5); TL=mat('touche_led',(.02,.02,.03),.5,(.2,.45,1),.6)
+for r in range(5):
+    n=14 if r<4 else 7
+    for k in range(n):
+        x=-.205+k*.0315 + (r*.006 if r<4 else 0)
+        if r==4: x=-.205+k*.0315
+        w=.026 if not (r==4 and k==3) else .16
+        if r==4 and k>3: x+=.135
+        box('t',(x,1.268+r*.026,.785),(w,.022,.01),TOUCHE if (r+k)%9 else TL)
+box('souris',(.32,1.3,.785),(.05,.08,.025),NOIR); box('tapis',(.32,1.3,.7705),(.2,.18,.003),mat('tapis_s',(.05,.05,.06)))
 cyl('canette',(-.6,1.3,.83),.033,.12,mat('alu',(.6,.6,.62),.3),12); cyl('bol',(.62,1.35,.8),.08,.07,BLANC,16)
 box('routeur',(-.75,1.72,.8),(.22,.13,.04),NOIR)
 for k in range(4): box('led',(-.83+k*.05,1.65,.81),(.012,.005,.012),LED)
 # lit + étagère pour lire une vraie chambre
-box('lit',(1.9,-.6,.25),(1.2,2.2,.5),mat('drap',(.25,.27,.32))); box('etagere',(-2.35,1.6,1.1),(.3,.9,2.2),BOIS)
+DRAP=mat('drap',(.30,.32,.38),.8); COUV=mat('couverture',(.13,.15,.22),.9); OREILLER=mat('oreiller',(.75,.76,.8),.9)
+box('sommier',(1.75,-1.85,.18),(1.5,2.1,.36),BOIS); box('matelas',(1.75,-1.85,.44),(1.42,2.0,.18),DRAP)
+box('tete_lit',(2.52,-1.85,.75),(.06,1.5,1.1),BOIS)
+box('couverture',(1.6,-1.85,.55),(1.15,2.02,.06),COUV,(0,math.radians(1.5),0))
+box('oreiller1',(2.25,-2.3,.6),(.35,.55,.12),OREILLER); box('oreiller2',(2.25,-1.4,.6),(.35,.55,.12),OREILLER)
+box('table_nuit',(2.3,-.6,.27),(.45,.4,.54),BOIS); cyl('lampe_chevet',(2.3,-.6,.65),.1,.22,mat('abat',(.8,.7,.5),.8,(1,.65,.35),3),16)
+bpy.ops.object.light_add(type='POINT',location=(2.3,-.6,.85)); lc=bpy.context.object; lc.data.energy=25; lc.data.color=(1,.6,.3); lc.data.shadow_soft_size=.3
+box('tapis_sol',(.6,-1.2,.005),(2.2,1.6,.01),mat('tapis',(.22,.08,.06),.95))
+box('poster1',(1.2,-3.0+.06,1.6),(.6,.02,.85),mat('poster1',(.05,.08,.12),.6,(.15,.3,.6),.4))
+box('poster2',(2.0,-3.0+.06,1.7),(.45,.02,.6),mat('poster2',(.12,.05,.05),.6,(.5,.1,.08),.3))
+box('mur_arriere',(0,-3.0,1.4),(6,.1,2.8),MUR); box('mur_droit',(2.6,0,1.4),(.1,6,2.8),MUR)
+box('vetements',(-1.2,-2.5,.15),(.6,.4,.3),mat('linge',(.2,.2,.25)))
+box('porte',(-1.9,-2.94,1.0),(.9,.04,2.0),BOIS); box('etagere',(-2.35,1.6,1.1),(.3,.9,2.2),BOIS)
 for k in range(5): box('livre',(-2.3,1.3+k*.12,1.3),(.2,.08,.28),mat(f'l{k}',[(.5,.2,.15),(.2,.3,.5),(.6,.55,.4),(.2,.4,.3),(.4,.4,.45)][k]))
 # pirate : GLB figé de Silk Road (assis, tape), recoloré en rouge TRU
-bpy.ops.import_scene.gltf(filepath='assets3d/silk-road/glb/ross_assis_tape.glb')
+bpy.ops.import_scene.gltf(filepath='/home/claude/repo/assets3d/silk-road/glb/ross_assis_tape.glb')
 objs=[o for o in bpy.context.selected_objects]
 racine=[o for o in objs if o.parent is None]
 for o in objs:
@@ -72,7 +94,7 @@ for r in racines: desc(r)
 for o in b.objects:
     if o and o not in garde: bpy.data.objects.remove(o)
 for o in garde: sc.collection.objects.link(o)
-ch=racines[0]; ch.rotation_mode='XYZ'
+ch=racines[0]; ch.rotation_mode='XYZ'; ch.rotation_euler.z+=math.pi
 bpy.context.view_layer.update()
 def bb(objs):
     mi=Vector((1e9,)*3); ma=Vector((-1e9,)*3)
@@ -98,5 +120,5 @@ def cam(n,loc,tgt,lens):
     c.data.dof.use_dof=True; c.data.dof.focus_distance=d.length; c.data.dof.aperture_fstop=2.8; return c
 sc.render.engine='CYCLES'; sc.cycles.device='CPU'; sc.cycles.samples=32; sc.cycles.use_denoising=True
 sc.render.resolution_x=1920; sc.render.resolution_y=804; sc.render.resolution_percentage=50
-for n,loc,tgt,lens in [('large',(1.6,-1.8,1.6),Vector((-.1,1.2,1.0)),30),('dos',(.55,-.35,1.45),Vector((0,1.7,1.05)),40),('epaule',(-.9,1.1,1.3),Vector((.1,1.0,1.15)),50)]:
-    sc.camera=cam(n,loc,tgt,lens); sc.render.filepath=f'videos/binance-hack/blender/chambre_v6_{n}.png'; bpy.ops.render.render(write_still=True); print('RENDU',n)
+for n,loc,tgt,lens in [('large',(-1.9,-2.5,1.7),Vector((.4,.6,.9)),24),('contrechamp',(-.75,1.55,1.25),Vector((.4,-.9,.95)),30),('dos',(.55,-.35,1.45),Vector((0,1.7,1.05)),40),('clavier',(.35,.95,1.05),Vector((0,1.32,.78)),45)]:
+    sc.camera=cam(n,loc,tgt,lens); sc.render.filepath=f'videos/binance-hack/blender/chambre_v7_{n}.png'; bpy.ops.render.render(write_still=True); print('RENDU',n)
