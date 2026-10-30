@@ -1,0 +1,183 @@
+VOIX OFF BRUTE — Binance (v3) — voix Adrien (TTtB1x9U8PF0Vgf20IAP)
+Une partie = une génération (p1.mp3 … p10.mp3). Coller uniquement le texte entre les lignes ====.
+<break time="1.0s" /> = la pause d'une seconde (balise reconnue par ElevenLabs).
+
+==================== p1 ====================
+Vingt-neuf octobre deux mille vingt-six.
+
+Vingt heures cinq, temps universel.
+
+Quelque part dans le monde.
+
+Une rue vide. Tard dans la nuit.
+
+Une voiture passe, lentement. Ses phares glissent sur les façades endormies.
+
+Troisième étage.
+
+Une seule fenêtre est allumée.
+
+Pas une lampe… la lueur d'un écran.
+
+Un homme est assis dans le noir. Ou dix hommes. Personne ne le sait encore.
+
+Des lignes de code défilent. Leur reflet bleu sur son visage.
+
+Pas de musique. Pas un bruit. Seulement le claquement des touches.
+
+Dans un coin de l'écran, un nom que des millions de personnes connaissent :
+
+Binance.
+
+Il tape une dernière commande.
+
+<break time="1.0s" />
+
+Entrée.
+
+Vingt minutes plus tard… plus de six milliards de dollars auront quitté la plus grande plateforme crypto du monde.
+
+Le plus gros vol de l'histoire de la crypto.
+
+Et cette nuit-là… presque personne ne comprend ce qui se passe.
+
+==================== p2 ====================
+Rembobine.
+
+Vingt heures vingt. Une transaction étrange arrive jusqu'à un portefeuille de Binance. Son nom : Binance quatorze.
+
+Un hot wallet. Le coffre qui doit rester ouvert, connecté, pour que chaque client puisse retirer son argent à tout moment.
+
+Problème pour le pirate : chaque ordre envoyé par ce portefeuille porte un numéro. Et il en envoie sans arrêt. Impossible de savoir quel numéro sera le bon.
+
+Alors il n'en devine pas un. Il en envoie cinquante. Dans une seule transaction.
+
+Quarante-neuf tombent dans le vide.
+
+Une seule suffit.
+
+<break time="1.0s" />
+
+Vingt heures vingt-quatre. Cent soixante-sept mille ETH. Soixante-trois autres cryptos. Plus d'un milliard six cents millions de dollars de Tether.
+
+Une seule transaction. Personne, chez Binance, ne l'a autorisée.
+
+Puis dix blockchains se vident. Bitcoin. Tron. Solana. XRP.
+
+==================== p3 ====================
+Binance. Environ cent quarante-quatre milliards de dollars d'actifs, selon DefiLlama.
+
+Son fondateur, CZ, ne la dirige plus. Mais il en reste l'actionnaire majoritaire.
+
+Cette forteresse a déjà été touchée.
+
+Mai deux mille dix-neuf : sept mille bitcoins disparaissent d'un hot wallet. Quarante millions de dollars.
+
+CZ envisage de faire reculer la blockchain Bitcoin. Puis renonce.
+
+Il avait pourtant créé un fonds de secours : le SAFU. Et une phrase mal orthographiée, devenue légende : « Funds are SAFU. »
+
+Sept ans plus tard : environ cent cinquante fois plus d'argent.
+
+==================== p4 ====================
+Vingt heures trente-deux : un chercheur on-chain lance l'alerte. L'adresse du pirate a été financée par Tornado Cash. Un service fait pour effacer les traces.
+
+Vingt et une heures quinze : CZ écrit sur X : « Ça ressemble bien à un piratage de Binance. »
+
+Binance, elle, hésite. Son message officiel est modifié deux fois en treize minutes.
+
+Dans l'ombre, des centaines d'employés se battent pour reprendre la main.
+
+Vers deux heures du matin, heure de Paris, Binance reprend le contrôle de Binance quatorze.
+
+Trop tard.
+
+==================== p5 ====================
+Alors, une course commence.
+
+Pas de police. Pas de commando. Des émetteurs de stablecoins.
+
+Dans l'heure, Tether gèle près d'un milliard de dollars d'USDT. Puis plus d'un milliard et demi. Circle bloque environ huit cent vingt-trois millions d'USDC.
+
+Le pirate, lui, ne s'arrête pas : il dépose soixante millions d'USDT sur Aave pour emprunter quarante-quatre millions de dollars d'ETH.
+
+Vers vingt-deux heures quinze, Binance coupe tout. Dépôts. Retraits.
+
+Après minuit, la cofondatrice Yi He promet : Binance couvrira toutes les pertes.
+
+Puis, vendredi, CZ écrit qu'une salariée enceinte a passé la nuit à travailler, avec des centaines d'autres. Et : « Ça fait mal, mais on survivra. »
+
+<break time="1.0s" />
+
+Bilan : environ trois milliards gelés. Il en manque… trois.
+
+==================== p6 ====================
+Pendant ce temps, les marchés paniquent.
+
+Plus de six cents millions de dollars de paris à l'effet de levier sont liquidés en une heure.
+
+Le bitcoin tombe à son plus bas depuis six semaines.
+
+Un analyste de Standard Chartered prévient : la baisse peut continuer tant que le flou demeure.
+
+==================== p7 ====================
+Mais comment ?
+
+Binance parle d'un détail presque banal : l'ordinateur portable d'un ingénieur DevOps. Compromis.
+
+On ne sait ni son nom, ni comment. Un e-mail ? Un fichier ? Une faille ? Personne ne l'a dit.
+
+Cet ordinateur aurait ouvert l'accès à un conteneur de service. Et de là, des retraits non autorisés ont été soumis.
+
+Binance n'a trouvé aucune preuve de fuite de clé privée. Alors qui a signé les cinquante autorisations ?
+
+Les ordres seraient passés par le propre circuit de Binance. Comme s'ils étaient légitimes.
+
+Maintenant, imagine.
+
+Un matin ordinaire. Un café. Tu ouvres ton ordinateur, comme mille fois avant.
+
+Et quelque part, quelqu'un attendait ce geste.
+
+==================== p8 ====================
+Février deux mille vingt-cinq. Bybit. Un milliard et demi de dollars.
+
+Là aussi, tout commence par l'ordinateur d'un développeur. Un faux projet, présenté comme un simulateur d'investissement, selon l'enquête de Safe.
+
+À l'époque, CZ demandait : comment ont-ils piraté cette machine ? Un virus ? De l'ingénierie sociale ?
+
+Aujourd'hui, c'est à Binance de répondre.
+
+Richard Teng nuance déjà : ce n'est pas une attaque « en un clic ». D'autres points de brèche ont été découverts.
+
+==================== p9 ====================
+Reviens à la fenêtre allumée.
+
+Qui était derrière l'écran ?
+
+TRM Labs désigne TraderTraitor, l'unité d'élite des hackers nord-coréens, avec un haut niveau de confiance. Le même groupe que le FBI avait désigné pour Bybit.
+
+ZachXBT retrouve, à la même adresse, l'argent de Binance et celui d'un piratage de Bitget en septembre.
+
+Binance, elle, n'a rien confirmé.
+
+En deux mille vingt-deux, les renseignements sud-coréens estimaient à un virgule un milliard ce que ces hackers avaient volé en cinq ans.
+
+Cette nuit, en vingt minutes : près de six fois plus.
+
+==================== p10 ====================
+Binance a mis de côté plus de six milliards pour rembourser. Les retraits doivent reprendre sous quarante-huit heures. Le rapport complet est promis.
+
+Mais regarde ce que ça révèle.
+
+Des milliards de dollars. Des années de sécurité. Une forteresse mondiale.
+
+Et, peut-être, un seul ordinateur portable.
+
+<break time="1.0s" />
+
+Quelque part, une rue vide. Une voiture passe, lentement.
+
+Une fenêtre est encore allumée.
+
+Et toi… sais-tu qui tient la porte de ton argent ?
