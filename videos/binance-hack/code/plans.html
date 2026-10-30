@@ -1,0 +1,201 @@
+<!doctype html>
+<!-- TRU Stories · Binance · tous les plans [CODE]. Usage : plans.html?s=<id>&t=<secondes>  (window.renderAt(t) pour la capture image par image).
+     Format 1920×804 (2,39:1). Style Silk Road : fond quasi noir, texte fin centré, petites légendes espacées, sérif italique pour les mots forts, rouge réservé aux ruptures. -->
+<html lang="fr"><head><meta charset="utf-8">
+<style>
+  html,body{margin:0;width:1920px;height:804px;background:#050607;overflow:hidden;font-family:"Segoe UI","Inter",system-ui,sans-serif;color:#e8e8e8}
+  .sc{position:absolute;inset:0;display:none}
+  .petit{position:absolute;left:0;right:0;text-align:center;font-weight:300;letter-spacing:.35em;font-size:22px;color:#8a8f96;text-transform:uppercase}
+  .grand{position:absolute;left:0;right:0;text-align:center;font-size:96px;font-weight:200;font-variant-numeric:tabular-nums}
+  .serif{font-family:Georgia,"Times New Roman",serif;font-style:italic}
+  .mono{font-family:"JetBrains Mono","DejaVu Sans Mono",Consolas,monospace}
+  .rouge{color:#ff2d2d}.bleu{color:#7fa3ff}.vert{color:#3fdc7a}.gris{color:#5d636b}
+  .ligne{position:absolute;background:#2a2f36}
+  .carte{position:absolute;border:1px solid #23272d;background:#0b0d10;border-radius:8px}
+  #grain{position:absolute;inset:0;pointer-events:none;opacity:.06;z-index:99;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+  #vignette{position:absolute;inset:0;pointer-events:none;z-index:98;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.65) 100%)}
+  .jauge{position:absolute;height:34px;border-radius:3px}
+  .tw{position:absolute;left:50%;top:50%;width:1000px;transform:translate(-50%,-50%) scale(1.15);background:#0d0f12;border:1px solid #23272d;border-radius:14px;padding:30px 36px;box-sizing:border-box}
+  .tw .nom{font-size:24px;font-weight:600}.tw .id{color:#6b7178;font-size:20px;margin-left:8px;font-weight:400}
+  .tw .txt{font-size:34px;line-height:1.35;margin-top:18px;font-weight:300}
+  .tw .meta{color:#6b7178;font-size:18px;margin-top:22px}
+  .av{display:inline-block;width:54px;height:54px;border-radius:50%;background:#1a1d22;vertical-align:middle;margin-right:14px}
+  .node{position:absolute;width:280px;height:140px;margin:-70px 0 0 -140px;border:1px solid #2c3138;border-radius:10px;background:#0b0d10;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;font-size:32px;font-weight:300;line-height:1.3}
+</style></head><body>
+<div id="vignette"></div><div id="grain"></div>
+
+<!-- 1 · horodatage du cold open -->
+<div class="sc" id="horodatage"><div class="grand mono" id="h-txt" style="top:330px;font-size:72px;letter-spacing:.06em"></div>
+  <div class="petit" id="h-sous" style="top:450px">quelque part dans le monde</div></div>
+
+<!-- 1b · avertissement « scène illustrée » (incrustation) -->
+<div class="sc" id="avertissement"><div class="petit" style="bottom:42px;font-size:17px;letter-spacing:.18em;color:#9aa0a8">Scène illustrée — l'identité et le lieu des pirates sont inconnus</div></div>
+
+<!-- 6 · écran du pirate : le nom BINANCE apparaît -->
+<div class="sc" id="ecran"><div class="mono" id="e-code" style="position:absolute;left:120px;top:80px;right:120px;font-size:22px;line-height:1.55;color:#2f8a52;white-space:pre"></div>
+  <div class="grand" id="e-nom" style="top:330px;font-size:120px;letter-spacing:.3em;font-weight:300;color:#fff">BINANCE</div></div>
+
+<!-- 8 · montant + titre -->
+<div class="sc" id="montant"><div class="grand" id="m-val" style="top:250px;font-size:150px"></div>
+  <div class="grand serif" id="m-sous" style="top:470px;font-size:46px;color:#bfc4ca">le plus gros vol de l'histoire de la crypto</div></div>
+
+<!-- 9 · rembobinage -->
+<div class="sc" id="rembobine"><div class="grand mono" id="r-h" style="top:300px;font-size:120px"></div><div class="petit" style="top:480px">◀◀ rembobine</div></div>
+
+<!-- 11 · le numéro qui change (nonce) -->
+<div class="sc" id="nonce"><div class="petit" style="top:150px">chaque ordre porte un numéro</div>
+  <div class="grand mono" id="n-val" style="top:300px;font-size:130px"></div>
+  <div class="petit" id="n-sous" style="top:520px;color:#ff2d2d;letter-spacing:.25em">lequel sera le bon ?</div></div>
+
+<!-- 14 · la transaction -->
+<div class="sc" id="transaction"><div class="petit" style="top:120px">20:24 utc · binance 14 → adresse inconnue</div>
+  <div id="tx-lignes" style="position:absolute;left:0;right:0;top:220px;text-align:center"></div></div>
+
+<!-- 15 · dix blockchains -->
+<div class="sc" id="chaines"><div class="petit" style="top:90px">dix blockchains</div><div id="ch-grille" style="position:absolute;left:260px;right:260px;top:200px;display:grid;grid-template-columns:repeat(5,1fr);gap:28px"></div></div>
+
+<!-- 17 · la forteresse : 144 Md$ -->
+<div class="sc" id="forteresse"><div class="grand" id="f-val" style="top:270px;font-size:140px"></div>
+  <div class="petit" style="top:480px">d'actifs détenus par binance · source defillama</div></div>
+
+<!-- 18 · frise 2018 → 2019 → 2026 -->
+<div class="sc" id="frise"><div class="ligne" id="fr-l" style="top:400px;left:260px;height:2px"></div><div id="fr-pts"></div></div>
+
+<!-- 19 · « Funds are SAFU » (post recréé) -->
+<div class="sc" id="safu"><div class="tw"><span class="av"></span><span class="nom">CZ</span><span class="id">· 2018</span>
+  <div class="txt">Funds are <span id="safu-mot" style="border-bottom:3px solid #ff2d2d">SAFU</span>.</div>
+  <div class="meta">Publication recréée — illustration</div></div></div>
+
+<!-- 20 · ×150 -->
+<div class="sc" id="fois"><div class="grand" id="x-val" style="top:250px;font-size:200px;font-weight:200"></div>
+  <div class="petit" style="top:520px">40 millions en 2019 · 6,3 milliards en 2026</div></div>
+
+<!-- 21 · chronologie de l'alerte -->
+<div class="sc" id="alerte"><div class="ligne" style="left:700px;top:120px;width:2px;height:560px"></div><div id="al-pts"></div></div>
+
+<!-- 22 · post de CZ -->
+<div class="sc" id="postcz"><div class="tw"><span class="av"></span><span class="nom">CZ</span><span class="id">· 29 oct. 2026 · 21:15 UTC</span>
+  <div class="txt">« Ça ressemble bien à un piratage de Binance. »</div>
+  <div class="meta">Traduction · publication recréée — illustration</div></div></div>
+
+<!-- 24 · Binance 14 rouge → blanc -->
+<div class="sc" id="reprise"><div class="grand mono" id="rp-nom" style="top:290px;font-size:110px">BINANCE 14</div>
+  <div class="petit" id="rp-sous" style="top:470px"></div></div>
+
+<!-- 25 · jauges volé / gelé -->
+<div class="sc" id="jauges">
+  <div class="petit" style="top:200px;text-align:left;left:300px">volé</div><div class="jauge" style="left:300px;top:240px;width:1320px;background:#141619"></div><div class="jauge" id="j-vol" style="left:300px;top:240px;background:#ff2d2d"></div>
+  <div class="grand" id="j-vol-t" style="top:290px;font-size:46px;text-align:left;left:300px"></div>
+  <div class="petit" style="top:440px;text-align:left;left:300px">gelé</div><div class="jauge" style="left:300px;top:480px;width:1320px;background:#141619"></div><div class="jauge" id="j-gel" style="left:300px;top:480px;background:#cfe0ff"></div>
+  <div class="grand" id="j-gel-t" style="top:530px;font-size:46px;text-align:left;left:300px"></div>
+  <div class="petit" id="j-qui" style="top:650px;letter-spacing:.2em"></div></div>
+
+<!-- 27 · Aave -->
+<div class="sc" id="aave"><div class="node" style="left:520px;top:380px;width:340px;margin-left:-170px">60 M USDT<br><span class="gris" style="font-size:20px">volés</span></div>
+  <div class="node" style="left:960px;top:380px">Aave</div>
+  <div class="node" id="aave-sortie" style="left:1400px;top:380px;width:340px;margin-left:-170px">44 M$ d'ETH<br><span class="gris" style="font-size:20px">empruntés</span></div>
+  <svg width="1920" height="804" style="position:absolute;inset:0"><line id="aave-l1" x1="690" y1="380" x2="820" y2="380" stroke="#ff2d2d" stroke-width="2"/><line id="aave-l2" x1="1100" y1="380" x2="1230" y2="380" stroke="#ff2d2d" stroke-width="2"/></svg>
+  <div class="petit" style="top:560px">le pirate convertit pendant sa fuite</div></div>
+
+<!-- 28 · tout suspendu -->
+<div class="sc" id="suspendu"><div class="grand mono" style="top:230px;font-size:64px">22:15 UTC</div>
+  <div class="grand" id="su-t" style="top:340px;font-size:96px;font-weight:300;letter-spacing:.08em">DÉPÔTS · RETRAITS</div>
+  <div class="grand rouge" id="su-s" style="top:470px;font-size:56px;letter-spacing:.3em">SUSPENDUS</div></div>
+
+<!-- 30 · bilan -->
+<div class="sc" id="bilan"><div class="grand" id="b-1" style="top:230px;font-size:80px">≈ 3 Md$ gelés</div>
+  <div class="grand rouge" id="b-2" style="top:380px;font-size:80px">≈ 3 Md$ manquants</div></div>
+
+<!-- 32 · marché -->
+<div class="sc" id="marche"><svg width="1920" height="804" style="position:absolute;inset:0"><polyline id="mk-l" fill="none" stroke="#ff2d2d" stroke-width="3"/></svg>
+  <div class="petit" style="top:80px">bitcoin · 29 → 30 octobre</div>
+  <div class="grand" id="mk-p" style="top:560px;font-size:60px;text-align:left;left:300px"></div>
+  <div class="grand" id="mk-l2" style="top:560px;font-size:44px;text-align:right;right:300px;left:auto"></div></div>
+
+<!-- 35 · schéma de l'attaque -->
+<div class="sc" id="schema"><div class="node" id="sc-1" style="left:520px;top:380px">ordinateur<br>de l'ingénieur</div><div class="node" id="sc-2" style="left:960px;top:380px">conteneur<br>de service</div><div class="node" id="sc-3" style="left:1400px;top:380px">retraits<br>non autorisés</div>
+  <svg width="1920" height="804" style="position:absolute;inset:0"><line id="sc-l1" x1="660" y1="380" x2="820" y2="380" stroke="#ff2d2d" stroke-width="2" stroke-dasharray="8 6"/><line id="sc-l2" x1="1100" y1="380" x2="1260" y2="380" stroke="#ff2d2d" stroke-width="2" stroke-dasharray="8 6"/></svg>
+  <div class="grand serif" id="sc-q" style="top:520px;font-size:64px;color:#bfc4ca">comment ?</div></div>
+
+<!-- 38 · frise Bybit -->
+<div class="sc" id="bybit"><div class="petit" style="top:120px">bybit · février 2025 · 1,5 milliard $</div><div class="ligne" id="by-l" style="top:400px;left:360px;height:2px"></div><div id="by-pts"></div></div>
+
+<!-- 40 · carte des suspects -->
+<div class="sc" id="suspects"><svg id="sp-svg" width="1920" height="804" style="position:absolute;inset:0"></svg>
+  <div class="petit" style="top:70px">attribution · trm labs, avec un haut niveau de confiance</div>
+  <div class="grand" id="sp-c" style="top:630px;font-size:40px"></div></div>
+
+<!-- 41 · mise à jour -->
+<div class="sc" id="maj"><div class="petit" style="top:250px">où en est-on</div>
+  <div class="grand" style="top:320px;font-size:54px;font-weight:300">retraits attendus sous 48 h</div>
+  <div class="grand" style="top:410px;font-size:54px;font-weight:300">rapport complet promis</div>
+  <div class="grand gris" style="top:500px;font-size:54px;font-weight:300">auteurs non confirmés par Binance</div></div>
+
+<!-- 42 · texte final -->
+<div class="sc" id="final"><div class="grand serif" id="fi-t" style="top:330px;font-size:70px;color:#f0f0f0">Qui tient la porte de ton argent ?</div>
+  <div class="petit" id="fi-s" style="top:470px">tru stories</div></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)), ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+const P=(t,a,b)=>ease(cl((t-a)/(b-a)));            // progression 0→1 entre a et b secondes
+const fade=(el,v)=>{el.style.opacity=v};
+const fr=n=>n.toLocaleString('fr-FR');
+let rnd=s=>()=>((s=Math.imul(s^s>>>15,1|s)+0x6D2B79F5)>>>0)/4294967296;
+// construction des éléments répétés
+(function(){
+  const ch=["Bitcoin","Ethereum","Tron","Solana","XRP","BNB Chain","Arbitrum","Avalanche","Optimism","Base"];
+  $('ch-grille').innerHTML=ch.map((c,i)=>`<div class="carte" id="ch${i}" style="position:relative;height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:26px;font-weight:300">${c}<span class="petit" style="position:static;font-size:15px;margin-top:10px" id="ch${i}s">ouvert</span></div>`).join('');
+  const fpts=[["juil. 2018","création du fonds SAFU"],["mai 2019","7 000 BTC volés · 40 M$"],["oct. 2026","6,3 Md$"]];
+  $('fr-pts').innerHTML=fpts.map((p,i)=>`<div id="fr${i}" style="position:absolute;left:${360+i*600}px;top:330px;width:400px;margin-left:-200px;text-align:center"><div style="width:16px;height:16px;border-radius:50%;margin:0 auto 26px;background:${i==2?'#ff2d2d':'#cfd6df'}"></div><div style="font-size:40px;font-weight:300;margin-top:30px" class="${i==2?'rouge':''}">${p[0]}</div><div class="gris" style="font-size:22px;margin-top:10px">${p[1]}</div></div>`).join('');
+  const al=[["20:05","les premières sorties"],["20:24","Binance 14 vidé en une transaction"],["20:32","un chercheur lance l'alerte"],["21:15","CZ : « ça ressemble à un piratage »"],["22:15","dépôts et retraits suspendus"]];
+  $('al-pts').innerHTML=al.map((p,i)=>`<div id="al${i}" style="position:absolute;left:660px;top:${150+i*110}px;display:flex;align-items:center;gap:40px"><div style="width:18px;height:18px;border-radius:50%;margin-left:11px;background:${i==1?'#ff2d2d':'#cfd6df'}"></div><div class="mono" style="font-size:40px;width:170px">${p[0]}</div><div style="font-size:32px;font-weight:300;color:#c9ced4">${p[1]}</div></div>`).join('');
+  const by=[["4 févr.","un ordinateur de développeur compromis"],["19 févr.","code malveillant injecté"],["21 févr.","1,5 Md$ volés"]];
+  $('by-pts').innerHTML=by.map((p,i)=>`<div id="by${i}" style="position:absolute;left:${460+i*500}px;top:330px;width:420px;margin-left:-210px;text-align:center"><div style="width:16px;height:16px;border-radius:50%;margin:0 auto 26px;background:${i==2?'#ff2d2d':'#cfd6df'}"></div><div style="font-size:40px;font-weight:300;margin-top:30px">${p[0]}</div><div class="gris" style="font-size:22px;margin-top:10px">${p[1]}</div></div>`).join('');
+  // carte des suspects : continents en points, lignes vers les cibles
+  const svg=$('sp-svg'), r=rnd(7); let d='';
+  const masses=[[260,250,260,150],[420,470,110,160],[880,220,170,120],[930,420,140,170],[1300,250,330,170],[1560,560,130,70]];
+  masses.forEach(m=>{for(let k=0;k<260;k++){const a=r()*6.283,u=Math.sqrt(r());d+=`<circle cx="${m[0]+Math.cos(a)*u*m[2]}" cy="${m[1]+Math.sin(a)*u*m[3]}" r="2.2" fill="#1d2228"/>`}});
+  const pyong=[1470,270], cibles=[["Binance",1640,330,"oct. 2026 · 6,3 Md$"],["Bybit",1260,420,"févr. 2025 · 1,5 Md$"],["Bitget",1520,470,"sept. 2026"]];
+  cibles.forEach((c,i)=>{d+=`<path id="spl${i}" d="M${pyong[0]} ${pyong[1]} Q ${(pyong[0]+c[1])/2} ${Math.min(pyong[1],c[2])-120} ${c[1]} ${c[2]}" fill="none" stroke="#ff2d2d" stroke-width="2"/>`;
+    d+=`<g id="spg${i}"><circle cx="${c[1]}" cy="${c[2]}" r="7" fill="#cfd6df"/><text x="${c[1]+16}" y="${c[2]+6}" fill="#cfd6df" font-size="22" font-family="Segoe UI,sans-serif">${c[0]}</text><text x="${c[1]+16}" y="${c[2]+32}" fill="#6b7178" font-size="16" font-family="Segoe UI,sans-serif">${c[3]}</text></g>`});
+  d+=`<circle cx="${pyong[0]}" cy="${pyong[1]}" r="10" fill="#ff2d2d"/><text x="${pyong[0]-20}" y="${pyong[1]-24}" fill="#ff6b6b" font-size="24" text-anchor="end" font-family="Segoe UI,sans-serif">TraderTraitor · Corée du Nord</text>`;
+  svg.innerHTML=d;
+})();
+// code qui défile sur l'écran du pirate
+const LIGNES=["import { signer, relay } from './ops'","const target = hotwallets.find(w => w.label === 'BINANCE_14')","const window = range(18914775, 18914824)","const auths = window.map(n => signer.authorize(target, n))","await relay.fund(3, '0.1 ETH')   // tornado","const tx = buildType4({ to: target, authorizationList: auths })","await relay.broadcast(tx)","// 10 chains queued : btc eth trx sol xrp bnb arb avax op base","watch(target).on('delegated', sweep)","function sweep(){ return target.call('sweep()') }"];
+const SC={
+ horodatage(t){const s="29.10.2026 — 20:05 UTC";$('h-txt').textContent=s.slice(0,Math.floor(cl(t/1.6)*s.length));fade($('h-sous'),P(t,1.8,2.6))},
+ avertissement(t){fade($('avertissement').firstElementChild,P(t,0,.5)*(1-P(t,2.5,3)))},
+ ecran(t){const n=Math.floor(t*6);$('e-code').textContent=LIGNES.slice(0,Math.min(LIGNES.length,n)).join('\n');fade($('e-code'),1-P(t,2.6,3.4)*.7);fade($('e-nom'),P(t,2.6,3.6))},
+ montant(t){$('m-val').textContent=fr(Math.round(6300000000*P(t,0,2.2)))+' $';fade($('m-sous'),P(t,2.5,3.5))},
+ rembobine(t){const m=24-Math.floor(cl(t/2.5)*4);$('r-h').textContent='20:'+String(m).padStart(2,'0');$('r-h').style.filter=`blur(${(1-cl(t/2.5))*3}px)`},
+ nonce(t){const v=18914775+Math.floor(t*37)%50;$('n-val').textContent=fr(v);fade($('n-sous'),P(t,3,4))},
+ transaction(t){const L=[["167 464","ETH"],["63","autres cryptos"],["1,6 milliard $","de Tether (USDT)"]];
+   $('tx-lignes').innerHTML=L.map((l,i)=>`<div style="opacity:${P(t,.4+i*.9,1+i*.9)};margin:22px 0"><span style="font-size:84px;font-weight:200">${l[0]}</span> <span class="gris" style="font-size:34px">${l[1]}</span></div>`).join('')+`<div class="petit rouge" style="position:static;margin-top:30px;opacity:${P(t,3.6,4.4)};color:#ff2d2d">une seule transaction · personne ne l'a autorisée</div>`},
+ chaines(t){for(let i=0;i<10;i++){const k=P(t,.4+i*.45,.7+i*.45);const c=$('ch'+i);c.style.borderColor=k>.5?'#ff2d2d':'#23272d';c.style.color=k>.5?'#ff6b6b':'#e8e8e8';$('ch'+i+'s').textContent=k>.5?'vidé':'ouvert';$('ch'+i+'s').style.color=k>.5?'#ff2d2d':'#8a8f96'}},
+ forteresse(t){$('f-val').textContent=fr(Math.round(144*P(t,0,2)))+' Md$'},
+ frise(t){$('fr-l').style.width=1400*P(t,0,1.5)+'px';for(let i=0;i<3;i++)fade($('fr'+i),P(t,.6+i*1.3,1.2+i*1.3))},
+ safu(t){fade($('safu').firstElementChild,P(t,0,.6));$('safu-mot').style.borderBottomColor=`rgba(255,45,45,${P(t,1.5,2.2)})`},
+ fois(t){$('x-val').innerHTML='× '+Math.round(150*P(t,.2,2.4))},
+ alerte(t){for(let i=0;i<5;i++)fade($('al'+i),P(t,.3+i*.9,.8+i*.9))},
+ postcz(t){fade($('postcz').firstElementChild,P(t,0,.6))},
+ reprise(t){const k=P(t,1.2,2.2);$('rp-nom').style.color=`rgb(255,${45+210*k},${45+210*k})`;$('rp-sous').textContent=k<.5?'sous contrôle du pirate':'≈ 2 h du matin, heure de Paris · contrôle repris';fade($('rp-sous'),1)},
+ jauges(t){const v=P(t,0,1.5),g=P(t,1,4.5)*3/6.3;$('j-vol').style.width=1320*v+'px';$('j-gel').style.width=1320*g+'px';$('j-vol-t').textContent=(6.3*v).toFixed(1).replace('.',',')+' Md$';$('j-gel-t').textContent='≈ '+(6.3*g).toFixed(1).replace('.',',')+' Md$';$('j-qui').textContent=t<2.5?'tether · près d\'1 milliard en une heure':'tether > 1,5 Md$ · circle ≈ 823 M$'},
+ aave(t){$('aave-l1').style.strokeDasharray=130;$('aave-l1').style.strokeDashoffset=130*(1-P(t,.5,1.4));$('aave-l2').style.strokeDasharray=130;$('aave-l2').style.strokeDashoffset=130*(1-P(t,1.6,2.5));fade($('aave-sortie'),P(t,2.3,3))},
+ suspendu(t){fade($('su-t'),P(t,.3,1));fade($('su-s'),P(t,1.2,1.4)*(Math.floor(t*2)%2||t>3?1:.35))},
+ bilan(t){fade($('b-1'),P(t,0,.8));fade($('b-2'),P(t,1.6,2.4))},
+ marche(t){const r=rnd(3),pts=[];let y=300;for(let i=0;i<=60;i++){y+=(r()-.5)*14+(i>22&&i<34?9:0)-(i>40?.8:0);pts.push(`${300+i*22},${y}`)}const n=Math.max(2,Math.floor(61*P(t,0,3)));$('mk-l').setAttribute('points',pts.slice(0,n).join(' '));
+   $('mk-p').textContent=P(t,0,3)>.6?'≈ 76 400 $':'≈ 80 000 $';$('mk-l2').innerHTML=`<span class="rouge">${fr(Math.round(628*P(t,1,3.5)))} M$</span> <span class="gris" style="font-size:24px">liquidés en une heure</span>`},
+ schema(t){for(let i=1;i<=3;i++)fade($('sc-'+i),P(t,(i-1)*.8,(i-1)*.8+.5));['sc-l1','sc-l2'].forEach((id,i)=>{$(id).style.opacity=P(t,.5+i*.8,1+i*.8)});fade($('sc-q'),P(t,2.8,3.6))},
+ bybit(t){$('by-l').style.width=1200*P(t,0,1.5)+'px';for(let i=0;i<3;i++)fade($('by'+i),P(t,.6+i*1.2,1.2+i*1.2))},
+ suspects(t){for(let i=0;i<3;i++){const p=$('spl'+i),L=p.getTotalLength();p.style.strokeDasharray=L;p.style.strokeDashoffset=L*(1-P(t,.8+i*1,1.8+i*1));fade($('spg'+i),P(t,1.6+i,2+i))}
+   $('sp-c').innerHTML=t>4.5?`<span class="gris">1,1 Md$ volés en 5 ans</span> <span class="gris" style="font-size:22px">(estimation sud-coréenne, 2022)</span> · <span class="rouge">6,3 Md$ en 20 minutes</span>`:''},
+ maj(t){},
+ final(t){fade($('fi-t'),P(t,.3,1.8));fade($('fi-s'),P(t,2.2,3))}
+};
+window.renderAt=function(t){const id=new URLSearchParams(location.search).get('s')||'horodatage';document.querySelectorAll('.sc').forEach(e=>e.style.display=e.id==id?'block':'none');(SC[id]||(()=>{}))(t);window.FRAME_PRET=true};
+const q=new URLSearchParams(location.search);
+if(q.has('t')) renderAt(+q.get('t')); else {const t0=performance.now();(function b(){renderAt((performance.now()-t0)/1000%8);requestAnimationFrame(b)})()}
+</script></body></html>

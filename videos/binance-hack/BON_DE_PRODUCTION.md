@@ -7,8 +7,8 @@
 | Voix off | ⏳ Mo génère p1…p10 | voix/ (texte : VOIX_OFF_BRUT.txt) |
 | Découpage | ✅ 42 plans | DECOUPAGE.md |
 | Assets réunis | ⏳ voir plus bas | assets3d/binance-hack/ |
-| Plans [CODE] | 🟡 plan 12 fait, 23 à faire | code/ |
-| Plans [3D] | 🟡 chambre du pirate en test (méthode Silk Road) | blender/chambre_pirate.py |
+| Plans [CODE] | ✅ 25 plans, à valider par Mo | code/plans.html (?s=<plan>&t=<s>) + code/plan12_autorisations.html — aperçu : code/planche_code.png |
+| Plans [3D] | 🟡 brouillons : chambre du pirate v7, ruelle v3, salle de crise, open space — attend voiture + HDRI de Mo | blender/ (chambre_pirate.py, ruelle.py, crise.py, bureau.py, commun.py) — tests : blender/tests/ |
 | Montage final | ⬜ | rendu/binance-hack_final.mp4 |
 | Miniature + Short | ⬜ | livrables/ |
 
