@@ -1,0 +1,13 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+body{margin:0;width:1600px;height:900px;background:#05080d;font:15px/1.45 "DejaVu Sans Mono",monospace;color:#3fdc7a;overflow:hidden}
+.bar{height:30px;background:#0c1420;color:#7fa3ff;padding:6px 14px;box-sizing:border-box;font-size:14px}
+.w{display:flex;height:870px}.c{flex:1;padding:14px 18px;white-space:pre}.r{width:520px;border-left:1px solid #13324a;padding:14px;white-space:pre;color:#8fb3ff}
+.red{color:#ff3b30}.dim{color:#2a6a44}.wh{color:#e6eefc}
+</style></head><body><div class="bar">root@node-7 : ~/ops — ssh tunnel · 4 sessions</div><div class="w"><div class="c" id="c"></div><div class="r" id="r"></div></div>
+<script>
+const L=["$ ./sweep --target hotwallet --chain eth","[+] loading signer context ........ ok","[+] relayer funded (3 x 0.1 ETH)","[*] building type-4 tx","    auth[0]  nonce 18914775  sig 0x8f3a..e1","    auth[1]  nonce 18914776  sig 0x1c9b..77","    auth[2]  nonce 18914777  sig 0xa04d..3f","    ...","    auth[49] nonce 18914824  sig 0x6e21..c0","[*] broadcasting ..................","[?] waiting for inclusion","<span class=red>[!] 1/50 authorization matched</span>","[+] delegation active","$ call sweep()","    ETH    167,464.00","    USDT   1,615,000,000","    tokens 63","<span class=wh>[+] tx confirmed  block 23 71x xxx</span>","$ _"];
+document.getElementById('c').innerHTML=L.map(l=>l.startsWith('    ')?'<span class=dim>'+l+'</span>':l).join('\n');
+let r="CHAINS\n";["BTC","ETH","TRX","SOL","XRP","BNB","ARB","AVAX","OP","TON"].forEach((c,i)=>r+=`  ${c.padEnd(6)} ${'█'.repeat(4+(i*7)%14).padEnd(18)} ${i<6?'<span class=red>drain</span>':'queue'}\n`);
+r+="\nRELAY   tornado → 0x7c86…6ca0\nGAS     ok\nTIME    20:24:06 UTC\n\n<span class=red>BINANCE 14</span>  0x28C6…1d60\nstatus  delegated\n";
+document.getElementById('r').innerHTML=r;
+</script></body></html>
