@@ -15,7 +15,7 @@ def ff(*a): subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', *a], check=Tru
 TL = [
  (0.0, 0.8, 'noir', ()),
  (0.8, 3.5, '3d', ('A_entree', 0, 1, False)),
- (3.5, 5.5, '3d', ('B_passe', 0, 1, False)),
+ (3.5, 5.5, '3d', ('B_passe', 0, .45, False)),
  (5.5, 8.0, '3d', ('C_montee', 0, 1, False)),
  (8.0, 10.5, '3d', ('D_dos', 0, 1, False)),
  (10.5, 12.0, 'code', ('ecran', 1.6, 3.4)),
@@ -23,10 +23,10 @@ TL = [
  (13.0, 16.2, 'code', ('titre', 0, 3.2)),
  (16.2, 22.4, 'code', ('date', 0, 6.2)),
  (22.4, 27.83, '3d', ('A_entree', 0, 1, False)),
- (27.83, 33.22, '3d', ('B_passe', 0, 1, False)),
+ (27.83, 33.22, '3d', ('B_passe', 0, .45, False)),
  (33.22, 37.44, '3d', ('C_montee', 0, 1, False)),
  (37.44, 40.57, '3d', ('G_large', 0, .5, False)),
- (40.57, 43.9, '3d', ('H_contre', 0, 1, False)),
+ (40.57, 43.9, '3d', ('G_large', 0, 1, True)),
  (43.9, 46.88, '3d', ('G_large', .5, 1, False)),
  (46.88, 49.4, 'code', ('ecran', 0, 2.4)),
  (49.4, 54.6, '3d', ('D_dos', 0, 1, False)),
@@ -41,7 +41,7 @@ TL = [
 ]
 
 def seg_noir(i, d):
-    out = f'{TMP}/{i:02d}.mp4'; ff('-f', 'lavfi', '-i', f'color=c=black:s={W}x{H}:r={FPS}', '-t', f'{d:.3f}', '-pix_fmt', 'yuv420p', '-c:v', 'libx264', out); return out
+    out = f'{TMP}/{i:02d}.mp4'; ff('-f', 'lavfi', '-i', f'color=c=black:s={W}x{H}:r={FPS}', '-frames:v', str(round(d * FPS)), '-pix_fmt', 'yuv420p', '-c:v', 'libx264', out); return out
 
 def seg_3d(i, d, plan, u0, u1, envers):
     src = sorted(f for f in os.listdir(f'{ANIM}/{plan}') if f.endswith('.png')); n = len(src)
@@ -52,8 +52,8 @@ def seg_3d(i, d, plan, u0, u1, envers):
     src_d = len(sel) / 8.0; vitesse = src_d / d                # < 1 = ralenti
     out = f'{TMP}/{i:02d}.mp4'
     vf = (f"setpts={1/vitesse:.4f}*PTS,minterpolate=fps={FPS}:mi_mode=mci:mc_mode=aobmc:vsbmc=1,"
-          f"scale={W}:{H}:flags=lanczos,format=yuv420p")
-    ff('-framerate', '8', '-i', f'{lst}/%04d.png', '-vf', vf, '-t', f'{d:.3f}', '-c:v', 'libx264', '-crf', '17', out)
+          f"scale={W}:{H}:flags=lanczos,tpad=stop_mode=clone:stop_duration={d:.3f},format=yuv420p")
+    ff('-framerate', '8', '-i', f'{lst}/%04d.png', '-vf', vf, '-frames:v', str(round(d * FPS)), '-r', str(FPS), '-c:v', 'libx264', '-crf', '17', out)
     return out
 
 def seg_code(i, d, pg, scene, t0, t1):
@@ -70,14 +70,14 @@ morceaux = []
 with sync_playwright() as p:
     br = p.chromium.launch(); pg = br.new_page(viewport={'width': 1920, 'height': 804})
     for i, (a, b, typ, par) in enumerate(TL):
-        d = b - a
+        d = (round(b * FPS) - round(a * FPS)) / FPS
         if typ == 'noir': morceaux.append(seg_noir(i, d))
         elif typ == '3d': morceaux.append(seg_3d(i, d, *par))
         else: morceaux.append(seg_code(i, d, pg, *par))
         print('SEG', i, typ, par[0] if par else '', round(d, 2), flush=True)
     br.close()
 open(f'{TMP}/liste.txt', 'w').write(''.join(f"file '{m}'\n" for m in morceaux))
-ff('-f', 'concat', '-safe', '0', '-i', f'{TMP}/liste.txt', '-c', 'copy', f'{TMP}/image.mp4')
+ff('-f', 'concat', '-safe', '0', '-i', f'{TMP}/liste.txt', '-r', str(FPS), '-c:v', 'libx264', '-crf', '17', f'{TMP}/image.mp4')
 
 # voix : partie 1 (0 → 64 s) découpée au silence avant « Entrée. » (48,30 s) et décalée : 18 s puis 67,5 s
 ff('-i', VOIX, '-filter_complex',
