@@ -61,6 +61,8 @@ Vidéo FR 2K · vidéo EN 2K · 2 miniatures · 2 titres FR + 2 EN · descriptio
 ## 6. Assets
 - Inventaire de tout ce qu'on possède : **`ASSETS.md`**. On le consulte avant de demander un téléchargement, et on le met à jour après chaque ajout.
 - Stockage : sur GitHub dans `assets3d/<catégorie>/` (fichier de moins de 50 Mo, à alléger avec `outils/`). Sur Google Drive « TRU_Stories_Assets/ » avec la même arborescence pour les fichiers plus lourds.
+- **Vidéos et rendus : jamais sur GitHub** (limite 100 Mo par fichier, le push échoue). Vidéos finales, reels, .blend validés → Drive `G:\Mon Drive\TRU_Stories_Assetsideos/<slug>/` (Google Drive pour ordinateur), liens dans le bon de production. Le `.gitignore` exclut `rendu/*.mp4`, `partie*/final*/`, `partie*/brouillon*/`. GitHub = scripts, textes, petites images, archives légères.
+- Git : pousser avec le compte **tagbamed025-lgtm** (propriétaire). Le dépôt local force ce compte (`credential.https://github.com.username`).
 - Sources : Mixamo (personnages + animations : **Without Skin, 30 fps**), BlenderKit, Poly Haven (HDRI, textures), Sketchfab, MPFB. Footage gratuit : Pexels, Pixabay.
 - Personnages figés pour Three.js : `videos/silk-road/3d/exporter_glb.py` → `assets3d/<slug>/glb/`. Archives (photos) : `assets3d/<slug>/archives/`.
 
