@@ -18,9 +18,9 @@ PL = [  # (début voix, fin voix, plan)
  (66.04, 67.62, ('code', 'horodatage', 0, 1.6)),
  (67.62, 69.4, ('foot', 'f69de8de-maskedtran_pindown.io_1793468966.mp4', 2.0)),
  (69.4, 71.86, ('3d', 'D_dos', 0, 1, False)),
- (71.86, 73.08, ('hack', 7.0, 7.6, CIBLE, (16, 60, 560, 234))),
- (73.08, 74.9, ('foot', '1aeebce7-BestAfterEffectsTutorials_pindown.io_1793469299.mp4', 4.0)),
- (74.9, 80.2, ('3d', 'V_coffre', 0, 1, False)),
+ (71.86, 74.5, ('hack', 7.0, 8.4, CIBLE, (16, 60, 560, 234))),
+ (74.5, 75.7, ('foot', '1aeebce7-BestAfterEffectsTutorials_pindown.io_1793469299.mp4', 4.0)),
+ (75.7, 80.2, ('3d', 'V_coffre', 0, 1, False)),
  (80.2, 83.58, ('three', 'pieces', 0, 4.5)),
  (83.58, 85.6, ('3d', 'N_epaule', 0, 1, False)),
  (85.6, 88.67, ('code', 'nonce', 0, 3.0)),
@@ -104,7 +104,7 @@ for s in np.cumsum(rng.uniform(.08, .2, 30)) + g(83.58):
     if s < g(85.6): fx += burst(s, .03, 1500, 7000, .22)
 fx += burst(g(96.27) + 1.5 * (100.56 - 96.27) / 4.6, .06, 800, 6000, .7)                                           # clic « ENVOYER »
 for j in range(50): fx += burst(g(96.27) + (2 + j * 3.5 / 50) * (100.56 - 96.27) / 4.6, .015, 3000, 9000, .12)       # 50 envois
-fx += reverb(coup(g(74.9) + 1.6 * 5.3 / 5, 50, 30, 1.6, .5), 2.2, .4)                                              # porte du coffre
+fx += reverb(coup(g(75.7) + 1.6 * 4.5 / 5, 50, 30, 1.6, .5), 2.2, .4)                                              # porte du coffre
 fx += reverb(coup(g(103.05) + .2, 62, 36, .9, .5), 2, .4)                                                          # « acceptée »
 mt = env([(0, 0), (sil0 - 3, 0), (sil0 - .02, 1), (sil0, 0), (T, 0)])
 fx += bp(rng.standard_normal(N), 300, 7000) * mt ** 2 * .4
