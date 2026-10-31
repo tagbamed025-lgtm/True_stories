@@ -178,7 +178,7 @@ const LIGNES=["import { signer, relay } from './ops'","const target = hotwallets
 const SC={
  titre(t){fade($('ti-t'),P(t,0,.15)*(1-P(t,2.6,3.2)));fade($('ti-s'),P(t,.5,1.1)*(1-P(t,2.6,3.2)));fade(document.querySelector('#titre .petit'),P(t,.2,.8)*(1-P(t,2.6,3.2)))},
  date(t){fade($('da-t'),P(t,0,.8));fade($('da-s'),P(t,.6,1.4))},
- horodatage(t){const s="29.10.2026 — 20:05 UTC";$('h-txt').textContent=s.slice(0,Math.floor(cl(t/1.6)*s.length));fade($('h-sous'),P(t,1.8,2.6))},
+ horodatage(t){const s=new URLSearchParams(location.search).get("h")||"29.10.2026 — 20:05 UTC";$('h-txt').textContent=s.slice(0,Math.floor(cl(t/1.6)*s.length));fade($('h-sous'),P(t,1.8,2.6))},
  avertissement(t){fade($('avertissement').firstElementChild,P(t,0,.5)*(1-P(t,2.5,3)))},
  ecran(t){const n=Math.floor(t*6);$('e-code').textContent=LIGNES.slice(0,Math.min(LIGNES.length,n)).join('\n');fade($('e-code'),1-P(t,2.6,3.4)*.7);fade($('e-nom'),P(t,2.6,3.6))},
  montant(t){$('m-val').textContent=fr(Math.round(6300000000*P(t,0,2.2)))+' $';fade($('m-sous'),P(t,2.5,3.5))},

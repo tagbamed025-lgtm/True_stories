@@ -1,0 +1,42 @@
+<!doctype html>
+<!-- TRU Stories · Binance · écran du pirate en GROS plan, lisible sur téléphone. envoi.html?t=<s>&z=<zoom 0..1>
+     0–1,6 s : curseur vers « ENVOYER » · 1,6 s clic · 2–5,5 s les 50 envois partent un à un · 6 s : 49 rejetées · 6,8 s : 1 ACCEPTÉE (rouge) -->
+<html lang="fr"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:"TRU Texte";src:local("Segoe UI"),url(polices/OpenSans.ttf)}
+html,body{margin:0;width:1920px;height:804px;background:#05080c;overflow:hidden;color:#dfe6f0;font-family:"DejaVu Sans Mono",monospace}
+#v{position:absolute;inset:0;transform-origin:50% 50%}
+.top{position:absolute;left:60px;right:60px;top:34px;display:flex;align-items:center;gap:28px}
+.top img{height:64px}.top .t{font:600 40px "TRU Texte",sans-serif;letter-spacing:.04em}
+.top .n{margin-left:auto;font-size:34px;color:#6fa8ff}
+#btn{position:absolute;left:60px;top:128px;padding:22px 44px;border:3px solid #f0b90b;color:#f0b90b;font:700 38px "DejaVu Sans Mono",monospace;border-radius:8px;letter-spacing:.06em}
+#cnt{position:absolute;right:60px;top:128px;font:300 74px "TRU Texte",sans-serif;font-variant-numeric:tabular-nums}
+#g{position:absolute;left:60px;right:60px;top:250px;display:grid;grid-template-columns:repeat(10,1fr);gap:12px}
+.c{height:92px;border:3px solid #1c2633;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:26px;color:#2c3a4c}
+.c small{font-size:17px;margin-top:4px;letter-spacing:.08em}
+#ok{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:30px 70px;border:5px solid #ff2d2d;background:rgba(30,0,0,.94);color:#ff3b30;font:700 72px "DejaVu Sans Mono",monospace;letter-spacing:.08em;opacity:0;box-shadow:0 0 90px rgba(255,40,40,.5);text-align:center}
+#ok small{display:block;font-size:30px;color:#ffb3ad;margin-top:10px;letter-spacing:.1em}
+#cur{position:absolute;width:0;height:0;border-left:22px solid #fff;border-top:16px solid transparent;border-bottom:16px solid transparent;transform:rotate(-30deg);filter:drop-shadow(0 0 6px #000)}
+.scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.02) 0 1px,transparent 1px 3px)}
+</style></head><body><div id="v">
+<div class="top"><img src="img/binance_icone.png"><span class="t">BINANCE 14</span><span style="color:#4a5568;font-size:30px">hot wallet</span><span class="n" id="n">nonce 18 914 790</span></div>
+<div id="btn">▶ ENVOYER 50 AUTORISATIONS</div><div id="cnt">0 / 50</div>
+<div id="g"></div><div id="ok">1 / 50 ACCEPTÉE<small>nonce 18 914 790 · délégation active</small></div><div id="cur"></div></div><div class="scan"></div>
+<script>
+const q=new URLSearchParams(location.search),t=+(q.get('t')||0),z=+(q.get('z')||0);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)),E=u=>u*u*(3-2*u),P=(a,b)=>cl((t-a)/(b-a));
+const $=i=>document.getElementById(i),G=15;
+$('g').innerHTML=Array.from({length:50},(_,i)=>`<div class="c" id="c${i}">${String(18914775+i).slice(-3)}<small></small></div>`).join('');
+const sent=Math.floor(P(2,5.5)*50+(t>=5.5?0:0));$('cnt').textContent=Math.min(50,sent)+' / 50';
+for(let i=0;i<50;i++){const c=$('c'+i),s=c.querySelector('small');
+  if(t>=6&&i!==G){c.style.borderColor='#141b24';c.style.color='#28323f';s.textContent='REJETÉE';c.style.textDecoration='line-through'}
+  else if(t>=6.8&&i===G){c.style.borderColor='#ff2d2d';c.style.background='#3a0606';c.style.color='#ff5148';s.textContent='ACCEPTÉE'}
+  else if(i<sent){const fresh=i>sent-4;c.style.borderColor=fresh?'#6fa8ff':'#2e5a86';c.style.background=fresh?'#12304f':'#0c1a2a';c.style.color='#bcd6f5';s.textContent='ENVOYÉE'}}
+const bx=320,by=160,ux=1400*(1-E(P(0,1.5)))+bx*E(P(0,1.5)),uy=650*(1-E(P(0,1.5)))+by*E(P(0,1.5));
+$('cur').style.left=ux+'px';$('cur').style.top=uy+'px';$('cur').style.opacity=t<2.4?1:0;
+const clic=t>=1.5&&t<1.8;$('btn').style.background=clic?'#f0b90b':(t>=1.8?'rgba(240,185,11,.12)':'');$('btn').style.color=clic?'#000':'#f0b90b';
+if(t>=1.8)$('btn').textContent='● ENVOI EN COURS…';
+$('ok').style.opacity=cl((t-6.8)/.15);
+const k=1+z*.6;$('v').style.transform=`scale(${k})`;
+window.FRAME_PRET=true;
+</script></body></html>
