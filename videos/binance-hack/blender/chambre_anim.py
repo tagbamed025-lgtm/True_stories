@@ -140,18 +140,19 @@ ENTREE=max(touches,key=lambda o:(o.location.x if abs(o.location.y-1.32)<.02 else
 PLANS={
  'D_dos':(2.5,((.6,-.15,1.5),(.35,.25,1.35)),((0,1.75,1.1),(0,1.75,1.1)),38,0),
  'F_entree':(1.2,((.42,1.05,.93),(.40,1.08,.91)),((.19,1.32,.79),(.19,1.32,.79)),60,1),
+ 'L_ecran':(5.0,((-.42,1.62,1.24),(-.36,1.60,1.20)),((1.2,-1.8,.75),(1.35,-1.8,.75)),22,0),
  'G_large':(3.0,((-2.1,-2.6,1.75),(-1.7,-2.3,1.6)),((.3,.8,.95),(.2,1.0,.95)),24,0),
  'H_contre':(3.0,((-1.25,1.85,1.32),(-1.1,1.75,1.25)),((.35,-.7,1.0),(.3,-.7,1.0)),32,0),
 }
 for nom,(d,(p0,p1),(t0,t1),lens,entree) in PLANS.items():
     if os.environ.get('SEUL') and nom not in os.environ['SEUL'].split(','): continue
-    os.makedirs(f'/home/claude/anim/{nom}',exist_ok=True); n=int(round(d*FPS)); CAM.data.lens=lens
+    os.makedirs(f'/home/claude/anim/{nom}',exist_ok=True); n=int(round(d*FPS)); CAM.data.lens=lens; CAM.data.dof.aperture_fstop=6.5 if nom=='L_ecran' else 2.4
     for f in range(n):
         out=f'/home/claude/anim/{nom}/{f:04d}.png'
         if os.path.exists(out): continue
         u=f/max(1,n-1); e=ease(u)
         sc.frame_set(int(40+ (hash(nom)%300) + f*2.5))   # animation Mixamo 60 i/s ralentie ×0,5
-        p=lerp(p0,p1,e); t=lerp(t0,t1,e); CAM.location=p; CAM.rotation_euler=(t-p).to_track_quat('-Z','Y').to_euler(); CAM.data.dof.focus_distance=(t-p).length
+        p=lerp(p0,p1,e); t=lerp(t0,t1,e); CAM.location=p; CAM.rotation_euler=(t-p).to_track_quat('-Z','Y').to_euler(); CAM.data.dof.focus_distance=(1.0 if nom=='L_ecran' else (t-p).length)
         if entree and ENTREE: ENTREE.location.z=.785-(.006 if u>.55 else 0)
         bpy.context.view_layer.update()
         sc.render.filepath=out; bpy.ops.render.render(write_still=True); print('IMG',nom,f,flush=True)

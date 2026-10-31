@@ -23,12 +23,12 @@ TL = [
  (12.0, 13.0, '3d', ('F_entree', 0, 1, False)),
  (13.0, 16.2, 'code', ('titre', 0, 3.2)),
  (16.2, 22.4, 'code', ('date', 0, 6.2)),
- (22.4, 27.83, '3d', ('I_dessus', 0, .5, False)),
- (27.83, 33.22, '3d', ('I_dessus', .5, 1, False)),
+ (22.4, 26.4, '3d', ('I_dessus', 0, .5, False)),
+ (26.4, 30.4, '3d', ('J_face', 0, 1, False)),
+ (30.4, 33.22, '3d', ('K_facades', 0, 1, False)),
  (33.22, 37.44, '3d', ('C_montee', 0, 1, False)),
  (37.44, 40.57, '3d', ('G_large', 0, .5, False)),
- (40.57, 43.9, '3d', ('G_large', 0, 1, True)),
- (43.9, 46.88, '3d', ('G_large', .5, 1, False)),
+ (40.57, 46.88, '3d', ('L_ecran', 0, 1, False)),
  (46.88, 49.4, 'hack', (0, 2.6, (0, 138, 1920, 804), (300, 160, 1500, 628))),
  (49.4, 54.6, '3d', ('D_dos', 0, 1, False)),
  (54.6, 57.13, '3d', ('F_entree', 0, .5, False)),
@@ -103,5 +103,5 @@ ff('-i', f'{TMP}/image.mp4', '-i', f'{TMP}/voix.wav', '-i', MUS, '-filter_comple
    "[1]asplit[va][vb];[2]volume=0.55[m];[m][va]sidechaincompress=threshold=0.03:ratio=4:attack=20:release=400[md];[vb][md]amix=inputs=2:normalize=0,alimiter=limit=0.95[a];"
    "[0]noise=alls=2:allf=t,vignette=PI/6[v]",
    '-map', '[v]', '-map', '[a]', '-c:v', 'libx264', '-crf', '19', '-preset', 'medium', '-c:a', 'aac', '-b:a', '192k', '-t', '85',
-   '/home/claude/anim/binance_ouverture_v3.mp4')
+   '/home/claude/anim/binance_ouverture_v4.mp4')
 print('FINI')
