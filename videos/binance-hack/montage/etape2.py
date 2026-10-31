@@ -1,6 +1,7 @@
 # Partie 2 · étape 2 (voix 105,3 → 129,67 s : « Vingt heures vingt-quatre » → « Binance. »).
 # Chaque plan coupe sur le début de la phrase (calage_p2p5.json). Plans de 1 à 3 s, alternance 3D / écran / Three.js / footage.
 import os, shutil, subprocess, wave
+from urllib.parse import quote
 import numpy as np
 from scipy.signal import butter, sosfilt, fftconvolve
 from playwright.sync_api import sync_playwright
@@ -25,7 +26,7 @@ PL = [
  (121.42, 123.75, ('three', 'globe', 0, 2.6, {'x': 420, 'y': 176, 'width': 1080, 'height': 452})),
  (123.75, 126.76, ('hack', 7.0, 8.4, (16, 380, 620, 259), (16, 380, 620, 259))),
  (126.76, 128.02, ('three', 'globe', 3.8, 5.2, {'x': 420, 'y': 176, 'width': 1080, 'height': 452})),
- (128.02, 129.67, ('three', 'tours', 2.4, 4.6)),
+ (128.02, 129.67, ('logo',)),
 ]
 def seg_noir(out, n): ff('-f', 'lavfi', '-i', f'color=c=black:s={W}x{H}:r={FPS}', '-frames:v', str(n), '-pix_fmt', 'yuv420p', '-c:v', 'libx264', out)
 def seg_3d(out, n, plan, u0, u1, envers):
@@ -59,6 +60,9 @@ with sync_playwright() as p:
         elif typ == 'code': sc_, t0, t1, *cz = s[1:]; capture(pg, out, n, lambda u: (f'file://{R}plans.html?s={sc_}&h=29.10.2026%20%E2%80%94%2020:24%20UTC&t={t0+(t1-t0)*u:.3f}', cz[0] if cz else None))
         elif typ == 'three': sc_, t0, t1, *cz = s[1:]; capture(pg, out, n, lambda u: (f'file://{R}scenes3d.html?s={sc_}&t={t0+(t1-t0)*u:.3f}', cz[0] if cz else None))
         elif typ == 'envoi': t0, t1, z0, z1 = s[1:]; capture(pg, out, n, lambda u: (f'file://{R}envoi.html?t={t0+(t1-t0)*u:.3f}&z={z0+(z1-z0)*E(u):.3f}', None))
+        elif typ == 'logo': capture(pg, out, n, lambda u: (f'file://{R}logo.html?d={n/FPS:.2f}&t={u*n/FPS:.3f}', None))
+        elif typ == 'art': img, hl = s[1:]; d = n / FPS; capture(pg, out, n, lambda u: (f'file://{R}archive.html?img={img}&mode=article&d={d:.2f}&t={u*d:.3f}&hl={hl}', None))
+        elif typ == 'portrait': img, nom, role = s[1:]; d = n / FPS; capture(pg, out, n, lambda u: (f'file://{R}archive.html?img={img}&mode=portrait&d={d:.2f}&t={u*d:.3f}&nom={quote(nom)}&role={quote(role)}', None))
         elif typ == 'hack':
             t0, t1, c0, c1 = s[1:]; pg.set_viewport_size({'width': 1920, 'height': 1080})
             capture(pg, out, n, lambda u: (f'file://{R}ecran_hacker.html?t={t0+(t1-t0)*u:.3f}', lerpc(c0, c1, E(u))))

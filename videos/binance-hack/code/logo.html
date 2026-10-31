@@ -1,0 +1,10 @@
+<!doctype html><!-- TRU Stories · logo Binance plein écran. logo.html?t=<s>&d=<durée> --><html><head><meta charset="utf-8"><style>
+html,body{margin:0;width:1920px;height:804px;background:#030405;overflow:hidden}
+#w{position:absolute;left:50%;top:50%;display:flex;align-items:center;gap:60px;transform-origin:50% 50%}
+#i{height:300px;filter:drop-shadow(0 0 50px rgba(240,185,11,.45))}#h{font:800 150px/1 "DejaVu Sans",Arial,sans-serif;color:#f0b90b;letter-spacing:.06em;text-shadow:0 0 40px rgba(240,185,11,.35)}
+#lu{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(240,185,11,.10),transparent 60%)}
+</style></head><body><div id="lu"></div><div id="w"><img id="i" src="img/binance_icone.png"><span id="h">BINANCE</span></div><script>
+const q=new URLSearchParams(location.search),t=+(q.get('t')||0),D=+(q.get('d')||2),u=Math.min(1,t/D),e=u*u*(3-2*u);
+const w=document.getElementById('w');let n=0;const ok=()=>{if(++n<2)return;w.style.transform=`translate(-50%,-50%) scale(${.9+.14*e})`;w.style.opacity=Math.min(1,t/.25);window.FRAME_PRET=true};
+n=1;['i'].forEach(id=>{const im=document.getElementById(id);im.complete?ok():im.onload=ok});
+</script></body></html>

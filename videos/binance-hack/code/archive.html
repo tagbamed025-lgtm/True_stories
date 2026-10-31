@@ -31,7 +31,7 @@ const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)), ease=u=>u*u*(3-2*u);
 const src='../../../assets3d/binance/archives/'+q.get('img');
 let pret=false;
 if(mode==='article'){document.getElementById('photo').style.display='none';document.getElementById('tag').style.display='none';
-  const im=document.getElementById('aimg'); im.onload=()=>{const r=im.naturalWidth/im.naturalHeight;let w=1500,h=w/r;if(h>680){h=680;w=h*r}
+  const im=document.getElementById('aimg'); im.onload=()=>{const r=im.naturalWidth/im.naturalHeight;let w=1800,h=w/r;if(h>760){h=760;w=h*r}
     const c=document.getElementById('carte');c.style.width=w+'px';c.style.height=h+'px';c.style.marginLeft=-w/2+'px';c.style.marginTop=-h/2+'px';
     if(q.get('hl')){const [x,y,ww,hh]=q.get('hl').split(',').map(Number),H=document.getElementById('hl');H.style.left=x+'%';H.style.top=y+'%';H.style.width=ww+'%';H.style.height=hh+'%'}
     pret=true;go()}; im.src=src;
@@ -42,7 +42,9 @@ if(mode==='article'){document.getElementById('photo').style.display='none';docum
 }
 function renderAt(t){const u=cl(t/D),e=ease(u);
   if(mode==='article'){const c=document.getElementById('carte');
-    c.style.transform=`rotateY(${-7+9*e}deg) rotateX(${3-2*e}deg) scale(${.92+.12*e})`;
+    let zx=0,zy=0,zs=1;const hl=q.get('hl');if(hl){const [x,y,ww,hh]=hl.split(',').map(Number),z=ease(cl((t-D*.3)/(D*.45)));
+      const W=c.offsetWidth,Hh=c.offsetHeight;zs=1+z*Math.min(1.1,Math.max(0,(1500/(ww/100*W))-1));zx=-((x+ww/2)/100-.5)*W*z*zs;zy=-((y+hh/2)/100-.5)*Hh*z*zs}
+    c.style.transform=`translate(${zx}px,${zy}px) rotateY(${(-7+9*e)*(1/zs)}deg) rotateX(${(3-2*e)/zs}deg) scale(${(.95+.1*e)*zs})`;
     document.getElementById('hl').style.opacity=cl((t-D*.35)/.4);
   }else{const im=document.getElementById('pimg');
     im.style.transform=`translate(-50%,-50%) scale(${1.0+.08*e}) translateX(${-10+20*e}px)`;
