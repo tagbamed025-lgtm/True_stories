@@ -1,0 +1,90 @@
+<!doctype html>
+<!-- TRU Stories · Binance · scènes Three.js (caméra seule). scenes3d.html?s=<scène>&t=<s>
+     coffre · cles · globe · pieces · graphe · telephone · tours. Principal = rouge émissif, le reste blanc/gris, fond noir. -->
+<html lang="fr"><head><meta charset="utf-8">
+<style>html,body{margin:0;width:1920px;height:804px;background:#030405;overflow:hidden}canvas{display:block}</style>
+<script src="three.min.js"></script></head><body><script>
+const q=new URLSearchParams(location.search),S=q.get('s')||'coffre',T=+(q.get('t')||0);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)),E=u=>u*u*(3-2*u),P=(t,a,b)=>cl((t-a)/(b-a));
+const R=new THREE.WebGLRenderer({antialias:true});R.setSize(1920,804);R.setPixelRatio(1);document.body.appendChild(R.domElement);
+R.toneMapping=THREE.ACESFilmicToneMapping;
+const sc=new THREE.Scene();sc.background=new THREE.Color(0x030405);sc.fog=new THREE.FogExp2(0x030405,.045);
+const cam=new THREE.PerspectiveCamera(35,1920/804,.1,400);
+sc.add(new THREE.AmbientLight(0xffffff,.12));
+const key=new THREE.DirectionalLight(0xdfe8ff,.9);key.position.set(4,8,6);sc.add(key);
+const ROUGE=new THREE.MeshStandardMaterial({color:0x330000,emissive:0xff1a1a,emissiveIntensity:1.6,roughness:.4});
+const BLANC=new THREE.MeshStandardMaterial({color:0xd8dde4,roughness:.55,metalness:.2});
+const GRIS=new THREE.MeshStandardMaterial({color:0x2a2f36,roughness:.7,metalness:.4});
+const OR=new THREE.MeshStandardMaterial({color:0xf0b90b,emissive:0x3a2a00,roughness:.3,metalness:.9});
+let r=1;const rnd=()=>((r=Math.imul(r^r>>>15,1|r)+0x6D2B79F5)>>>0)/4294967296;
+function sol(){const g=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.MeshStandardMaterial({color:0x07090c,roughness:.35,metalness:.6}));g.rotation.x=-Math.PI/2;sc.add(g);return g}
+function look(p,c){cam.position.set(...p);cam.lookAt(...c)}
+const L=(a,b,u)=>a.map((v,i)=>v+(b[i]-v)*u);
+const sc_={
+coffre(t){ // porte de coffre-fort qui s'ouvre, lueur rouge derrière
+  sol();const mur=new THREE.Mesh(new THREE.BoxGeometry(12,8,.6),GRIS);mur.position.set(0,4,-.4);sc.add(mur);
+  const pivot=new THREE.Group();pivot.position.set(-1.6,3,0.1);sc.add(pivot);
+  const porte=new THREE.Mesh(new THREE.CylinderGeometry(1.6,1.6,.5,64),GRIS);porte.rotation.x=Math.PI/2;porte.position.x=1.6;pivot.add(porte);
+  const volant=new THREE.Mesh(new THREE.TorusGeometry(.6,.07,12,48),GRIS);volant.position.set(1.6,0,.3);pivot.add(volant);
+  for(let i=0;i<3;i++){const b=new THREE.Mesh(new THREE.BoxGeometry(1.2,.08,.08),GRIS);b.rotation.z=i*Math.PI/3;b.position.set(1.6,0,.3);pivot.add(b);b.rotation.z+=t*.8}
+  volant.rotation.z=t*.8;pivot.rotation.y=-E(P(t,1.2,3.5))*1.9;
+  const fond=new THREE.Mesh(new THREE.CircleGeometry(1.5,48),ROUGE);fond.position.set(0,3,-.05);sc.add(fond);
+  const pl=new THREE.PointLight(0xff2020,2.2*P(t,1.2,3),9);pl.position.set(0,3,1.5);sc.add(pl);
+  look(L([5,3,14],[2,3.1,9.5],E(P(t,0,4))),[0,3,0]);},
+cles(t){ // 50 clés en anneau, une seule devient rouge
+  sol();const g=new THREE.Group();sc.add(g);
+  for(let i=0;i<50;i++){const a=i/50*Math.PI*2,k=new THREE.Group();
+    const m=(i===15&&t>2.4)?ROUGE:BLANC;
+    const tete=new THREE.Mesh(new THREE.TorusGeometry(.18,.05,8,24),m),tige=new THREE.Mesh(new THREE.BoxGeometry(.06,.6,.05),m);tige.position.y=-.45;
+    const dent=new THREE.Mesh(new THREE.BoxGeometry(.14,.06,.05),m);dent.position.set(.08,-.68,0);k.add(tete,tige,dent);
+    k.position.set(Math.cos(a)*4,1.6+Math.sin(i*1.7)*.15,Math.sin(a)*4);k.rotation.y=-a+t*.3;
+    if(t>2.4&&i!==15){k.position.y-=E(P(t,2.4+(i%7)*.08,3.6))*1.3;k.rotation.z=E(P(t,2.4,3.6))*1.2}
+    if(i===15&&t>2.4)k.position.y+=E(P(t,2.4,3.4))*.4;g.add(k)}
+  g.rotation.y=t*.15-.4;
+  const pl=new THREE.PointLight(0xff2020,t>2.4?4:0,6);pl.position.set(Math.cos(15/50*Math.PI*2-.4+t*.15)*4,2,0);sc.add(pl);
+  look(L([0,3.4,10],[0,2.2,7.2],E(P(t,0,5))),[0,1.4,0]);},
+globe(t){ // globe filaire, 10 arcs rouges partent d'un point
+  const G=new THREE.Mesh(new THREE.SphereGeometry(3,48,32),new THREE.MeshBasicMaterial({color:0x3a4250,wireframe:true,transparent:true,opacity:.35}));sc.add(G);
+  const Gi=new THREE.Mesh(new THREE.SphereGeometry(2.97,48,32),new THREE.MeshStandardMaterial({color:0x07090c}));sc.add(Gi);
+  const v=(la,lo)=>new THREE.Vector3().setFromSphericalCoords(3,(90-la)*Math.PI/180,lo*Math.PI/180);
+  const src=v(1.3,103.8);const s=new THREE.Mesh(new THREE.SphereGeometry(.09,16,16),ROUGE);s.position.copy(src);sc.add(s);
+  const dst=[[40,-74],[51,0],[35,139],[-33,151],[55,37],[19,72],[-23,-46],[37,127],[1,30],[60,-100]];
+  dst.forEach(([la,lo],i)=>{const d=v(la,lo),m=src.clone().add(d).multiplyScalar(.5).normalize().multiplyScalar(4.6);
+    const c=new THREE.QuadraticBezierCurve3(src,m,d),u=P(t,.6+i*.25,1.8+i*.25);if(u<=0)return;
+    const pts=c.getPoints(60).slice(0,Math.max(2,Math.ceil(61*u)));
+    sc.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0xff2a2a})));
+    if(u>=1){const e=new THREE.Mesh(new THREE.SphereGeometry(.06,12,12),ROUGE);e.position.copy(d);sc.add(e)}});
+  const grp=sc.children.filter(o=>o!==cam);const rot=-1.9+t*.12;grp.forEach(o=>{if(o.isMesh||o.isLine){o.position.applyAxisAngle(new THREE.Vector3(0,1,0),rot);o.rotation.y+=rot}});
+  look(L([0,1.5,11],[0,.6,8.6],E(P(t,0,5))),[0,0,0]);},
+pieces(t){ // portefeuille-cube qui se vide : pièces aspirées vers le noir
+  sol();const box=new THREE.Mesh(new THREE.BoxGeometry(2.4,1.6,1.6),BLANC);box.position.set(-2.5,.8,0);sc.add(box);
+  const fente=new THREE.Mesh(new THREE.BoxGeometry(.1,1,1),ROUGE);fente.position.set(-1.28,.8,0);sc.add(fente);
+  for(let i=0;i<120;i++){const d=(i/120)*4,u=cl((t-d*.6)/1.6);if(u<=0)continue;
+    const c=new THREE.Mesh(new THREE.CylinderGeometry(.16,.16,.035,24),OR);
+    const y=.8+Math.sin(i*2.3)*.45,z=Math.cos(i*1.7)*.45;
+    c.position.set(-1.3+u*10,y+u*u*1.5*Math.sin(i),z+u*2*Math.cos(i*.7));c.rotation.set(i+u*6,u*5,i);sc.add(c)}
+  box.scale.y=1-E(P(t,1,5))*.6;box.position.y=.8*box.scale.y;
+  const pl=new THREE.PointLight(0xff2020,3,8);pl.position.set(-1,1.4,1);sc.add(pl);
+  look(L([-3,2.4,7],[1,1.6,6],E(P(t,0,5))),[0,.8,0]);},
+graphe(t){ // barres 3D (marché) qui s'effondrent en rouge
+  sol();const N=24;
+  for(let i=0;i<N;i++){const h0=1.5+Math.sin(i*.5)*.4+i*.08,chute=E(P(t,.8+i*.05,2.2+i*.05)),h=h0*(1-chute*(.4+.5*(i/N)));
+    const b=new THREE.Mesh(new THREE.BoxGeometry(.32,h,.32),chute>.05?ROUGE:BLANC);b.position.set((i-N/2)*.5,h/2,0);sc.add(b)}
+  look(L([-9,4.5,11],[6,2.6,9],E(P(t,0,5))),[0,1,0]);},
+telephone(t){ // téléphone sur table dans le noir, écran qui s'allume et vibre
+  const table=new THREE.Mesh(new THREE.BoxGeometry(8,.2,5),new THREE.MeshStandardMaterial({color:0x14100c,roughness:.6}));table.position.y=-.1;sc.add(table);
+  const ph=new THREE.Group();sc.add(ph);ph.add(new THREE.Mesh(new THREE.BoxGeometry(.75,.06,1.55),GRIS));
+  const on=t>.8;const ecr=new THREE.Mesh(new THREE.PlaneGeometry(.68,1.45),on?new THREE.MeshBasicMaterial({color:0x9aa3ad}):new THREE.MeshBasicMaterial({color:0x050505}));
+  ecr.rotation.x=-Math.PI/2;ecr.position.y=.032;ph.add(ecr);
+  if(on){const bd=new THREE.Mesh(new THREE.PlaneGeometry(.6,.18),new THREE.MeshBasicMaterial({color:0xff2020}));bd.rotation.x=-Math.PI/2;bd.position.set(0,.034,-.5);ph.add(bd);
+    const pl=new THREE.PointLight(0xdfe8ff,1.5,3);pl.position.y=.6;sc.add(pl)}
+  const vib=on&&(Math.floor(t*2)%2===0)?Math.sin(t*90)*.02:0;ph.position.x=vib;ph.rotation.y=.3+vib*2;
+  look(L([1.6,1.4,1.8],[.5,.9,.8],E(P(t,0,4))),[0,0,0]);},
+tours(t){ // skyline de tours, les fenêtres s'éteignent, une seule tour rouge (Binance)
+  sol();for(let i=0;i<40;i++){const x=(rnd()-.5)*40,z=-rnd()*30-4,h=3+rnd()*10,w=1+rnd()*1.5;
+    const bin=i===7,m=new THREE.Mesh(new THREE.BoxGeometry(w,h,w),bin?ROUGE:new THREE.MeshStandardMaterial({color:0x0c0f13,emissive:0xdfe8ff,emissiveIntensity:.08*(1-E(P(t,1+rnd()*3,1.4+rnd()*3)))}));
+    m.position.set(bin?0:x,h/2,bin?-8:z);if(bin){m.scale.y=1.2;m.position.y=h*.6;m.material=ROUGE.clone();m.material.emissiveIntensity=1.6*(1-.8*E(P(t,3,4.5)))}sc.add(m)}
+  look(L([0,1.2,12],[0,4,6],E(P(t,0,5))),[0,4,-8]);},
+};
+(sc_[S]||sc_.coffre)(T);R.render(sc,cam);window.FRAME_PRET=true;
+</script></body></html>

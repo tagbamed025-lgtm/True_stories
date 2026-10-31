@@ -1,0 +1,53 @@
+<!doctype html>
+<!-- TRU Stories · plans d'archives réelles (captures d'articles, posts, photos de personnes).
+     archive.html?img=<fichier>&mode=article|portrait&t=<s>&d=<durée>&hl=x,y,w,h (surlignage en % de l'image)&nom=…&role=…
+     article  : la capture flotte en carte sur fond noir, légère rotation 3D + lent zoom, puis trait rouge sur la phrase clé.
+     portrait : la photo plein cadre, désaturée (charte nuit), Ken Burns lent, étiquette de nom noire à bord blanc déchiré. -->
+<html lang="fr"><head><meta charset="utf-8">
+<style>
+  @font-face{font-family:"TRU Texte";src:local("Segoe UI"),url(polices/OpenSans.ttf)}
+  html,body{margin:0;width:1920px;height:804px;background:#050607;overflow:hidden}
+  #scene{position:absolute;inset:0;perspective:1800px}
+  #carte{position:absolute;left:50%;top:50%;transform-origin:50% 50%;box-shadow:0 40px 120px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.06);background:#fff}
+  #carte img{display:block;width:100%;height:100%;object-fit:cover}
+  #hl{position:absolute;border:3px solid #ff2d2d;border-radius:3px;box-shadow:0 0 30px rgba(255,45,45,.45);opacity:0}
+  #ombre{position:absolute;inset:0;background:rgba(5,6,7,.0);pointer-events:none}
+  #photo{position:absolute;inset:0;overflow:hidden}
+  #photo #fond{position:absolute;inset:-60px;background-size:cover;background-position:center;filter:blur(38px) saturate(.4) brightness(.35)}
+  #photo img{position:absolute;left:50%;top:50%;height:100%;transform-origin:50% 45%;filter:saturate(.6) brightness(.92) contrast(1.05);box-shadow:0 0 120px rgba(0,0,0,.8)}
+  #tag{position:absolute;left:110px;bottom:120px;background:#0a0a0a;color:#f2f2f2;padding:18px 28px 16px;opacity:0;
+       font:600 34px/1.1 "DejaVu Sans Mono",Consolas,monospace;letter-spacing:.02em;
+       outline:3px solid #f2f2f2;outline-offset:-1px;
+       clip-path:polygon(0 4%,3% 0,9% 3%,16% 0,24% 2%,33% 0,41% 3%,50% 0,58% 2%,67% 0,75% 3%,84% 0,92% 2%,100% 0,99% 22%,100% 46%,98% 70%,100% 100%,92% 97%,83% 100%,74% 98%,65% 100%,56% 97%,47% 100%,38% 98%,29% 100%,20% 97%,11% 100%,3% 98%,0 100%,2% 74%,0 50%,1% 25%)}
+  #tag small{display:block;font:400 20px/1.3 "TRU Texte",sans-serif;color:#b9bdc3;margin-top:6px;letter-spacing:.04em}
+  #vign{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.7) 100%)}
+</style></head><body>
+<div id="scene"><div id="carte"><img id="aimg"><div id="hl"></div></div></div>
+<div id="photo"><div id="fond"></div><img id="pimg"></div><div id="tag"><span id="tnom"></span><small id="trole"></small></div>
+<div id="vign"></div>
+<script>
+const q=new URLSearchParams(location.search), mode=q.get('mode')||'article', D=+(q.get('d')||5);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)), ease=u=>u*u*(3-2*u);
+const src='../../../assets3d/binance/archives/'+q.get('img');
+let pret=false;
+if(mode==='article'){document.getElementById('photo').style.display='none';document.getElementById('tag').style.display='none';
+  const im=document.getElementById('aimg'); im.onload=()=>{const r=im.naturalWidth/im.naturalHeight;let w=1500,h=w/r;if(h>680){h=680;w=h*r}
+    const c=document.getElementById('carte');c.style.width=w+'px';c.style.height=h+'px';c.style.marginLeft=-w/2+'px';c.style.marginTop=-h/2+'px';
+    if(q.get('hl')){const [x,y,ww,hh]=q.get('hl').split(',').map(Number),H=document.getElementById('hl');H.style.left=x+'%';H.style.top=y+'%';H.style.width=ww+'%';H.style.height=hh+'%'}
+    pret=true;go()}; im.src=src;
+}else{document.getElementById('scene').style.display='none';
+  const im=document.getElementById('pimg'); im.onload=()=>{pret=true;go()}; im.src=src; document.getElementById('fond').style.backgroundImage=`url(${src})`;
+  document.getElementById('tnom').textContent=q.get('nom')||''; document.getElementById('trole').textContent=q.get('role')||'';
+  if(!q.get('nom')) document.getElementById('tag').style.display='none';
+}
+function renderAt(t){const u=cl(t/D),e=ease(u);
+  if(mode==='article'){const c=document.getElementById('carte');
+    c.style.transform=`rotateY(${-7+9*e}deg) rotateX(${3-2*e}deg) scale(${.92+.12*e})`;
+    document.getElementById('hl').style.opacity=cl((t-D*.35)/.4);
+  }else{const im=document.getElementById('pimg');
+    im.style.transform=`translate(-50%,-50%) scale(${1.0+.08*e}) translateX(${-10+20*e}px)`;
+    document.getElementById('tag').style.opacity=cl((t-.6)/.4);
+    document.getElementById('tag').style.transform=`translateX(${(1-cl((t-.6)/.5))*-30}px)`;}
+  window.FRAME_PRET=true}
+function go(){renderAt(+(q.get('t')||0))}
+</script></body></html>
