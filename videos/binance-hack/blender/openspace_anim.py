@@ -58,5 +58,6 @@ for nom, (D, (c0, c1), (t0, t1), lens, fs) in PLANS.items():
         u = E(f / (D * 8)); c = V(c0).lerp(V(c1), u); tg = V(t0).lerp(V(t1), u)
         cam.location = c; cam.rotation_euler = (tg - c).to_track_quat('-Z', 'Y').to_euler(); cd.dof.focus_distance = (tg - c).length
         sc.frame_set(int(30 + f * 2.5))
+        if not test and os.path.exists(f'{out}/{f:04d}.png'): continue
         sc.render.filepath = f'/home/claude/anim/{nom}_test.png' if test else f'{out}/{f:04d}.png'
         bpy.ops.render.render(write_still=True); print('IMG', nom, f, flush=True)
