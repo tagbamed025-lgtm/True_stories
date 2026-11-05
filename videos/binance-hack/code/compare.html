@@ -1,0 +1,13 @@
+<!doctype html><!-- TRU Stories · Binance · 1,1 Md$ en 5 ans vs 6,3 Md$ en 20 minutes. compare.html?t= --><html><head><meta charset="utf-8"><style>
+@font-face{font-family:"TRU Texte";src:local("Segoe UI"),url(polices/OpenSans.ttf)}@font-face{font-family:"TRU Titre";src:local("Georgia Bold Italic"),url(polices/GelasioBoldItalic.ttf)}
+html,body{margin:0;width:1920px;height:804px;background:#040506;overflow:hidden;color:#e8edf3;font-family:"TRU Texte",sans-serif}
+.l{position:absolute;left:180px;font-size:40px;letter-spacing:.06em;color:#9aa3ad}.b{position:absolute;left:180px;height:70px;border-radius:4px}
+.v{position:absolute;font:300 72px "TRU Texte";font-variant-numeric:tabular-nums}#x{position:absolute;right:170px;top:560px;font:700 italic 130px "TRU Titre",Georgia,serif;color:#ff3b30;opacity:0}
+</style></head><body>
+<div class="l" style="top:110px">2017 → 2022 · cinq ans · Corée du Nord</div><div class="b" id="b1" style="top:170px;background:#cfd6de"></div><div class="v" id="v1" style="top:160px"></div>
+<div class="l" style="top:360px">29 octobre 2026 · vingt minutes</div><div class="b" id="b2" style="top:420px;background:#ff2d2d;box-shadow:0 0 40px rgba(255,45,45,.4)"></div><div class="v" id="v2" style="top:410px;color:#ff3b30"></div>
+<div id="x">× 6</div>
+<script>const t=+(new URLSearchParams(location.search).get('t')||0),cl=(x)=>Math.max(0,Math.min(1,x)),E=u=>u*u*(3-2*u),P=(a,b)=>E(cl((t-a)/(b-a))),$=i=>document.getElementById(i);
+const k=1500/6.3,a=P(0,1.2),b=P(1.8,3.6);$('b1').style.width=k*1.1*a+'px';$('v1').style.left=200+k*1.1*a+'px';$('v1').textContent=(1.1*a).toFixed(1).replace('.',',')+' Md$';
+$('b2').style.width=k*6.3*b+'px';$('v2').style.left=Math.min(200+k*6.3*b,1500)+'px';$('v2').style.top=b>.85?'510px':'410px';$('v2').textContent=b>0?(6.3*b).toFixed(1).replace('.',',')+' Md$':'';
+$('x').style.opacity=P(4.2,4.8);window.FRAME_PRET=true</script></body></html>
