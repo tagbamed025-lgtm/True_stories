@@ -107,7 +107,9 @@ PB = [
 evts = [(gA(a), gA(b) - (DA1 if b == SA1 else DA2 if b == SA2 else 0), s) for a, b, s in PA]
 evts += [(gA(SA1) - DA1, gA(SA1), ('noir',)), (gA(SA2) - DA2, gA(SA2), ('noir',)), (gA(AF), OB, ('noir',))]
 evts += [(gB(a), gB(b), s) for a, b, s in PB] + [(gB(BF), FIN_TITRE, ('code', 'final', 0, 3.5, None)), (FIN_TITRE, T, ('noir',))]
-evts.sort(key=lambda e: e[0])
+AV = .4
+evts = [(max(0, a - AV) if i else a, b - AV, s) for i, (a, b, s) in enumerate(sorted(evts, key=lambda e: e[0]))]
+evts[-1] = (evts[-1][0], T, evts[-1][2])
 def E(u): return u * u * (3 - 2 * u)
 def seg_noir(out, n): ff('-f', 'lavfi', '-i', f'color=c=black:s={W}x{H}:r={FPS}', '-frames:v', str(n), '-pix_fmt', 'yuv420p', '-c:v', 'libx264', out)
 def seg_3d(out, n, plan, u0, u1, envers):
@@ -192,14 +194,14 @@ for s0, s1 in SIL: fx += montee(s0) + impact(s1 + .02, .9)
 for v in (184.4, 199.99, 241.89, 256.14): fx += reverb(coup(gA(v), 62, 36, .8, .4), 2, .35)
 for v in (214.49, 219.65, 224.0): fx += burst(gA(v) + .3, .35, 2500, 9000, .3)                          # gel
 for k in range(3): fx += np.sin(2 * np.pi * 1760 * t) * env([(0, 0), (gA(236.14) + k * .16, 0), (gA(236.14) + k * .16 + .005, .09), (gA(236.14) + k * .16 + .08, .09), (gA(236.14) + k * .16 + .085, 0), (T, 0)])
-for v in (2.37, 25.72, 48.35, 64.41, 102.58, 107.82, 123.5, 132.47): fx += reverb(coup(gB(v), 62, 36, .8, .42), 2, .35)
+
 for s in np.cumsum(rng.uniform(.07, .16, 40)) + gB(84.28):
     if s < gB(87.86): fx += burst(s, .03, 1500, 7000, .3)                                                   # clavier
 fx += burst(gB(58.77) + 1.0, .5, 200, 1200, .25)                                                              # le capot s'ouvre
 fx += montee(gB(98.2), 2.5) + reverb(coup(gB(98.2), 55, 32, 1.4, .6), 2.4, .45)                            # « Reviens à la fenêtre allumée »
-fx += reverb(coup(gB(162.32) + .3, 45, 40, 2.2, .25), 1.5, .2)                                                # voiture
+
 fx += montee(gB(BF), 3.0) + impact(gB(BF) + .05, 1.0)                                                         # titre final
-mix = basse + fond + tic + fx; st = mix * (.85 / np.max(np.abs(mix)))
+mix = tic * 1.6 + fx; st = mix * (.85 / np.max(np.abs(mix)))
 with wave.open(f'{TMP}/mus.wav', 'wb') as w:
     w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR); w.writeframes((np.stack([st, st], 1) * 32767).astype('<i2').tobytes())
 ff('-i', f'{TMP}/image.mp4', '-i', f'{TMP}/voix.wav', '-i', f'{TMP}/mus.wav', '-filter_complex',
