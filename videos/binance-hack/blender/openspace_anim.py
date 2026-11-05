@@ -4,7 +4,7 @@ import bpy, math, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 os.chdir('/home/claude/true_stories')
 from commun import *
-from mathutils import Vector as V
+from mathutils import Vector as V, Matrix
 sc = reset(); sc.cycles.samples = 10; sc.render.resolution_x = 1280; sc.render.resolution_y = 536; sc.render.resolution_percentage = 100
 sc.view_settings.look = 'AgX - Punchy'
 MUR = mat('mur', (.16, .17, .2), .8); SOL = mat('sol', (.05, .055, .065), .35); NOIR = mat('noir', (.03, .03, .035), .4)
@@ -26,7 +26,7 @@ def poste(x, y, fbx, k):
     for dx in (-.6, .6): box(f'pied{k}{dx}', (x + dx, y + .62, .36), (.04, .6, .72), NOIR)
     box(f'mon{k}', (x, y + .9, 1.08), (.62, .03, .38), NOIR); dalle(f'ecr{k}', (x, y + .88, 1.08), .58, .34, [HACK, APS[0], APS[1], APS[2], ROUGE_E][k % 5])
     box(f'clav{k}', (x, y + .42, .755), (.44, .14, .015), NOIR)
-    kit('Wooden Chair', (x, y - .06, 0), 0, .9, NOIR)
+    kit('Wooden Chair', (x, y - .06, 0), 180, .9, NOIR)
     av = set(bpy.data.objects); bpy.ops.import_scene.fbx(filepath=f'/home/claude/true_stories/assets3d/personnages_animes/{fbx}')
     neufs = [o for o in bpy.data.objects if o not in av]; arm = [o for o in neufs if o.type == 'ARMATURE'][0]
     for o in neufs:
@@ -36,6 +36,14 @@ def poste(x, y, fbx, k):
             o.modifiers.move(len(o.modifiers) - 1, 0)
     emp = bpy.data.objects.new(f'empty{k}', None); sc.collection.objects.link(emp); emp.location = (x, y, 0); emp.rotation_euler.z = math.pi
     arm.parent = emp; ARMS.append((arm, k))
+    if k == 2:   # l'employée enceinte : ventre arrondi accroché à l'os du dos
+        bpy.context.view_layer.update(); sc.frame_set(30)
+        bn = [b.name for b in arm.pose.bones if b.name.endswith('Spine')][0]
+        pb = arm.pose.bones[bn]; w = arm.matrix_world @ pb.head
+        bpy.ops.mesh.primitive_uv_sphere_add(segments=24, ring_count=16, location=w); v = bpy.context.object; v.name = 'ventre'
+        v.data.materials.append(BL); bpy.ops.object.shade_smooth()
+        v.parent = arm; v.parent_type = 'BONE'; v.parent_bone = bn
+        bpy.context.view_layer.update(); v.matrix_world = Matrix.Translation(w + V((0, .2, 0.0))) @ Matrix.Diagonal((.14, .17, .15, 1)); print('VENTRE', tuple(round(c,2) for c in w), bn, flush=True)
 for r, y in enumerate((0, -2.3)):
     for c, x in enumerate((-3.6, -1.8, 0, 1.8, 3.6)):
         if r == 1 and c in (0, 4): continue
@@ -48,7 +56,9 @@ cd = bpy.data.cameras.new('c'); cam = bpy.data.objects.new('cam', cd); sc.collec
 E = lambda u: u * u * (3 - 2 * u)
 PLANS = {  # durée, (cam0, cam1), (cible0, cible1), focale, f-stop
  'O_large': (5.0, ((-5.6, -4.6, 1.9), (-3.0, -4.2, 1.75)), ((-1.0, .6, 1.0), (.6, .6, 1.0)), 28, 3.5),
- 'O_femme': (4.0, ((-2.55, .55, 1.25), (-2.45, .2, 1.22)), ((-3.6, .05, 1.15), (-3.6, .05, 1.15)), 50, 2.0),
+ 'O_dessus': (4.0, ((-1.5, -1.6, 3.35), (1.0, -1.3, 3.35)), ((-1.2, -.5, .6), (1.0, -.4, .6)), 20, 5.6),
+ 'O_face': (4.0, ((-1.6, 2.4, 2.25), (.4, 2.4, 2.2)), ((-.8, -.1, 1.0), (.6, -.1, 1.0)), 30, 3.2),
+ 'O_femme': (4.0, ((1.15, -.15, 1.05), (1.0, .0, 1.0)), ((0, .18, .92), (0, .18, .92)), 30, 2.8),
 }
 seul = os.environ.get('SEUL'); test = '--test' in sys.argv
 for nom, (D, (c0, c1), (t0, t1), lens, fs) in PLANS.items():
