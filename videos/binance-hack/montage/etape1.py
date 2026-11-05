@@ -109,7 +109,7 @@ fx += reverb(coup(g(103.05) + .2, 62, 36, .9, .5), 2, .4)                       
 mt = env([(0, 0), (sil0 - 3, 0), (sil0 - .02, 1), (sil0, 0), (T, 0)])
 fx += bp(rng.standard_normal(N), 300, 7000) * mt ** 2 * .4
 fx += reverb(coup(sil1 + .02, 70, 30, 2.3, 1) + burst(sil1 + .02, .5, 60, 900, .5), 3.2, .55)                       # impact
-mix = basse + fond + tic + fx; st = mix * (.85 / np.max(np.abs(mix)))
+mix = tic * 1.6 + fx; st = mix * (.85 / np.max(np.abs(mix)))
 with wave.open(f'{TMP}/mus.wav', 'wb') as w:
     w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR); w.writeframes((np.stack([st, st], 1) * 32767).astype('<i2').tobytes())
 ff('-i', f'{TMP}/image.mp4', '-i', f'{TMP}/voix.wav', '-i', f'{TMP}/mus.wav', '-filter_complex',

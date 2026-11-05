@@ -113,7 +113,7 @@ for k in range(4): fx += burst(g(172.4) + k * .5, .25, 80, 300, .5)
 fx += reverb(coup(g(174.19), 55, 32, 1.0, .5), 2.2, .4)
 mt = env([(0, 0), (g(VF) - 2.5, 0), (g(VF) - .02, 1), (g(VF), 0), (T, 0)]); fx += bp(rng.standard_normal(N), 300, 7000) * mt ** 2 * .4
 fx += reverb(coup(g(VF) + 1.2, 70, 30, 2.3, 1) + burst(g(VF) + 1.2, .5, 60, 900, .5), 3.2, .55)
-mix = basse + fond + tic + fx; st = mix * (.85 / np.max(np.abs(mix)))
+mix = tic * 1.6 + fx; st = mix * (.85 / np.max(np.abs(mix)))
 with wave.open(f'{TMP}/mus.wav', 'wb') as w:
     w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR); w.writeframes((np.stack([st, st], 1) * 32767).astype('<i2').tobytes())
 ff('-i', f'{TMP}/image.mp4', '-i', f'{TMP}/voix.wav', '-i', f'{TMP}/mus.wav', '-filter_complex',

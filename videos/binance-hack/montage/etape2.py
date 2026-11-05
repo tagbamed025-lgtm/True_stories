@@ -101,7 +101,7 @@ for j in range(30): fx += burst(g(109.0) + j * .04, .02, 2000, 9000, .1)        
 fx += reverb(coup(g(116.37), 55, 32, 1.2, .6), 2.4, .45)                                          # « une seule transaction »
 for v in (123.75, 124.82, 125.66, 126.76, 128.02): fx += burst(g(v), .09, 400, 6000, .45) + coup(g(v), 90, 40, .25, .3)   # chaque chaîne
 mw = env([(0, 0), (g(127.2), 0), (T - .02, 1), (T, 0)]); fx += bp(rng.standard_normal(N), 300, 7000) * mw ** 2 * .35   # montée vers la suite
-mix = basse + fond + tic + fx; st = mix * (.85 / np.max(np.abs(mix)))
+mix = tic * 1.6 + fx; st = mix * (.85 / np.max(np.abs(mix)))
 with wave.open(f'{TMP}/mus.wav', 'wb') as w:
     w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR); w.writeframes((np.stack([st, st], 1) * 32767).astype('<i2').tobytes())
 ff('-i', f'{TMP}/image.mp4', '-i', f'{TMP}/voix.wav', '-i', f'{TMP}/mus.wav', '-filter_complex',

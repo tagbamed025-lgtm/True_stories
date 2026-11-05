@@ -1,11 +1,13 @@
 # Fin de la vidéo : voix 1 (vo_complete 179,9 → 265,4 : CZ sur X → « Il en manque… trois. ») + voix 2 (vo_suite, p6 → p10).
 # Silences de tension : avant « Trop tard. » (0,8 s), avant « trois. » (1,5 s), puis 2,2 s de noir + impact avant la voix 2. Titre final + noir.
 import os, shutil, subprocess, wave
-from urllib.parse import quote
+from urllib.parse import quote, urlencode
+import json
 import numpy as np
 from scipy.signal import butter, sosfilt, fftconvolve
 from playwright.sync_api import sync_playwright
 ANIM = '/home/claude/anim'; R = '/home/claude/true_stories/videos/binance-hack/code/'
+CARTES = json.load(open('/home/claude/true_stories/videos/binance-hack/code/cartes_fin.json'))
 FOOT = '/mnt/user-data/attachments/320b0a0f-0a6b-5eaa-97cb-bc509def2206/'
 VA, VB = '/home/claude/voix/vo_complete.mp3', '/home/claude/voix/vo_suite.mp3'
 TMP = ANIM + '/et4'; os.makedirs(TMP, exist_ok=True); W, H, FPS = 1280, 536, 24
@@ -28,34 +30,37 @@ PA = [
  (180.88, 184.4, ('portrait', 'cz_reuters.png', '', '')),
  (184.4, 189.02, ('code', 'postcz', 0, 2, Pz)),
  (189.02, 193.97, ('foot', 'capuche', 1.0)),
- (193.97, 196.5, ('3d', 'X_crise', 0, .5, False)),
- (196.5, 199.99, ('3d', 'X_equipe', 0, 1, False)),
+ (193.97, 197.0, ('3d', 'O_large', 0, .7, False)),
+ (197.0, 199.99, ('3d', 'O_face', 0, 1, False)),
  (199.99, 205.45, ('code', 'reprise', 0, 3, None)),
  (205.45, 207.21, ('hack', 9.0, 9.8, CIBLE, CIBLE)),
  (207.21, 209.74, ('three', 'globe', 2.0, 4.6, Gl)),
  (209.74, 212.42, ('foot', 'pluie', 2.0)),
  (212.42, 214.49, ('foot', 'pieces', 5.0)),
- (214.49, 219.65, ('code', 'jauges', 0, 3, J)),
- (219.65, 221.95, ('code', 'jauges', 3, 4.5, J)),
+ (214.49, 219.65, ('carte', 'tether')),
+ (219.65, 221.95, ('carte', 'tether2')),
  (221.95, 224.0, ('3d', 'X_crise', .5, 1, False)),
- (224.0, 226.51, ('code', 'jauges', 4.5, 6, J)),
+ (224.0, 226.51, ('carte', 'circle')),
  (226.51, 231.0, ('hack', 6.5, 9.0, FLUX, (16, 720, 900, 377))),
- (231.0, 236.14, ('code', 'aave', 0, 3.6, Zc)),
+ (231.0, 236.14, ('carte', 'aave')),
  (236.14, 239.43, ('code', 'suspendu', 0, 1.5, None)),
  (239.43, 241.89, ('code', 'suspendu', 1.5, 3.6, None)),
  (241.89, 247.49, ('portrait', 'yihe_rouge.png', 'Yi He', 'cofondatrice de Binance')),
- (247.49, 252.0, ('3d', 'X_equipe', 1, 0, True)),
- (252.0, 256.14, ('3d', 'X_crise', .2, .8, False)),
+ (247.49, 250.5, ('3d', 'O_dessus', 0, 1, False)),
+ (250.5, 254.0, ('3d', 'O_femme', 0, 1, False)),
+ (254.0, 256.14, ('3d', 'O_large', .5, 1, False)),
  (256.14, 259.5, ('portrait', 'cz_websummit.png', 'Changpeng Zhao', '« Ça fait mal, mais on survivra. »')),
- (259.5, 264.62, ('code', 'bilan', 0, 1.2, None)),
- (264.62, 265.4, ('code', 'bilan', 2.4, 3.0, None)),
+ (259.5, 264.62, ('carte', 'bilan')),
+ (264.62, 265.4, ('carte', 'manque')),
 ]
 PB = [
  (0, 2.37, ('foot', 'ville', 3.0)),
- (2.37, 5.5, ('code', 'marche', 0, 2.5, Mz)),
+ (2.37, 5.5, ('carte', 'liquid')),
  (5.5, 7.4, ('foot', 'pieces', 7.0)),
- (7.4, 13.08, ('code', 'marche', 2.5, 5, Mz)),
- (13.08, 18.24, ('three', 'graphe', 0, 4, None)),
+ (7.4, 10.36, ('three', 'graphe', 0, 2.5, None)),
+ (10.36, 13.08, ('carte', 'btc')),
+ (13.08, 15.5, ('foot', 'ville', 12.0)),
+ (15.5, 18.24, ('3d', 'X_crise', .2, .8, False)),
  (18.24, 21.0, ('code', 'schema', 0, .4, Sc)),
  (21.0, 25.72, ('art', 'art_forkast_laptop.png', '')),
  (25.72, 28.39, ('foot', 'vert', 3.0)),
@@ -71,10 +76,9 @@ PB = [
  (54.76, 56.21, ('foot', 'lampes', 2.0)),
  (56.21, 61.41, ('3d', 'W_matin', 0, 1, False)),
  (61.41, 64.41, ('foot', 'capuche', 4.0)),
- (64.41, 67.29, ('code', 'bybit', 0, 1.2, By)),
- (67.29, 70.52, ('code', 'bybit', 1.2, 2.4, By)),
+ (64.41, 70.52, ('carte', 'bybit')),
  (70.52, 74.33, ('foot', 'code', 10.0)),
- (74.33, 77.5, ('code', 'bybit', 2.4, 4.5, By)),
+ (74.33, 77.5, ('3d', 'L_ecran', 0, .6, False)),
  (77.5, 81.34, ('foot', 'vert', 6.0)),
  (81.34, 84.28, ('portrait', 'cz_sourire.png', '', '')),
  (84.28, 87.86, ('3d', 'F_entree', 0, 1, False)),
@@ -83,16 +87,18 @@ PB = [
  (95.35, 98.2, ('three', 'cles', 2.3, 4.6, None)),
  (98.2, 100.25, ('3d', 'C_montee', 0, 1, False)),
  (100.25, 102.58, ('3d', 'L_ecran', 0, .5, False)),
- (102.58, 107.82, ('code', 'suspects', 0, 2.5, Su)),
+ (102.58, 107.82, ('carte', 'trader')),
  (107.82, 111.09, ('code', 'suspects', 2.5, 4.5, Su)),
- (111.09, 113.15, ('code', 'bybit', 3.5, 4.5, By)),
+ (111.09, 113.15, ('carte', 'bybit')),
  (113.15, 117.0, ('art', 'art_infocrypto_bitget.png', '')),
  (117.0, 120.41, ('art', 'art_infocrypto_bitget_2.png', '')),
  (120.41, 123.5, ('foot', 'ville', 8.0)),
- (123.5, 132.47, ('compare', 0, 5.2)),
+ (123.5, 126.5, ('carte', 'cinq')),
+ (126.5, 130.17, ('carte', 'vingt')),
+ (130.17, 132.47, ('carte', 'fois')),
  (132.47, 135.33, ('code', 'maj', 0, 1.2, None)),
- (135.33, 143.09, ('code', 'maj', 1.2, 3.0, None)),
- (143.09, 146.48, ('code', 'maj', 3.0, 4.6, None)),
+ (135.33, 143.09, ('carte', 'couvert')),
+ (143.09, 146.48, ('carte', 'retraits')),
  (146.48, 148.32, ('foot', 'code', 14.0)),
  (148.32, 151.68, ('3d', 'V_coffre', .5, 1, False)),
  (151.68, 153.15, ('foot', 'pieces', 9.0)),
@@ -146,6 +152,7 @@ with sync_playwright() as p:
         elif typ == 'three': sc_, t0, t1, cz = s[1:]; capture(pg, out, n, lambda u: (f'file://{R}scenes3d.html?s={sc_}&t={t0+(t1-t0)*u:.3f}', cz))
         elif typ == 'compare': t0, t1 = s[1:]; capture(pg, out, n, lambda u: (f'file://{R}compare.html?t={t0+(t1-t0)*u:.3f}', None))
         elif typ == 'envoi': t0, t1, z0, z1 = s[1:]; capture(pg, out, n, lambda u: (f'file://{R}envoi.html?t={t0+(t1-t0)*u:.3f}&z={z0+(z1-z0)*E(u):.3f}', None))
+        elif typ == 'carte': prm = CARTES[s[1]]; capture(pg, out, n, lambda u: (f'file://{R}carte.html?' + urlencode({**prm, 't': f'{u*d:.3f}'}), None))
         elif typ == 'logo': capture(pg, out, n, lambda u: (f'file://{R}logo.html?d={d:.2f}&t={u*d:.3f}', None))
         elif typ == 'art': img, hl = s[1:]; capture(pg, out, n, lambda u: (f'file://{R}archive.html?img={img}&mode=article&d={d:.2f}&t={u*d:.3f}&hl={hl}', None))
         elif typ == 'portrait': img, nom, role = s[1:]; capture(pg, out, n, lambda u: (f'file://{R}archive.html?img={img}&mode=portrait&d={d:.2f}&t={u*d:.3f}&nom={quote(nom)}&role={quote(role)}', None))
