@@ -22,10 +22,11 @@ t.data.body = 'BINANCE 14'; t.data.align_x = 'CENTER'; t.data.align_y = 'CENTER'
 PERSOS = ['Typing_1_Ch02_femme.fbx', 'Typing_4_Ch12_homme_veste.fbx', 'Typing_2_Ch26_femme_talons.fbx', 'Typing_3_Ch18_homme.fbx']
 ARMS = []
 def poste(x, y, fbx, k):
-    box(f'bur{k}', (x, y + .62, .73), (1.3, .7, .04), BUREAU)
+    dz = -.08 if k == 2 else 0   # bureau un peu plus bas pour l'employée enceinte : mains posées dessus
+    box(f'bur{k}', (x, y + .62, .73 + dz), (1.3, .7, .04), BUREAU)
     for dx in (-.6, .6): box(f'pied{k}{dx}', (x + dx, y + .62, .36), (.04, .6, .72), NOIR)
     box(f'mon{k}', (x, y + .9, 1.08), (.62, .03, .38), NOIR); dalle(f'ecr{k}', (x, y + .88, 1.08), .58, .34, [HACK, APS[0], APS[1], APS[2], ROUGE_E][k % 5])
-    box(f'clav{k}', (x, y + .42, .755), (.44, .14, .015), NOIR)
+    box(f'clav{k}', (x, y + .42, .755 + dz), (.44, .14, .015), NOIR)
     kit('Wooden Chair', (x, y - .06, 0), 180, .9, NOIR)
     av = set(bpy.data.objects); bpy.ops.import_scene.fbx(filepath=f'/home/claude/true_stories/assets3d/personnages_animes/{fbx}')
     neufs = [o for o in bpy.data.objects if o not in av]; arm = [o for o in neufs if o.type == 'ARMATURE'][0]
