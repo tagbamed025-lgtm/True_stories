@@ -185,7 +185,7 @@ def coup(t0, f0, f1, dur, gain):
 def reverb(x, d=2.6, mix=.4):
     n = int(d * SR); ir = lp(rng.standard_normal(n) * np.exp(-np.arange(n) / SR * 3.2), 5000); return x + mix * a_(fftconvolve(x, ir)[:N]) * np.max(np.abs(x))
 def impact(x0, g=1.0): return reverb(coup(x0, 70, 30, 2.3, g) + burst(x0, .5, 60, 900, .5 * g), 3.2, .55)
-def montee(x1, d=3.0): m = env([(0, 0), (max(0, x1 - d), 0), (x1 - .02, 1), (x1, 0), (T, 0)]); return bp(rng.standard_normal(N), 300, 7000) * m ** 2 * .4
+def montee(x1, d=3.0): m = env([(0, 0), (max(0, x1 - d), 0), (x1 - .02, 1), (x1, 0), (T, 0)]); return (np.sin(2 * np.pi * np.cumsum(70 + 150 * m) / SR) + .5 * np.sin(2 * np.pi * np.cumsum(70.7 + 151 * m) / SR)) * m ** 2 * .22
 SIL = [(gA(SA1) - DA1, gA(SA1)), (gA(SA2) - DA2, gA(SA2)), (gA(AF), OB)]
 on = np.ones(N)
 for s0, s1 in SIL: on *= env([(0, 1), (s0 - .01, 1), (s0, 0), (s1, 0), (s1 + .01, 1), (T, 1)])

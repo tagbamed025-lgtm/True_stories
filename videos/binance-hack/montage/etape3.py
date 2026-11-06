@@ -1,7 +1,9 @@
 # Partie 2 · étape 2 (voix 105,3 → 129,67 s : « Vingt heures vingt-quatre » → « Binance. »).
 # Chaque plan coupe sur le début de la phrase (calage_p2p5.json). Plans de 1 à 3 s, alternance 3D / écran / Three.js / footage.
 import os, shutil, subprocess, wave
-from urllib.parse import quote
+from urllib.parse import quote, urlencode
+import json
+CARTES = json.load(open('/home/claude/true_stories/videos/binance-hack/code/cartes_fin.json'))
 import numpy as np
 from scipy.signal import butter, sosfilt, fftconvolve
 from playwright.sync_api import sync_playwright
@@ -20,9 +22,9 @@ PL = [
  (134.75, 137.85, ('portrait', 'cz_reuters.png', 'Changpeng Zhao', 'fondateur de Binance')),
  (137.85, 140.56, ('portrait', 'cz_websummit.png', '', '')),
  (140.56, 143.16, ('3d', 'V_coffre', .4, 1, True)),
- (143.16, 145.6, ('code', 'frise', 0, 2.6, {'x': 360, 'y': 150, 'width': 1200, 'height': 502})),
+ (143.16, 145.6, ('carte', 'btc2019')),
  (145.6, 147.98, ('foot', '7f2770ef-weddingvideoeditornomi_pindown.io_1793468724.mp4', .2)),
- (147.98, 150.22, ('code', 'frise', 2.6, 4.6, {'x': 360, 'y': 150, 'width': 1200, 'height': 502})),
+ (147.98, 150.22, ('carte', 'm2019')),
  (150.22, 152.3, ('portrait', 'cz_sourire.png', '', '')),
  (152.3, 153.75, ('code', 'rembobine', 0, 1.5)),
  (153.75, 155.6, ('foot', '520535af-themkpcaptain_pindown.io_1793468880.mp4', 6.0)),
@@ -68,6 +70,7 @@ with sync_playwright() as p:
         elif typ == 'code': sc_, t0, t1, *cz = s[1:]; capture(pg, out, n, lambda u: (f'file://{R}plans.html?s={sc_}&h=29.10.2026%20%E2%80%94%2020:24%20UTC&t={t0+(t1-t0)*u:.3f}', cz[0] if cz else None))
         elif typ == 'three': sc_, t0, t1, *cz = s[1:]; capture(pg, out, n, lambda u: (f'file://{R}scenes3d.html?s={sc_}&t={t0+(t1-t0)*u:.3f}', cz[0] if cz else None))
         elif typ == 'envoi': t0, t1, z0, z1 = s[1:]; capture(pg, out, n, lambda u: (f'file://{R}envoi.html?t={t0+(t1-t0)*u:.3f}&z={z0+(z1-z0)*E(u):.3f}', None))
+        elif typ == 'carte': prm = CARTES[s[1]]; d = n / FPS; capture(pg, out, n, lambda u: (f'file://{R}carte.html?' + urlencode({**prm, 't': f'{u*d:.3f}'}), None))
         elif typ == 'logo': capture(pg, out, n, lambda u: (f'file://{R}logo.html?d={n/FPS:.2f}&t={u*n/FPS:.3f}', None))
         elif typ == 'art': img, hl = s[1:]; d = n / FPS; capture(pg, out, n, lambda u: (f'file://{R}archive.html?img={img}&mode=article&d={d:.2f}&t={u*d:.3f}&hl={hl}', None))
         elif typ == 'portrait': img, nom, role = s[1:]; d = n / FPS; capture(pg, out, n, lambda u: (f'file://{R}archive.html?img={img}&mode=portrait&d={d:.2f}&t={u*d:.3f}&nom={quote(nom)}&role={quote(role)}', None))
@@ -106,12 +109,12 @@ tic = sum(burst(s, .012, 2500, 9000, 1) for s in np.arange(.5, T, 1.0)) * .2 * o
 fx = np.zeros(N)
 fx += reverb(coup(g(131.6), 62, 36, .8, .4), 2, .35) + reverb(coup(g(140.56), 50, 30, 1.4, .5), 2.4, .4)
 m = env([(0, 0), (g(152.3), 0), (g(153.2), 1), (g(153.75), 0), (T, 0)])
-fx += bp(rng.standard_normal(N), 500, 4000) * m * .25 + np.sin(2 * np.pi * np.cumsum(900 - 700 * m) / SR) * m * .08
+fx += np.sin(2 * np.pi * np.cumsum(900 - 700 * m) / SR) * m * .08
 fx += reverb(coup(g(165.6) + .1, 62, 36, .9, .45), 2, .35)
 for k in range(3): fx += np.sin(2 * np.pi * 1760 * t) * env([(0, 0), (g(169.81) + k * .16, 0), (g(169.81) + k * .16 + .005, .09), (g(169.81) + k * .16 + .08, .09), (g(169.81) + k * .16 + .085, 0), (T, 0)])
 for k in range(4): fx += burst(g(172.4) + k * .5, .25, 80, 300, .5)
 fx += reverb(coup(g(174.19), 55, 32, 1.0, .5), 2.2, .4)
-mt = env([(0, 0), (g(VF) - 2.5, 0), (g(VF) - .02, 1), (g(VF), 0), (T, 0)]); fx += bp(rng.standard_normal(N), 300, 7000) * mt ** 2 * .4
+mt = env([(0, 0), (g(VF) - 2.5, 0), (g(VF) - .02, 1), (g(VF), 0), (T, 0)]); fx += (np.sin(2 * np.pi * np.cumsum(70 + 150 * mt) / SR) + .5 * np.sin(2 * np.pi * np.cumsum(70.7 + 151 * mt) / SR)) * mt ** 2 * .22
 fx += reverb(coup(g(VF) + 1.2, 70, 30, 2.3, 1) + burst(g(VF) + 1.2, .5, 60, 900, .5), 3.2, .55)
 mix = tic * 1.6 + fx; st = mix * (.85 / np.max(np.abs(mix)))
 with wave.open(f'{TMP}/mus.wav', 'wb') as w:

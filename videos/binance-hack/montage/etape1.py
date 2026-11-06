@@ -97,7 +97,7 @@ basse = lp(basse, 400) * .24 * on
 fond = a_(lp(sum(np.sin(2 * np.pi * 73.42 * j * t + j) / j for j in range(1, 10)), 300)) * .12 * on
 tic = sum(burst(s, .012, 2500, 9000, 1) for s in np.arange(.5, T, 1.0)) * .2 * on
 m = env([(0, 0), (.1, 0), (1.4, 1), (1.6, 0), (T, 0)])
-fx = bp(rng.standard_normal(N), 500, 4000) * m * .25 + np.sin(2 * np.pi * np.cumsum(900 - 700 * m) / SR) * m * .08          # rembobine
+fx = np.sin(2 * np.pi * np.cumsum(900 - 700 * m) / SR) * m * .08          # rembobine
 for s in np.cumsum(rng.uniform(.07, .16, 40)) + g(94.16):
     if s < g(96.27): fx += burst(s, .03, 1500, 7000, .35)                                                          # clavier (mains)
 for s in np.cumsum(rng.uniform(.08, .2, 30)) + g(83.58):
@@ -107,7 +107,7 @@ for j in range(50): fx += burst(g(96.27) + (2 + j * 3.5 / 50) * (100.56 - 96.27)
 fx += reverb(coup(g(75.7) + 1.6 * 4.5 / 5, 50, 30, 1.6, .5), 2.2, .4)                                              # porte du coffre
 fx += reverb(coup(g(103.05) + .2, 62, 36, .9, .5), 2, .4)                                                          # « acceptée »
 mt = env([(0, 0), (sil0 - 3, 0), (sil0 - .02, 1), (sil0, 0), (T, 0)])
-fx += bp(rng.standard_normal(N), 300, 7000) * mt ** 2 * .4
+fx += (np.sin(2 * np.pi * np.cumsum(70 + 150 * mt) / SR) + .5 * np.sin(2 * np.pi * np.cumsum(70.7 + 151 * mt) / SR)) * mt ** 2 * .22
 fx += reverb(coup(sil1 + .02, 70, 30, 2.3, 1) + burst(sil1 + .02, .5, 60, 900, .5), 3.2, .55)                       # impact
 mix = tic * 1.6 + fx; st = mix * (.85 / np.max(np.abs(mix)))
 with wave.open(f'{TMP}/mus.wav', 'wb') as w:

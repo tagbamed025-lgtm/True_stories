@@ -100,7 +100,7 @@ for v in (107.04, 110.23, 112.49): fx += reverb(coup(g(v) + .05, 62, 36, .8, .45
 for j in range(30): fx += burst(g(109.0) + j * .04, .02, 2000, 9000, .1)                          # pièces
 fx += reverb(coup(g(116.37), 55, 32, 1.2, .6), 2.4, .45)                                          # « une seule transaction »
 for v in (123.75, 124.82, 125.66, 126.76, 128.02): fx += burst(g(v), .09, 400, 6000, .45) + coup(g(v), 90, 40, .25, .3)   # chaque chaîne
-mw = env([(0, 0), (g(127.2), 0), (T - .02, 1), (T, 0)]); fx += bp(rng.standard_normal(N), 300, 7000) * mw ** 2 * .35   # montée vers la suite
+mw = env([(0, 0), (g(127.2), 0), (T - .02, 1), (T, 0)]); fx += (np.sin(2 * np.pi * np.cumsum(70 + 150 * mw) / SR) + .5 * np.sin(2 * np.pi * np.cumsum(70.7 + 151 * mw) / SR)) * mw ** 2 * .2   # montée vers la suite
 mix = tic * 1.6 + fx; st = mix * (.85 / np.max(np.abs(mix)))
 with wave.open(f'{TMP}/mus.wav', 'wb') as w:
     w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR); w.writeframes((np.stack([st, st], 1) * 32767).astype('<i2').tobytes())

@@ -25,7 +25,7 @@ for x in (-1.2,.9,2.6): kit('Coffee Cup',(x,1.75,.75),0,.1,BL)
 perso('agent_debout_veste.glb',(-1.6,3.4,0),180,BL)
 perso('agente_debout.glb',(.6,3.6,0),200,BL)
 perso('agent_debout_2.glb',(2.8,3.3,0),150,BL)
-perso('alford_assis_tape.glb',(-.8,.75,.05),0,BL)
+perso('alford_assis_tape.glb',(-.8,.62,.05),180,BL)
 # lumière : le mur d'écrans éclaire la pièce, néons faibles
 lum('AREA',(0,3.9,2.2),900,(.45,.6,1),(math.radians(-90),0,0),9)
 lum('AREA',(0,0,3.5),250,(.75,.82,1),(0,0,0),6)
