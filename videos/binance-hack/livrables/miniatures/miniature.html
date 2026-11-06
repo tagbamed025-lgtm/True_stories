@@ -9,20 +9,25 @@ html,body{margin:0;width:1280px;height:720px;overflow:hidden;background:#000;fon
 .t{position:absolute;font:700 italic 120px/0.95 "TRU Titre",Georgia,serif;color:#fff;text-shadow:0 6px 30px rgba(0,0,0,.9),0 0 2px #000;letter-spacing:-.01em}
 .r{color:#ff2d24}.o{color:#f0b90b}
 .p{position:absolute;font:700 34px "TRU Texte";letter-spacing:.18em;text-transform:uppercase;color:#fff;background:#d0140c;padding:10px 20px}
-.logo{position:absolute;filter:drop-shadow(0 0 30px rgba(240,185,11,.6))}
+.logo{position:absolute;filter:blur(.7px) drop-shadow(0 0 40px rgba(240,185,11,.45))}
 .marque{position:absolute;right:26px;bottom:20px;font:700 italic 26px "TRU Titre";color:rgba(255,255,255,.75)}
 </style></head><body><div id="m"></div><script>
 const v=+(new URLSearchParams(location.search).get('v')||1),I=n=>`url(img/${n}.png)`;
+const LG=(st,cls='')=>`<img class="logo ${cls}" src="img/binance_icone.png" style="${st}">`;
+const FENDU=(x,y,w)=>`<img class="logo" src="img/binance_icone.png" style="left:${x}px;top:${y}px;width:${w}px;clip-path:polygon(0 0,52% 0,44% 48%,56% 52%,46% 100%,0 100%);transform:translate(-14px,6px) rotate(-4deg)">
+  <img class="logo" src="img/binance_icone.png" style="left:${x}px;top:${y}px;width:${w}px;clip-path:polygon(52% 0,100% 0,100% 100%,46% 100%,56% 52%,44% 48%);transform:translate(16px,-4px) rotate(5deg)">`;
 const M={
-1:`<div class="bg" style="background-image:${I('hacker')};filter:brightness(.8) contrast(1.15)"></div><div class="ombre" style="background:linear-gradient(90deg,transparent 30%,rgba(0,0,0,.85) 70%)"></div>
-   <div class="t" style="right:40px;top:120px;text-align:right">6,3<br><span class="r">MILLIARDS</span></div><div class="p" style="right:40px;top:440px">volés en 20 minutes</div>`,
-2:`<div class="bg" style="background-image:${I('coffre')};filter:brightness(.9) contrast(1.1)"></div><div class="ombre" style="background:radial-gradient(ellipse at 30% 50%,transparent 35%,rgba(0,0,0,.8))"></div>
-   <img class="logo" src="img/binance_icone.png" style="left:60px;top:60px;width:150px"><div class="t" style="left:60px;bottom:90px">BINANCE<br><span class="r">VIDÉ.</span></div>`,
-3:`<div class="bg" style="background-image:${I('matin')};filter:brightness(.85)"></div><div class="ombre" style="background:linear-gradient(0deg,rgba(0,0,0,.9) 15%,transparent 60%)"></div>
-   <div class="t" style="left:50px;bottom:60px;font-size:96px">UN SEUL<br><span class="r">ORDINATEUR…</span></div><div class="p" style="left:50px;top:50px">6,3 Md$ envolés</div>`,
-4:`<div class="bg" style="background-image:${I('ecran')};filter:brightness(.75) contrast(1.2)"></div><div class="ombre" style="background:linear-gradient(90deg,rgba(0,0,0,.9) 25%,transparent 70%)"></div>
-   <div class="t" style="left:50px;top:110px;font-size:104px">LE CASSE<br>DU <span class="r">SIÈCLE</span></div><img class="logo" src="img/binance_icone.png" style="left:56px;top:470px;width:110px"><div class="p" style="left:190px;top:497px">29 oct. 2026</div>`,
-5:`<div class="bg" style="background-image:${I('fenetre')};filter:brightness(.95) contrast(1.15)"></div><div class="ombre" style="background:linear-gradient(90deg,rgba(0,0,0,.85) 20%,transparent 65%)"></div>
-   <div class="t" style="left:50px;top:150px;font-size:104px">QUI A<br>VIDÉ<br><span class="o">BINANCE</span> ?</div>`};
+6:`<div class="bg" style="background:radial-gradient(ellipse at 38% 50%,#2a0606,#000 70%)"></div>${FENDU(70,90,540)}
+   <div class="t" style="right:40px;top:150px;text-align:right">6,3<br><span class="r">MD$</span></div><div class="p" style="right:40px;top:470px">volés en 20 min</div>`,
+7:`<div class="bg" style="background:#050505"></div>${LG('left:340px;top:60px;width:600px')}
+   <div style="position:absolute;left:180px;top:250px;transform:rotate(-12deg);border:12px solid #ff2018;color:#ff2018;font:700 150px 'TRU Texte';padding:0 40px;letter-spacing:.06em;background:rgba(0,0,0,.35)">VIDÉ</div>`,
+8:`<div class="bg" style="background-image:${I('coffre')};filter:brightness(.55)"></div>${LG('left:390px;top:90px;width:500px;filter:blur(.7px) drop-shadow(0 0 70px rgba(255,30,20,.95))')}
+   <div class="t" style="left:0;right:0;bottom:40px;text-align:center;font-size:100px">LE COFFRE <span class="r">OUVERT</span></div>`,
+9:`<div class="bg" style="background:linear-gradient(90deg,#000 50%,#1a0000 50%)"></div>
+   <img class="logo" src="img/binance_icone.png" style="left:340px;top:60px;width:600px;clip-path:inset(0 50% 0 0)">
+   <img class="logo" src="img/binance_icone.png" style="left:340px;top:60px;width:600px;clip-path:inset(0 0 0 50%);filter:hue-rotate(-45deg) saturate(4) brightness(.9) drop-shadow(0 0 40px red)">
+   <div class="t" style="left:60px;bottom:40px;font-size:84px">AVANT</div><div class="t r" style="right:60px;bottom:40px;font-size:84px">20 MIN APRÈS</div>`,
+10:`<div class="bg" style="background-image:${I('hacker')};filter:brightness(.6)"></div>${LG('right:60px;top:60px;width:520px')}
+   <div class="t" style="left:50px;bottom:60px;font-size:110px">ILS ONT<br>VIDÉ <span class="o">BINANCE</span></div>`};
 document.getElementById('m').innerHTML=M[v]+'<div class="marque">TRU Stories</div>';
 </script></body></html>
