@@ -114,5 +114,28 @@
 "u": "M$",
 "l": "à l'époque",
 "c": "rouge"
+},
+"devops": {
+"h": "la brèche",
+"n": "DevOps",
+"l": "l'ordinateur portable d'un ingénieur, compromis",
+"c": "rouge"
+},
+"cle": {
+"h": "selon Binance",
+"n": "0",
+"l": "preuve de fuite de clé privée"
+},
+"cinquante": {
+"n": "50",
+"u": "autorisations",
+"l": "qui les a signées ?",
+"c": "rouge"
+},
+"retraits_ouverts": {
+"h": "dimanche 1er novembre",
+"n": "Retraits",
+"l": "rouverts",
+"c": "or"
 }
 }

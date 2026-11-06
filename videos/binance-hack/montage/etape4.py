@@ -10,13 +10,15 @@ ANIM = '/home/claude/anim'; R = '/home/claude/true_stories/videos/binance-hack/c
 CARTES = json.load(open('/home/claude/true_stories/videos/binance-hack/code/cartes_fin.json'))
 FOOT = '/mnt/user-data/attachments/320b0a0f-0a6b-5eaa-97cb-bc509def2206/'
 VA, VB = '/home/claude/voix/vo_complete.mp3', '/home/claude/voix/vo_suite.mp3'
-TMP = ANIM + '/et4'; os.makedirs(TMP, exist_ok=True); W, H, FPS = 1280, 536, 24
+TMP = ANIM + '/et4' + ('_hd' if os.environ.get('HD') == '1' else ''); os.makedirs(TMP, exist_ok=True); HD = os.environ.get('HD') == '1'
+W, H, FPS = (1920, 804, 60) if HD else (1280, 536, 24)
+SUF = '_hd' if HD else ''
 def ff(*a): subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', *a], check=True)
 A0, SA1, DA1, SA2, DA2, AF = 179.9, 205.45, .8, 264.62, 1.5, 265.4
 def gA(v): return v - A0 + (DA1 if v >= SA1 else 0) + (DA2 if v >= SA2 else 0)
 OB = gA(AF) + 2.2; BF = 169.48
 def gB(v): return OB + v
-FIN_TITRE = gB(BF) + 4.5; T = FIN_TITRE + 1.5
+FIN_TITRE = gB(BF) + 13.5; T = FIN_TITRE + 1.5
 F = {k: FOOT + v for k, v in {'capuche': '14a53b43-viatkinaviktoria_pindown.io_1793469151.mp4', 'serveurs': '1aeebce7-BestAfterEffectsTutorials_pindown.io_1793469299.mp4',
      'vert': '26e3e112-bchaib729_pindown.io_1793469178.mp4', 'ville': '520535af-themkpcaptain_pindown.io_1793468880.mp4', 'pieces': '54f7ed59-dezinejunkieArt_pindown.io_1793468742.mp4',
      'code': 'e14f3f18-georgehowell2020_pindown.io_1793469250.mp4', 'pluie': 'f69de8de-maskedtran_pindown.io_1793468966.mp4', 'lampes': 'fa474c37-Movies404_pindown.io_1793468995.mp4'}.items()}
@@ -54,65 +56,65 @@ PA = [
  (264.62, 265.4, ('carte', 'manque')),
 ]
 PB = [
- (0, 2.37, ('foot', 'ville', 3.0)),
- (2.37, 5.5, ('carte', 'liquid')),
- (5.5, 7.4, ('foot', 'pieces', 7.0)),
- (7.4, 10.36, ('three', 'graphe', 0, 2.5, None)),
- (10.36, 13.08, ('carte', 'btc')),
- (13.08, 15.5, ('foot', 'ville', 12.0)),
- (15.5, 18.24, ('3d', 'X_crise', .2, .8, False)),
- (18.24, 21.0, ('code', 'schema', 0, .4, Sc)),
- (21.0, 25.72, ('art', 'art_forkast_laptop.png', '')),
- (25.72, 28.39, ('foot', 'vert', 3.0)),
- (28.39, 31.5, ('foot', 'code', 6.0)),
- (31.5, 34.0, ('three', 'cles', 0, 1.5, None)),
- (34.0, 37.5, ('3d', 'D_dos', 0, .7, False)),
- (37.5, 41.43, ('code', 'schema', 0, 1.4, Sc)),
- (41.43, 43.0, ('3d', 'S_serveurs', 0, .5, False)),
- (43.0, 44.91, ('code', 'schema', 1.4, 2.6, Sc)),
- (44.91, 48.35, ('3d', 'V_coffre', 0, .4, False)),
- (48.35, 51.68, ('envoi', 2.0, 5.0, .2, .3)),
- (51.68, 54.76, ('logo',)),
- (54.76, 56.21, ('foot', 'lampes', 2.0)),
- (56.21, 61.41, ('3d', 'W_matin', 0, 1, False)),
- (61.41, 64.41, ('foot', 'capuche', 4.0)),
- (64.41, 70.52, ('carte', 'bybit')),
- (70.52, 74.33, ('foot', 'code', 10.0)),
- (74.33, 77.5, ('3d', 'L_ecran', 0, .6, False)),
- (77.5, 81.34, ('foot', 'vert', 6.0)),
- (81.34, 84.28, ('portrait', 'cz_sourire.png', '', '')),
- (84.28, 87.86, ('3d', 'F_entree', 0, 1, False)),
- (87.86, 90.89, ('three', 'tours', 2.4, 4.6, None)),
- (90.89, 95.35, ('portrait', 'richard_teng.png', 'Richard Teng', 'co-PDG de Binance')),
- (95.35, 98.2, ('three', 'cles', 2.3, 4.6, None)),
- (98.2, 100.25, ('3d', 'C_montee', 0, 1, False)),
- (100.25, 102.58, ('3d', 'L_ecran', 0, .5, False)),
- (102.58, 107.82, ('carte', 'trader')),
- (107.82, 111.09, ('code', 'suspects', 2.5, 4.5, Su)),
- (111.09, 113.15, ('carte', 'bybit')),
- (113.15, 117.0, ('art', 'art_infocrypto_bitget.png', '')),
- (117.0, 120.41, ('art', 'art_infocrypto_bitget_2.png', '')),
- (120.41, 123.5, ('foot', 'ville', 8.0)),
- (123.5, 126.5, ('carte', 'cinq')),
- (126.5, 130.17, ('carte', 'vingt')),
- (130.17, 132.47, ('carte', 'fois')),
- (132.47, 135.33, ('code', 'maj', 0, 1.2, None)),
- (135.33, 143.09, ('carte', 'couvert')),
- (143.09, 146.48, ('carte', 'retraits')),
- (146.48, 148.32, ('foot', 'code', 14.0)),
- (148.32, 151.68, ('3d', 'V_coffre', .5, 1, False)),
- (151.68, 153.15, ('foot', 'pieces', 9.0)),
- (153.15, 155.4, ('3d', 'S_serveurs', .3, 1, False)),
- (155.4, 158.45, ('three', 'tours', 0, 3, None)),
- (158.45, 161.03, ('3d', 'W_matin', .6, 1, False)),
- (161.03, 162.32, ('3d', 'A_entree', 0, .6, False)),
- (162.32, 163.83, ('3d', 'B_passe', 0, .6, False)),
- (163.83, 166.34, ('3d', 'C_montee', 0, 1, False)),
- (166.34, 169.48, ('3d', 'L_ecran', .4, 1, False)),
+ (0.0, 2.4, ('foot', 'ville', 3.0)),
+ (2.4, 7.08, ('carte', 'liquid')),
+ (7.08, 10.46, ('carte', 'btc')),
+ (10.46, 13.18, ('foot', 'pieces', 7.0)),
+ (13.18, 16.74, ('3d', 'X_crise', .2, .8, False)),
+ (16.74, 18.3, ('3d', 'D_dos', 0, .3, False)),
+ (18.3, 21.1, ('logo',)),
+ (21.1, 24.36, ('carte', 'devops')),
+ (24.36, 25.82, ('foot', 'vert', 3.0)),
+ (25.82, 28.48, ('3d', 'W_matin', 0, .4, False)),
+ (28.48, 32.1, ('foot', 'code', 6.0)),
+ (32.1, 33.92, ('3d', 'F_entree', 0, 1, False)),
+ (33.92, 37.54, ('3d', 'S_serveurs', 0, .6, False)),
+ (37.54, 41.5, ('envoi', 2.0, 5.0, 0, 0)),
+ (41.5, 45.0, ('carte', 'cle')),
+ (45.0, 48.4, ('carte', 'cinquante')),
+ (48.4, 51.7, ('3d', 'V_coffre', 0, .5, False)),
+ (51.7, 53.94, ('logo',)),
+ (53.94, 56.24, ('foot', 'lampes', 2.0)),
+ (56.24, 62.04, ('3d', 'W_matin', 0, 1, False)),
+ (62.04, 65.62, ('foot', 'capuche', 4.0)),
+ (65.62, 71.0, ('carte', 'bybit')),
+ (71.0, 74.38, ('foot', 'code', 10.0)),
+ (74.38, 79.5, ('3d', 'L_ecran', 0, .6, False)),
+ (79.5, 81.92, ('portrait', 'cz_sourire.png', '', '')),
+ (81.92, 84.34, ('foot', 'vert', 6.0)),
+ (84.34, 87.88, ('3d', 'D_dos', .3, 1, False)),
+ (87.88, 91.0, ('3d', 'O_face', 0, 1, False)),
+ (91.0, 95.44, ('portrait', 'richard_teng.png', 'Richard Teng', 'co-PDG de Binance')),
+ (95.44, 98.28, ('three', 'cles', 2.3, 4.6, None)),
+ (98.28, 100.32, ('3d', 'C_montee', 0, 1, False)),
+ (100.32, 102.6, ('3d', 'L_ecran', 0, .5, False)),
+ (102.6, 107.86, ('carte', 'trader')),
+ (107.86, 111.16, ('foot', 'capuche', 8.0)),
+ (111.16, 113.6, ('carte', 'bybit')),
+ (113.6, 117.2, ('portrait', 'art_infocrypto_bitget.png', '', '')),
+ (117.2, 120.44, ('portrait', 'art_infocrypto_bitget_2.png', '', '')),
+ (120.44, 124.0, ('foot', 'ville', 8.0)),
+ (124.0, 128.02, ('carte', 'cinq')),
+ (128.02, 130.18, ('carte', 'vingt')),
+ (130.18, 132.54, ('carte', 'fois')),
+ (132.54, 135.36, ('carte', 'retraits_ouverts')),
+ (135.36, 138.58, ('carte', 'couvert')),
+ (138.58, 143.14, ('carte', 'retraits')),
+ (143.14, 146.52, ('foot', 'code', 14.0)),
+ (146.52, 148.4, ('3d', 'V_coffre', .5, 1, False)),
+ (148.4, 149.98, ('foot', 'pieces', 9.0)),
+ (149.98, 151.74, ('3d', 'S_serveurs', .3, 1, False)),
+ (151.74, 154.1, ('3d', 'O_dessus', 0, 1, False)),
+ (154.1, 158.46, ('3d', 'W_matin', .6, 1, False)),
+ (158.46, 161.06, ('3d', 'A_entree', 0, .6, False)),
+ (161.06, 163.86, ('3d', 'B_passe', 0, .6, False)),
+ (163.86, 166.36, ('3d', 'C_montee', 0, 1, False)),
+ (166.36, 169.48, ('3d', 'L_ecran', .4, 1, False)),
 ]
+
 evts = [(gA(a), gA(b) - (DA1 if b == SA1 else DA2 if b == SA2 else 0), s) for a, b, s in PA]
 evts += [(gA(SA1) - DA1, gA(SA1), ('noir',)), (gA(SA2) - DA2, gA(SA2), ('noir',)), (gA(AF), OB, ('noir',))]
-evts += [(gB(a), gB(b), s) for a, b, s in PB] + [(gB(BF), FIN_TITRE, ('code', 'final', 0, 3.5, None)), (FIN_TITRE, T, ('noir',))]
+evts += [(gB(a), gB(b), s) for a, b, s in PB] + [(gB(BF), FIN_TITRE, ('code', 'final', 0, 6.0, None)), (FIN_TITRE, T, ('noir',))]
 AV = .4
 evts = [(max(0, a - AV) if i else a, b - AV, s) for i, (a, b, s) in enumerate(sorted(evts, key=lambda e: e[0]))]
 evts[-1] = (evts[-1][0], T, evts[-1][2])
@@ -202,9 +204,9 @@ for v in (184.4, 199.99, 241.89, 256.14): fx += reverb(coup(gA(v), 62, 36, .8, .
 for v in (214.49, 219.65, 224.0): fx += burst(gA(v) + .3, .35, 2500, 9000, .3)                          # gel
 for k in range(3): fx += np.sin(2 * np.pi * 1760 * t) * env([(0, 0), (gA(236.14) + k * .16, 0), (gA(236.14) + k * .16 + .005, .09), (gA(236.14) + k * .16 + .08, .09), (gA(236.14) + k * .16 + .085, 0), (T, 0)])
 
-for s in np.cumsum(rng.uniform(.07, .16, 40)) + gB(84.28):
-    if s < gB(87.86): fx += burst(s, .03, 1500, 7000, .3)                                                   # clavier
-fx += burst(gB(58.77) + 1.0, .5, 200, 1200, .25)                                                              # le capot s'ouvre
+for s in np.cumsum(rng.uniform(.07, .16, 40)) + gB(84.34):
+    if s < gB(87.88): fx += burst(s, .03, 1500, 7000, .3)                                                   # clavier
+fx += burst(gB(56.24) + 1.0, .5, 200, 1200, .25)                                                              # le capot s'ouvre
 fx += montee(gB(98.2), 2.5) + reverb(coup(gB(98.2), 55, 32, 1.4, .6), 2.4, .45)                            # « Reviens à la fenêtre allumée »
 
 fx += montee(gB(BF), 3.0) + impact(gB(BF) + .05, 1.0)                                                         # titre final
@@ -213,5 +215,5 @@ with wave.open(f'{TMP}/mus.wav', 'wb') as w:
     w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR); w.writeframes((np.stack([st, st], 1) * 32767).astype('<i2').tobytes())
 ff('-i', f'{TMP}/image.mp4', '-i', f'{TMP}/voix.wav', '-i', f'{TMP}/mus.wav', '-filter_complex',
    "[1]asplit[va][vb];[2]volume=0.55[m];[m][va]sidechaincompress=threshold=0.03:ratio=4:attack=20:release=400[md];[vb][md]amix=inputs=2:normalize=0,alimiter=limit=0.95[a];[0]noise=alls=2:allf=t,vignette=PI/6[v]",
-   '-map', '[v]', '-map', '[a]', '-c:v', 'libx264', '-crf', '19', '-c:a', 'aac', '-b:a', '192k', '-t', f'{T:.3f}', f'{ANIM}/binance_partie3_v1.mp4')
+   '-map', '[v]', '-map', '[a]', '-c:v', 'libx264', '-crf', '19', '-c:a', 'aac', '-b:a', '192k', '-t', f'{T:.3f}', f'{ANIM}/binance_partie3_v1{SUF}.mp4')
 print('FINI', round(T, 2))

@@ -9,8 +9,10 @@ from scipy.signal import butter, sosfilt, fftconvolve
 from playwright.sync_api import sync_playwright
 ANIM = '/home/claude/anim'; R = '/home/claude/true_stories/videos/binance-hack/code/'
 FOOT = '/mnt/user-data/attachments/320b0a0f-0a6b-5eaa-97cb-bc509def2206/'
-VOIX = '/home/claude/voix/vo_complete.mp3'; TMP = ANIM + '/et3'; os.makedirs(TMP, exist_ok=True)
-W, H, FPS = 1280, 536, 24
+VOIX = '/home/claude/voix/vo_complete.mp3'; TMP = ANIM + '/et3' + ('_hd' if os.environ.get('HD') == '1' else ''); os.makedirs(TMP, exist_ok=True)
+HD = os.environ.get('HD') == '1'
+W, H, FPS = (1920, 804, 60) if HD else (1280, 536, 24)
+SUF = '_hd' if HD else ''
 def ff(*a): subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', *a], check=True)
 V0, S1, D1, VF = 129.67, 179.9, 0.0, 179.9
 def g(v): return v - V0 + (D1 if v >= S1 else 0)
@@ -121,5 +123,5 @@ with wave.open(f'{TMP}/mus.wav', 'wb') as w:
     w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR); w.writeframes((np.stack([st, st], 1) * 32767).astype('<i2').tobytes())
 ff('-i', f'{TMP}/image.mp4', '-i', f'{TMP}/voix.wav', '-i', f'{TMP}/mus.wav', '-filter_complex',
    "[1]asplit[va][vb];[2]volume=0.55[m];[m][va]sidechaincompress=threshold=0.03:ratio=4:attack=20:release=400[md];[vb][md]amix=inputs=2:normalize=0,alimiter=limit=0.95[a];[0]noise=alls=2:allf=t,vignette=PI/6[v]",
-   '-map', '[v]', '-map', '[a]', '-c:v', 'libx264', '-crf', '19', '-c:a', 'aac', '-b:a', '192k', '-t', f'{T:.3f}', f'{ANIM}/binance_p2_etape3_v1.mp4')
+   '-map', '[v]', '-map', '[a]', '-c:v', 'libx264', '-crf', '19', '-c:a', 'aac', '-b:a', '192k', '-t', f'{T:.3f}', f'{ANIM}/binance_p2_etape3_v1{SUF}.mp4')
 print('FINI', round(T, 2))

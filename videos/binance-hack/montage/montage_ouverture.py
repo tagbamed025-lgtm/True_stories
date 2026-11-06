@@ -6,7 +6,9 @@ from playwright.sync_api import sync_playwright
 ANIM = '/home/claude/anim'; CODE = '/home/claude/true_stories/videos/binance-hack/code/plans.html'
 HACK = '/home/claude/true_stories/videos/binance-hack/code/ecran_hacker.html'
 VOIX = '/home/claude/voix/vo_complete.mp3'; MUS = ANIM + '/musique.wav'
-W, H, FPS = 1280, 536, 24; TMP = ANIM + '/seg'; os.makedirs(TMP, exist_ok=True)
+HD = os.environ.get('HD') == '1'
+W, H, FPS = (1920, 804, 60) if HD else (1280, 536, 24)
+SUF = '_hd' if HD else ''; TMP = ANIM + '/seg' + ('_hd' if os.environ.get('HD') == '1' else ''); os.makedirs(TMP, exist_ok=True)
 def ff(*a): subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', *a], check=True)
 
 # (début, fin, type, paramètres)
@@ -103,5 +105,5 @@ ff('-i', f'{TMP}/image.mp4', '-i', f'{TMP}/voix.wav', '-i', MUS, '-filter_comple
    "[1]asplit[va][vb];[2]volume=0.55[m];[m][va]sidechaincompress=threshold=0.03:ratio=4:attack=20:release=400[md];[vb][md]amix=inputs=2:normalize=0,alimiter=limit=0.95[a];"
    "[0]noise=alls=2:allf=t,vignette=PI/6[v]",
    '-map', '[v]', '-map', '[a]', '-c:v', 'libx264', '-crf', '19', '-preset', 'medium', '-c:a', 'aac', '-b:a', '192k', '-t', '85',
-   '/home/claude/anim/binance_ouverture_v4.mp4')
+   f'/home/claude/anim/binance_ouverture_v4{SUF}.mp4')
 print('FINI')
