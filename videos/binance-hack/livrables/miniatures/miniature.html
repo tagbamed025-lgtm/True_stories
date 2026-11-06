@@ -1,0 +1,28 @@
+<!doctype html>
+<!-- TRU Stories · Binance · 5 propositions de miniature YouTube 1280×720. miniature.html?v=1..5 -->
+<html lang="fr"><head><meta charset="utf-8"><style>
+@font-face{font-family:"TRU Titre";src:local("Georgia Bold Italic"),url(../../code/polices/GelasioBoldItalic.ttf)}
+@font-face{font-family:"TRU Texte";src:local("Segoe UI"),url(../../code/polices/OpenSans.ttf)}
+html,body{margin:0;width:1280px;height:720px;overflow:hidden;background:#000;font-family:"TRU Texte",sans-serif}
+.bg{position:absolute;inset:0;background-size:cover;background-position:center}
+.ombre{position:absolute;inset:0}
+.t{position:absolute;font:700 italic 120px/0.95 "TRU Titre",Georgia,serif;color:#fff;text-shadow:0 6px 30px rgba(0,0,0,.9),0 0 2px #000;letter-spacing:-.01em}
+.r{color:#ff2d24}.o{color:#f0b90b}
+.p{position:absolute;font:700 34px "TRU Texte";letter-spacing:.18em;text-transform:uppercase;color:#fff;background:#d0140c;padding:10px 20px}
+.logo{position:absolute;filter:drop-shadow(0 0 30px rgba(240,185,11,.6))}
+.marque{position:absolute;right:26px;bottom:20px;font:700 italic 26px "TRU Titre";color:rgba(255,255,255,.75)}
+</style></head><body><div id="m"></div><script>
+const v=+(new URLSearchParams(location.search).get('v')||1),I=n=>`url(img/${n}.png)`;
+const M={
+1:`<div class="bg" style="background-image:${I('hacker')};filter:brightness(.8) contrast(1.15)"></div><div class="ombre" style="background:linear-gradient(90deg,transparent 30%,rgba(0,0,0,.85) 70%)"></div>
+   <div class="t" style="right:40px;top:120px;text-align:right">6,3<br><span class="r">MILLIARDS</span></div><div class="p" style="right:40px;top:440px">volés en 20 minutes</div>`,
+2:`<div class="bg" style="background-image:${I('coffre')};filter:brightness(.9) contrast(1.1)"></div><div class="ombre" style="background:radial-gradient(ellipse at 30% 50%,transparent 35%,rgba(0,0,0,.8))"></div>
+   <img class="logo" src="img/binance_icone.png" style="left:60px;top:60px;width:150px"><div class="t" style="left:60px;bottom:90px">BINANCE<br><span class="r">VIDÉ.</span></div>`,
+3:`<div class="bg" style="background-image:${I('matin')};filter:brightness(.85)"></div><div class="ombre" style="background:linear-gradient(0deg,rgba(0,0,0,.9) 15%,transparent 60%)"></div>
+   <div class="t" style="left:50px;bottom:60px;font-size:96px">UN SEUL<br><span class="r">ORDINATEUR…</span></div><div class="p" style="left:50px;top:50px">6,3 Md$ envolés</div>`,
+4:`<div class="bg" style="background-image:${I('ecran')};filter:brightness(.75) contrast(1.2)"></div><div class="ombre" style="background:linear-gradient(90deg,rgba(0,0,0,.9) 25%,transparent 70%)"></div>
+   <div class="t" style="left:50px;top:110px;font-size:104px">LE CASSE<br>DU <span class="r">SIÈCLE</span></div><img class="logo" src="img/binance_icone.png" style="left:56px;top:470px;width:110px"><div class="p" style="left:190px;top:497px">29 oct. 2026</div>`,
+5:`<div class="bg" style="background-image:${I('fenetre')};filter:brightness(.95) contrast(1.15)"></div><div class="ombre" style="background:linear-gradient(90deg,rgba(0,0,0,.85) 20%,transparent 65%)"></div>
+   <div class="t" style="left:50px;top:150px;font-size:104px">QUI A<br>VIDÉ<br><span class="o">BINANCE</span> ?</div>`};
+document.getElementById('m').innerHTML=M[v]+'<div class="marque">TRU Stories</div>';
+</script></body></html>
