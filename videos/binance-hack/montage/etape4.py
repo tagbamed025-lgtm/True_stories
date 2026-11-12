@@ -74,42 +74,55 @@ PB = [
  (45.0, 48.4, ('carte', 'cinquante')),
  (48.4, 51.7, ('3d', 'V_coffre', 0, .5, False)),
  (51.7, 53.94, ('logo',)),
- (53.94, 56.24, ('foot', 'lampes', 2.0)),
- (56.24, 62.04, ('3d', 'W_matin', 0, 1, False)),
- (62.04, 65.62, ('foot', 'capuche', 4.0)),
- (65.62, 71.0, ('carte', 'bybit')),
- (71.0, 74.38, ('foot', 'code', 10.0)),
- (74.38, 79.5, ('3d', 'L_ecran', 0, .6, False)),
- (79.5, 81.92, ('portrait', 'cz_sourire.png', '', '')),
- (81.92, 84.34, ('foot', 'vert', 6.0)),
- (84.34, 87.88, ('3d', 'D_dos', .3, 1, False)),
- (87.88, 91.0, ('3d', 'O_face', 0, 1, False)),
- (91.0, 95.44, ('portrait', 'richard_teng.png', 'Richard Teng', 'co-PDG de Binance')),
- (95.44, 98.28, ('three', 'cles', 2.3, 4.6, None)),
- (98.28, 100.32, ('3d', 'C_montee', 0, 1, False)),
- (100.32, 102.6, ('3d', 'L_ecran', 0, .5, False)),
- (102.6, 107.86, ('carte', 'trader')),
- (107.86, 111.16, ('foot', 'capuche', 8.0)),
- (111.16, 113.6, ('carte', 'bybit')),
- (113.6, 117.2, ('portrait', 'art_infocrypto_bitget.png', '', '')),
- (117.2, 120.44, ('portrait', 'art_infocrypto_bitget_2.png', '', '')),
- (120.44, 124.0, ('foot', 'ville', 8.0)),
- (124.0, 128.02, ('carte', 'cinq')),
- (128.02, 130.18, ('carte', 'vingt')),
- (130.18, 132.54, ('carte', 'fois')),
- (132.54, 135.36, ('carte', 'retraits_ouverts')),
- (135.36, 138.58, ('carte', 'couvert')),
- (138.58, 143.14, ('carte', 'retraits')),
- (143.14, 146.52, ('foot', 'code', 14.0)),
- (146.52, 148.4, ('3d', 'V_coffre', .5, 1, False)),
- (148.4, 149.98, ('foot', 'pieces', 9.0)),
- (149.98, 151.74, ('3d', 'S_serveurs', .3, 1, False)),
- (151.74, 154.1, ('3d', 'O_dessus', 0, 1, False)),
- (154.1, 158.46, ('3d', 'W_matin', .6, 1, False)),
- (158.46, 161.06, ('3d', 'A_entree', 0, .6, False)),
- (161.06, 163.86, ('3d', 'B_passe', 0, .6, False)),
- (163.86, 166.36, ('3d', 'C_montee', 0, 1, False)),
- (166.36, 169.48, ('3d', 'L_ecran', .4, 1, False)),
+ (53.88, 54.76, ('foot', 'lampes', 2.0)),
+ (54.76, 56.21, ('3d', 'K_facades', 0, .5, False)),
+ (56.21, 58.77, ('3d', 'W_matin', 0, .6, False)),
+ (58.77, 62.02, ('3d', 'W_matin', .6, 1, False)),
+ (62.02, 64.0, ('3d', 'N_epaule', 0, 1, False)),
+ (64.0, 65.56, ('3d', 'M_mains', 0, 1, False)),
+ (65.56, 67.29, ('carte', 'fev2025')),
+ (67.29, 68.49, ('carte', 'bybit_nom')),
+ (68.49, 70.53, ('carte', 'bybit')),
+ (70.53, 74.33, ('3d', 'J_face', 0, 1, False)),
+ (74.33, 76.8, ('carte', 'faux')),
+ (76.8, 79.45, ('hack', 6.5, 9.0, FLUX, (16, 720, 900, 377))),
+ (79.45, 81.89, ('3d', 'H_contre', 0, 1, False)),
+ (81.89, 84.28, ('portrait', 'cz_sourire.png', '', '')),
+ (84.28, 85.68, ('carte', 'virus')),
+ (85.68, 87.86, ('carte', 'inge')),
+ (87.86, 90.9, ('3d', 'X_equipe', 0, 1, False)),
+ (90.9, 92.93, ('portrait', 'richard_teng.png', 'Richard Teng', 'co-PDG de Binance')),
+ (92.93, 95.35, ('carte', 'unclic')),
+ (95.35, 98.2, ('three', 'cles', 2.3, 4.6, None)),
+ (98.2, 100.26, ('3d', 'C_montee', 0, 1, False)),
+ (100.26, 102.58, ('3d', 'G_large', 0, 1, False)),
+ (102.58, 105.2, ('carte', 'trader')),
+ (105.2, 107.82, ('3d', 'I_dessus', 0, .5, False)),
+ (107.82, 109.53, ('carte', 'fbi')),
+ (109.53, 111.09, ('3d', 'H_contre', .5, 1, True)),
+ (111.09, 113.17, ('lien', 0, 2.0)),
+ (113.17, 116.2, ('portrait', 'art_infocrypto_bitget.png', '', '')),
+ (116.2, 120.41, ('lien', 2.0, 7.0)),
+ (120.41, 124.0, ('three', 'globe', 2.0, 4.6, Gl)),
+ (124.0, 127.95, ('carte', 'cinq')),
+ (127.95, 130.17, ('carte', 'vingt')),
+ (130.17, 132.47, ('carte', 'fois')),
+ (132.47, 135.33, ('3d', 'V_coffre', 0, 1, False)),
+ (135.33, 138.49, ('carte', 'couvert')),
+ (138.49, 140.8, ('foot', 'serveurs', 2.0)),
+ (140.8, 143.1, ('3d', 'X_crise', .2, .8, False)),
+ (143.1, 146.48, ('carte', 'retraits')),
+ (146.48, 148.32, ('3d', 'O_dessus', 0, 1, False)),
+ (148.32, 149.92, ('3d', 'L_ecran', 0, .4, False)),
+ (149.92, 151.68, ('3d', 'S_serveurs', .3, 1, False)),
+ (151.68, 154.03, ('foot', 'pieces', 9.0)),
+ (154.03, 155.47, ('3d', 'S_coffre', 0, 1, False)),
+ (155.47, 158.45, ('3d', 'F_entree', 0, 1, False)),
+ (158.45, 161.03, ('3d', 'W_matin', .6, 1, False)),
+ (161.03, 162.33, ('3d', 'A_entree', 0, .6, False)),
+ (162.33, 163.83, ('3d', 'B_passe', 0, .6, False)),
+ (163.83, 166.34, ('3d', 'C_montee', 0, 1, False)),
+ (166.34, 169.48, ('3d', 'L_ecran', .4, 1, False)),
 ]
 
 evts = [(gA(a), gA(b) - (DA1 if b == SA1 else DA2 if b == SA2 else 0), s) for a, b, s in PA]
@@ -131,7 +144,8 @@ def seg_3d(out, n, plan, u0, u1, envers):
        '-frames:v', str(n), '-r', str(FPS), '-c:v', 'libx264', '-crf', '17', out)
 def seg_foot(out, n, k, ss):
     crop = 'crop=iw*0.85:ih*0.85:0:ih*0.15,' if k == 'vert' else ''
-    ff('-ss', str(ss), '-i', F[k], '-vf', f'{crop}scale={W}:-2,crop={W}:{H},fps={FPS},eq=saturation=.75:brightness=-.03,tpad=stop_mode=clone:stop_duration=5,format=yuv420p', '-frames:v', str(n), '-an', '-c:v', 'libx264', '-crf', '17', out)
+    du = float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', F[k]], capture_output=True, text=True).stdout)
+    ff('-stream_loop', '-1', '-ss', f'{ss % max(.5, du - .5):.2f}', '-i', F[k], '-vf', f'{crop}scale={W}:-2,crop={W}:{H},fps={FPS},eq=saturation=.75:brightness=-.03,tpad=stop_mode=clone:stop_duration=5,format=yuv420p', '-frames:v', str(n), '-an', '-c:v', 'libx264', '-crf', '17', out)
 def capture(pg, out, n, url_de):
     rep = out + '_c'; shutil.rmtree(rep, ignore_errors=True); os.makedirs(rep)
     for k in range(n):
@@ -155,6 +169,7 @@ with sync_playwright() as p:
         elif typ == 'compare': t0, t1 = s[1:]; capture(pg, out, n, lambda u: (f'file://{R}compare.html?t={t0+(t1-t0)*u:.3f}', None))
         elif typ == 'envoi': t0, t1, z0, z1 = s[1:]; capture(pg, out, n, lambda u: (f'file://{R}envoi.html?t={t0+(t1-t0)*u:.3f}&z={z0+(z1-z0)*E(u):.3f}', None))
         elif typ == 'carte': prm = CARTES[s[1]]; capture(pg, out, n, lambda u: (f'file://{R}carte.html?' + urlencode({**prm, 't': f'{u*d:.3f}'}), None))
+        elif typ == 'lien': t0, t1 = s[1:]; capture(pg, out, n, lambda u: (f'file://{R}lien.html?t={t0+(t1-t0)*u:.3f}', None))
         elif typ == 'logo': capture(pg, out, n, lambda u: (f'file://{R}logo.html?d={d:.2f}&t={u*d:.3f}', None))
         elif typ == 'art': img, hl = s[1:]; capture(pg, out, n, lambda u: (f'file://{R}archive.html?img={img}&mode=article&d={d:.2f}&t={u*d:.3f}&hl={hl}', None))
         elif typ == 'portrait': img, nom, role = s[1:]; capture(pg, out, n, lambda u: (f'file://{R}archive.html?img={img}&mode=portrait&d={d:.2f}&t={u*d:.3f}&nom={quote(nom)}&role={quote(role)}', None))
@@ -162,6 +177,8 @@ with sync_playwright() as p:
             t0, t1, c0, c1 = s[1:]; pg.set_viewport_size({'width': 1920, 'height': 1080})
             capture(pg, out, n, lambda u: (f'file://{R}ecran_hacker.html?t={t0+(t1-t0)*u:.3f}', lerpc(c0, c1, E(u))))
             pg.set_viewport_size({'width': 1920, 'height': 804})
+        nb = int(subprocess.run(['ffprobe', '-v', 'error', '-count_frames', '-select_streams', 'v', '-show_entries', 'stream=nb_read_frames', '-of', 'csv=p=0', out], capture_output=True, text=True).stdout.strip() or 0)
+        assert nb == n, f'segment {i} {s}: {nb} images au lieu de {n}'
         morceaux.append(out); print('SEG', i, typ, round(a, 2), flush=True)
     br.close()
 open(f'{TMP}/l.txt', 'w').write(''.join(f"file '{m}'\n" for m in morceaux))
@@ -204,9 +221,10 @@ for v in (184.4, 199.99, 241.89, 256.14): fx += reverb(coup(gA(v), 62, 36, .8, .
 for v in (214.49, 219.65, 224.0): fx += burst(gA(v) + .3, .35, 2500, 9000, .3)                          # gel
 for k in range(3): fx += np.sin(2 * np.pi * 1760 * t) * env([(0, 0), (gA(236.14) + k * .16, 0), (gA(236.14) + k * .16 + .005, .09), (gA(236.14) + k * .16 + .08, .09), (gA(236.14) + k * .16 + .085, 0), (T, 0)])
 
-for s in np.cumsum(rng.uniform(.07, .16, 40)) + gB(84.34):
-    if s < gB(87.88): fx += burst(s, .03, 1500, 7000, .3)                                                   # clavier
+for s in np.cumsum(rng.uniform(.07, .16, 40)) + gB(62.02):
+    if s < gB(65.5): fx += burst(s, .03, 1500, 7000, .3)                                                   # clavier
 fx += burst(gB(56.24) + 1.0, .5, 200, 1200, .25)                                                              # le capot s'ouvre
+for v in (67.29, 102.58, 107.82, 130.17, 143.1): fx += reverb(coup(gB(v) - .4, 62, 36, .8, .4), 2, .35)   # coups sourds sur les révélations
 fx += montee(gB(98.2), 2.5) + reverb(coup(gB(98.2), 55, 32, 1.4, .6), 2.4, .45)                            # « Reviens à la fenêtre allumée »
 
 fx += montee(gB(BF), 3.0) + impact(gB(BF) + .05, 1.0)                                                         # titre final

@@ -137,5 +137,42 @@
 "n": "Retraits",
 "l": "rouverts",
 "c": "or"
+},
+"fev2025": {
+"h": "flashback",
+"n": "Février 2025",
+"l": "un autre géant tombe"
+},
+"bybit_nom": {
+"h": "février 2025",
+"n": "Bybit",
+"l": "deuxième plateforme crypto au monde",
+"c": "rouge"
+},
+"faux": {
+"h": "selon l'enquête de Safe",
+"n": "Faux projet",
+"l": "un « simulateur d'investissement » piégé",
+"c": "rouge"
+},
+"virus": {
+"h": "CZ, en 2025",
+"n": "Un virus ?"
+},
+"inge": {
+"h": "CZ, en 2025",
+"n": "Ingénierie sociale ?"
+},
+"unclic": {
+"h": "Richard Teng · co-PDG",
+"n": "« Pas en un clic »",
+"l": "d'autres points de brèche découverts",
+"c": "or"
+},
+"fbi": {
+"h": "FBI",
+"n": "Confirmé",
+"l": "TraderTraitor · Corée du Nord",
+"c": "rouge"
 }
 }

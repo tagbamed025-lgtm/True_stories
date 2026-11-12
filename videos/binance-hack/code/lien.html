@@ -1,0 +1,20 @@
+<!doctype html>
+<!-- TRU Stories · « le même groupe » : TraderTraitor au centre, trois casses reliés. lien.html?t=<s> -->
+<html lang="fr"><head><meta charset="utf-8"><style>
+@font-face{font-family:"TRU Texte";src:local("Segoe UI"),url(polices/OpenSans.ttf)}
+html,body{margin:0;width:1920px;height:804px;background:#040506;overflow:hidden;color:#eef2f6;font-family:"TRU Texte",sans-serif}
+svg{position:absolute;inset:0}
+.n{position:absolute;transform:translate(-50%,-50%);text-align:center;white-space:nowrap}
+.n b{display:block;font-size:64px;font-weight:600}.n i{display:block;font-style:normal;font-size:40px;color:#9aa4b0;margin-top:4px}
+#c{font-size:84px;font-weight:700;color:#ff3b30;text-shadow:0 0 40px rgba(255,40,30,.5)}
+#adr{position:absolute;left:50%;bottom:70px;transform:translateX(-50%);font:600 40px monospace;color:#ff3b30;letter-spacing:.05em}
+</style></head><body><svg width="1920" height="804"><g id="L" stroke="#ff3b30" stroke-width="5" fill="none"></g></svg>
+<div class="n" id="c" style="left:960px;top:220px">TraderTraitor</div><div id="adr">même adresse : 0x…</div><script>
+const t=+(new URLSearchParams(location.search).get('t')||0),cl=x=>Math.max(0,Math.min(1,x)),E=u=>u*u*(3-2*u),P=(a,b)=>E(cl((t-a)/(b-a)));
+const N=[['Bybit','févr. 2025 · 1,5 Md$',330,480,.3],['Bitget','sept. 2026',960,520,2.0],['Binance','oct. 2026 · 6,3 Md$',1590,480,3.6]];
+let g='';N.forEach(([a,b,x,y,t0])=>{const p=P(t0+.3,t0+1.1);
+ g+=`<line x1="960" y1="270" x2="${960+(x-960)*p}" y2="${270+(y-60-270)*p}" stroke-dasharray="14 10"/>`;
+ document.body.insertAdjacentHTML('beforeend',`<div class="n" style="left:${x}px;top:${y}px;opacity:${P(t0,t0+.4)}"><b>${a}</b><i>${b}</i></div>`)});
+document.getElementById('L').innerHTML=g;
+const c=document.getElementById('c');c.style.opacity=P(0,.4);c.style.transform=`translate(-50%,-50%) scale(${.92+.08*P(0,1)})`;
+document.getElementById('adr').style.opacity=P(5,5.6);window.FRAME_PRET=true</script></body></html>
