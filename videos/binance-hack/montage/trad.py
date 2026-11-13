@@ -9,7 +9,7 @@ JS = r"""D => { const w = document.createTreeWalker(document.body, NodeFilter.SH
   for (const n of L) { const s = n.nodeValue, k = s.trim(); if (!k) continue;
     if (k in D) { n.nodeValue = s.replace(k, D[k]); continue; }
     if (!/\d/.test(k)) continue;
-    let t = s.replace(/(\d),(\d)/g, '$1.$2');
+    let t = s.replace(/(\d),(\d{1,2})(?!\d)/g, '$1.$2');
     for (let i = 0; i < 4; i++) t = t.replace(/(\d)[   ](\d{3})(?!\d)/g, '$1,$2');
     t = t.replace(/([\d.,]+)\s*Md\$/g, '$$$1B').replace(/([\d.,]+)\s*M\$/g, '$$$1M').replace(/([\d][\d.,]*)\s*\$/g, '$$$1');
     n.nodeValue = t; } }"""
