@@ -1,0 +1,204 @@
+{
+"tether": {
+"h": "Tether · within the hour",
+"n": "$1",
+"u": "B",
+"l": "of USDT frozen",
+"cnt": "0",
+"lang": "en"
+},
+"tether2": {
+"h": "Tether",
+"n": "$1.5",
+"u": "B",
+"l": "frozen in total",
+"cnt": "1",
+"lang": "en"
+},
+"circle": {
+"h": "Circle",
+"n": "$823",
+"u": "M",
+"l": "of USDC blocked",
+"cnt": "0",
+"lang": "en"
+},
+"aave": {
+"h": "the hacker keeps going · Aave",
+"n": "$60M → $44M",
+"l": "USDT deposited → ETH borrowed",
+"c": "rouge",
+"lang": "en"
+},
+"bilan": {
+"h": "the toll",
+"n": "$3",
+"u": "B",
+"l": "frozen",
+"lang": "en"
+},
+"manque": {
+"h": "the toll",
+"n": "$3",
+"u": "B",
+"l": "still missing",
+"c": "rouge",
+"lang": "en"
+},
+"liquid": {
+"h": "in one hour",
+"n": "$628",
+"u": "M",
+"l": "in bets liquidated",
+"c": "rouge",
+"cnt": "0",
+"lang": "en"
+},
+"btc": {
+"h": "bitcoin",
+"n": "$76,400",
+"l": "lowest in six weeks",
+"c": "rouge",
+"lang": "en"
+},
+"bybit": {
+"h": "february 2025 · Bybit",
+"n": "$1.5",
+"u": "B",
+"l": "stolen through a developer's computer",
+"c": "rouge",
+"lang": "en"
+},
+"trader": {
+"h": "TRM Labs · FBI",
+"n": "TraderTraitor",
+"l": "North Korea's elite hackers",
+"c": "rouge",
+"lang": "en"
+},
+"cinq": {
+"h": "North Korea · 2017 → 2022",
+"n": "$1.1",
+"u": "B",
+"l": "stolen in five years",
+"lang": "en"
+},
+"vingt": {
+"h": "October 29, 2026",
+"n": "$6.3",
+"u": "B",
+"l": "stolen in twenty minutes",
+"c": "rouge",
+"lang": "en"
+},
+"fois": {
+"n": "× 6",
+"l": "in a single night",
+"c": "rouge",
+"lang": "en"
+},
+"couvert": {
+"h": "sunday, november 1",
+"n": "95",
+"u": "%",
+"l": "of losses covered by Binance",
+"c": "or",
+"lang": "en"
+},
+"retraits": {
+"h": "withdrawals reopened",
+"n": "$4.6",
+"u": "B",
+"l": "withdrawn by customers within hours",
+"c": "rouge",
+"lang": "en"
+},
+"btc2019": {
+"h": "may 2019 · Binance hot wallet",
+"n": "7000",
+"u": "BTC",
+"l": "stolen",
+"c": "rouge",
+"cnt": "0",
+"lang": "en"
+},
+"m2019": {
+"h": "may 2019",
+"n": "$40",
+"u": "M",
+"l": "at the time",
+"c": "rouge",
+"lang": "en"
+},
+"devops": {
+"h": "the breach",
+"n": "DevOps",
+"l": "an engineer's laptop, compromised",
+"c": "rouge",
+"lang": "en"
+},
+"cle": {
+"h": "according to Binance",
+"n": "0",
+"l": "evidence of a private key leak",
+"lang": "en"
+},
+"cinquante": {
+"n": "50",
+"u": "authorizations",
+"l": "who signed them?",
+"c": "rouge",
+"lang": "en"
+},
+"retraits_ouverts": {
+"h": "sunday, november 1",
+"n": "Withdrawals",
+"l": "reopened",
+"c": "or",
+"lang": "en"
+},
+"fev2025": {
+"h": "flashback",
+"n": "February 2025",
+"l": "another giant falls",
+"lang": "en"
+},
+"bybit_nom": {
+"h": "february 2025",
+"n": "Bybit",
+"l": "world's second-largest crypto exchange",
+"c": "rouge",
+"lang": "en"
+},
+"faux": {
+"h": "according to Safe's investigation",
+"n": "Fake project",
+"l": "a booby-trapped “investment simulator”",
+"c": "rouge",
+"lang": "en"
+},
+"virus": {
+"h": "CZ, in 2025",
+"n": "A virus?",
+"lang": "en"
+},
+"inge": {
+"h": "CZ, in 2025",
+"n": "Social engineering?",
+"lang": "en"
+},
+"unclic": {
+"h": "Richard Teng · co-CEO",
+"n": "“Not a one-click hack”",
+"l": "other breach points discovered",
+"c": "or",
+"lang": "en"
+},
+"fbi": {
+"h": "FBI",
+"n": "Confirmed",
+"l": "TraderTraitor · North Korea",
+"c": "rouge",
+"lang": "en"
+}
+}

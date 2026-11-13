@@ -10,6 +10,9 @@ VOIX = '/home/claude/voix/vo_complete.mp3'; TMP = ANIM + '/et1' + ('_hd' if os.e
 HD = os.environ.get('HD') == '1'
 W, H, FPS = (1920, 804, 60) if HD else (1280, 536, 24)
 SUF = '_hd' if HD else ''
+import sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import trad
+TMP_FR = TMP
+if trad.EN: TMP = TMP + '_en'; os.makedirs(TMP, exist_ok=True)
 def ff(*a): subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', *a], check=True)
 V0, S1, D1, VF = 63.6, 104.2, 1.0, 105.3
 def g(v): return v - V0 + (D1 if v >= S1 else 0)
@@ -57,8 +60,10 @@ evts = [(g(a), g(b) if b != S1 else g(b) - D1, s) for a, b, s in PL] + [(g(S1) -
 morceaux = []
 with sync_playwright() as p:
     br = p.chromium.launch(args=['--use-gl=swiftshader', '--enable-webgl', '--ignore-gpu-blocklist']); pg = br.new_page(viewport={'width': 1920, 'height': 804})
+    if trad.EN: trad.brancher(pg)
     for i, (a, b, s) in enumerate(sorted(evts)):
         n = round(b * FPS) - round(a * FPS); out = f'{TMP}/{i:03d}.mp4'; typ = s[0]
+        if trad.EN and typ in ('noir', '3d', 'foot', 'three', 'logo', 'art') and os.path.exists(out.replace(TMP, TMP_FR)): shutil.copy(out.replace(TMP, TMP_FR), out); morceaux.append(out); continue
         if typ == 'noir': seg_noir(out, n)
         elif typ == '3d': seg_3d(out, n, *s[1:])
         elif typ == 'foot': seg_foot(out, n, *s[1:])
@@ -73,6 +78,7 @@ with sync_playwright() as p:
     br.close()
 open(f'{TMP}/l.txt', 'w').write(''.join(f"file '{m}'\n" for m in morceaux))
 ff('-f', 'concat', '-safe', '0', '-i', f'{TMP}/l.txt', '-r', str(FPS), '-c:v', 'libx264', '-crf', '17', f'{TMP}/image.mp4')
+if trad.EN: print('IMAGE_EN'); sys.exit()
 ff('-i', VOIX, '-filter_complex', f"[0]atrim={V0}:{S1},asetpts=PTS-STARTPTS[a];[0]atrim={S1}:{VF},asetpts=PTS-STARTPTS,adelay={int(g(S1)*1000)}|{int(g(S1)*1000)}[b];[a][b]amix=inputs=2:normalize=0,apad=whole_dur={T}[v]",
    '-map', '[v]', '-ar', '48000', '-ac', '2', f'{TMP}/voix.wav')
 # ---- bande son : basse + tic-tac (charte), rewind, clavier, clic, montée + impact au silence ----

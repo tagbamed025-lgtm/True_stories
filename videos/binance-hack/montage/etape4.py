@@ -7,12 +7,15 @@ import numpy as np
 from scipy.signal import butter, sosfilt, fftconvolve
 from playwright.sync_api import sync_playwright
 ANIM = '/home/claude/anim'; R = '/home/claude/true_stories/videos/binance-hack/code/'
-CARTES = json.load(open('/home/claude/true_stories/videos/binance-hack/code/cartes_fin.json'))
+CARTES = json.load(open('/home/claude/true_stories/videos/binance-hack/code/cartes_fin' + ('_en' if os.environ.get('LANGUE') == 'en' else '') + '.json'))
 FOOT = '/mnt/user-data/attachments/320b0a0f-0a6b-5eaa-97cb-bc509def2206/'
 VA, VB = '/home/claude/voix/vo_complete.mp3', '/home/claude/voix/vo_suite.mp3'
 TMP = ANIM + '/et4' + ('_hd' if os.environ.get('HD') == '1' else ''); os.makedirs(TMP, exist_ok=True); HD = os.environ.get('HD') == '1'
 W, H, FPS = (1920, 804, 60) if HD else (1280, 536, 24)
 SUF = '_hd' if HD else ''
+import sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import trad
+TMP_FR = TMP
+if trad.EN: TMP = TMP + '_en'; os.makedirs(TMP, exist_ok=True)
 def ff(*a): subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', *a], check=True)
 A0, SA1, DA1, SA2, DA2, AF = 179.9, 205.45, .8, 264.62, 1.5, 265.4
 def gA(v): return v - A0 + (DA1 if v >= SA1 else 0) + (DA2 if v >= SA2 else 0)
@@ -156,8 +159,10 @@ def lerpc(a, b, e): x, y, w, h = [p + (q - p) * e for p, q in zip(a, b)]; return
 morceaux = []
 with sync_playwright() as p:
     br = p.chromium.launch(args=['--use-gl=swiftshader', '--enable-webgl', '--ignore-gpu-blocklist']); pg = br.new_page(viewport={'width': 1920, 'height': 804})
+    if trad.EN: trad.brancher(pg)
     for i, (a, b, s) in enumerate(evts):
         n = round(b * FPS) - round(a * FPS); typ = s[0]; out = f'{TMP}/{i:03d}.mp4'
+        if trad.EN and typ in ('noir', '3d', 'foot', 'three', 'logo', 'art') and os.path.exists(out.replace(TMP, TMP_FR)): shutil.copy(out.replace(TMP, TMP_FR), out); morceaux.append(out); continue
         if n <= 0: continue
         d = n / FPS
         if os.path.exists(out) and os.environ.get('REPRISE'): morceaux.append(out); continue
@@ -183,6 +188,7 @@ with sync_playwright() as p:
     br.close()
 open(f'{TMP}/l.txt', 'w').write(''.join(f"file '{m}'\n" for m in morceaux))
 ff('-f', 'concat', '-safe', '0', '-i', f'{TMP}/l.txt', '-r', str(FPS), '-c:v', 'libx264', '-crf', '17', f'{TMP}/image.mp4')
+if trad.EN: print('IMAGE_EN'); sys.exit()
 ms = lambda x: int(x * 1000)
 ff('-i', VA, '-i', VB, '-filter_complex',
    f"[0]atrim={A0}:{SA1},asetpts=PTS-STARTPTS[a];[0]atrim={SA1}:{SA2},asetpts=PTS-STARTPTS,adelay={ms(gA(SA1))}|{ms(gA(SA1))}[b];"

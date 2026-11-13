@@ -1,0 +1,43 @@
+# Binance — voix off anglaise (à générer par Mo)
+
+Voix ElevenLabs : **Nathan — Deep Podcast Narrator**. Une génération par partie → `p1_en.mp3` … `p10_en.mp3`.
+
+## P1
+
+October 29, 2026. 8:05 p.m., UTC. Somewhere in the world. An empty street. Late at night. A car drives by, slowly. Its headlights slide across sleeping facades. Third floor. A single window is lit. Not a lamp… the glow of a screen. A man sits in the dark. Or ten men. No one knows yet. Lines of code scroll by. Their blue reflection on his face. No music. Not a sound. Only the clatter of keys. In a corner of the screen, a name millions of people know: Binance. He types one last command… Enter. Twenty minutes later… more than six billion dollars will have left the largest crypto exchange in the world. The biggest theft in crypto history. And that night… almost no one understands what is happening.
+
+## P2
+
+Rewind. 8:20 p.m. A strange transaction reaches a Binance wallet. Its name: Binance 14. A hot wallet. The vault that has to stay open, online, so every customer can withdraw their money at any moment. The hacker's problem: every order sent from this wallet carries a number. And it sends them nonstop. No way to know which number will be the right one. So he doesn't guess one. He sends fifty. In a single transaction. Forty-nine fall into the void. One is enough… 8:24 p.m. One hundred sixty-seven thousand ETH. Sixty-three other cryptos. More than one point six billion dollars in Tether. One single transaction. No one at Binance authorized it. Then ten blockchains drain. Bitcoin. Tron. Solana. XRP.
+
+## P3
+
+Binance. About one hundred forty-four billion dollars in assets, according to DefiLlama. Its founder, CZ, no longer runs it. But he is still its majority shareholder. This fortress has been hit before. May 2019: seven thousand bitcoins vanish from a hot wallet. Forty million dollars. CZ considers rolling back the Bitcoin blockchain. Then gives up. He had already created an emergency fund: SAFU. And a misspelled phrase that became a legend: "Funds are SAFU." Seven years later: about one hundred fifty times more money.
+
+## P4
+
+8:32 p.m.: an on-chain researcher raises the alarm. The hacker's address was funded through Tornado Cash. A service built to erase tracks. 9:15 p.m.: CZ posts on X: "This does look like a Binance hack." Binance, meanwhile, hesitates. Its official statement is edited twice in thirteen minutes. In the shadows, hundreds of employees fight to take back control. Around two a.m. Paris time, Binance regains control of Binance 14. Too late.
+
+## P5
+
+So a race begins. No police. No commandos. Stablecoin issuers. Within the hour, Tether freezes nearly a billion dollars in USDT. Then more than one and a half billion. Circle blocks about eight hundred twenty-three million USDC. The hacker doesn't stop: he deposits sixty million USDT on Aave to borrow forty-four million dollars in ETH. Around 10:15 p.m., Binance shuts everything down. Deposits. Withdrawals. After midnight, co-founder Yi He promises: Binance will cover all losses. Then, on Friday, CZ writes that a pregnant employee worked through the night, alongside hundreds of others. And: "It hurts, but we will survive." The toll: about three billion frozen. Still missing… three.
+
+## P6
+
+Meanwhile, the markets panic. More than six hundred million dollars in leveraged bets are liquidated in one hour. Bitcoin falls to its lowest level in six weeks. A Standard Chartered analyst warns: the drop could continue as long as the uncertainty lasts.
+
+## P7
+
+But how? Binance points to an almost mundane detail: a DevOps engineer's laptop. Compromised. No one knows his name, or how. An email? A file? A flaw? No one has said. That computer reportedly opened access to a service container. And from there, unauthorized withdrawals were submitted. Binance found no evidence of a private key leak. So who signed the fifty authorizations? The orders reportedly went through Binance's own pipeline. As if they were legitimate. Now, imagine. An ordinary morning. A coffee. You open your computer, like a thousand times before. And somewhere, someone was waiting for that move.
+
+## P8
+
+February 2025. Bybit. One and a half billion dollars. There too, it all started with a developer's computer. A fake project, disguised as an investment simulator, according to Safe's investigation. Back then, CZ asked: how did they hack that machine? A virus? Social engineering? Today, it's Binance's turn to answer. Richard Teng already pushes back: this was not a "one-click" attack. Other breach points have been found.
+
+## P9
+
+Go back to the lit window. Who was behind the screen? TRM Labs points to TraderTraitor, North Korea's elite hacking unit. Then the FBI confirms: it's them. The same group as Bybit. ZachXBT finds, at the same address, Binance's money and the proceeds of a Bitget hack in September. In 2022, South Korean intelligence estimated these hackers had stolen one point one billion over five years. That night, in twenty minutes: nearly six times more.
+
+## P10
+
+On Sunday, Binance reopens withdrawals. It says it has covered ninety-five percent of the losses. Within hours, its customers withdraw four point six billion dollars. The full report, meanwhile, is still pending. But look at what this reveals. Billions of dollars. Years of security. A global fortress. And, perhaps, a single laptop… Somewhere, an empty street. A car drives by, slowly. A window is still lit. And you… do you know who holds the door to your money?

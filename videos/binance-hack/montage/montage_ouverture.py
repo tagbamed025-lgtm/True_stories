@@ -9,6 +9,9 @@ VOIX = '/home/claude/voix/vo_complete.mp3'; MUS = ANIM + '/musique.wav'
 HD = os.environ.get('HD') == '1'
 W, H, FPS = (1920, 804, 60) if HD else (1280, 536, 24)
 SUF = '_hd' if HD else ''; TMP = ANIM + '/seg' + ('_hd' if os.environ.get('HD') == '1' else ''); os.makedirs(TMP, exist_ok=True)
+import sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import trad
+TMP_FR = TMP
+if trad.EN: TMP = TMP + '_en'; os.makedirs(TMP, exist_ok=True)
 def ff(*a): subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', *a], check=True)
 
 # (début, fin, type, paramètres)
@@ -84,8 +87,11 @@ def seg_code(i, d, pg, scene, t0, t1):
 morceaux = []
 with sync_playwright() as p:
     br = p.chromium.launch(); pg = br.new_page(viewport={'width': 1920, 'height': 804})
+    if trad.EN: trad.brancher(pg)
     for i, (a, b, typ, par) in enumerate(TL):
         d = (round(b * FPS) - round(a * FPS)) / FPS
+        if trad.EN and typ in ('noir', '3d') and os.path.exists(f'{TMP_FR}/{i:02d}.mp4'):
+            shutil.copy(f'{TMP_FR}/{i:02d}.mp4', f'{TMP}/{i:02d}.mp4'); morceaux.append(f'{TMP}/{i:02d}.mp4'); continue
         if typ == 'noir': morceaux.append(seg_noir(i, d))
         elif typ == '3d': morceaux.append(seg_3d(i, d, *par))
         elif typ == 'hack': morceaux.append(seg_hack(i, d, pg, *par))
@@ -94,6 +100,7 @@ with sync_playwright() as p:
     br.close()
 open(f'{TMP}/liste.txt', 'w').write(''.join(f"file '{m}'\n" for m in morceaux))
 ff('-f', 'concat', '-safe', '0', '-i', f'{TMP}/liste.txt', '-r', str(FPS), '-c:v', 'libx264', '-crf', '17', f'{TMP}/image.mp4')
+if trad.EN: print('IMAGE_EN'); sys.exit()
 
 # voix : partie 1 (0 → 64 s) découpée au silence avant « Entrée. » (48,30 s) et décalée : 18 s puis 67,5 s
 ff('-i', VOIX, '-filter_complex',
