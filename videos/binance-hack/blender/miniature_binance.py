@@ -9,12 +9,14 @@ from commun import *
 from mathutils import Vector as V
 args = sys.argv[sys.argv.index('--') + 1:]; VAR = args[0]; TEST = 'test' in args
 OUT = '/home/claude/true_stories/videos/binance-hack/livrables/miniatures/3d'; os.makedirs(OUT, exist_ok=True)
-sc = reset(); sc.render.resolution_x, sc.render.resolution_y = 1920, 1080; sc.render.resolution_percentage = 50 if TEST else 100
-sc.cycles.samples = 24 if TEST else 96; sc.view_settings.look = 'AgX - Punchy'
+sc = reset(); K4 = '4k' in args; sc.render.resolution_x, sc.render.resolution_y = (3840, 2160) if K4 else (1920, 1080); sc.render.resolution_percentage = 50 if TEST else 100
+sc.cycles.samples = 24 if TEST else (64 if K4 else 96); sc.view_settings.look = 'AgX - Punchy'
 sc.world.node_tree.nodes['Background'].inputs[0].default_value = (0, 0, 0, 1)
 random.seed(4)
 SOL = mat('sol', (.62, .63, .66), .7); BL = mat('perso_blanc', (.85, .86, .88), .55)
-RG = mat('pirate', (.7, .02, .02), .45, (1, .03, .02), .25)
+COUL = os.environ.get('COUL', 'rouge')
+RG = {'rouge': mat('pirate', (.7, .02, .02), .45, (1, .03, .02), .25), 'bleu': mat('pirate', (0, .1, .85), .45, (0, .35, 1), .9),
+      'blanc': mat('pirate', (.95, .96, 1), .45, (.9, .95, 1), .15)}[COUL]
 OR = mat('or', (1, .68, .08), .3); OR.node_tree.nodes['Principled BSDF'].inputs['Metallic'].default_value = 1
 OR_E = mat('or_logo', (1, .7, .05), .3, (1, .6, .02), 2.2)
 ACIER = mat('acier', (.6, .62, .66), .3); ACIER.node_tree.nodes['Principled BSDF'].inputs['Metallic'].default_value = 1
@@ -86,7 +88,7 @@ if VAR in 'ACD':   # le coffre de Binance grand ouvert, l'or qui en sort, le pir
     cam = ((3.6, -6.2, 4.6), (.1, 1.2, 1.3), 30)
     if VAR == 'C': cam = ((1.45, -2.3, 1.28), (.93, -.42, 1.15), 45)        # face au pirate, le coffre ouvert derrière lui
     if VAR == 'D': cam = ((.42, .5, 1.9), (1.1, -.95, .95), 32)          # par-dessus l'épaule : l'écran du retrait
-    if VAR in 'CD': lum('AREA', (1.5, -1.6, 1.4), 25, (1, .25, .15), (math.radians(80), 0, math.radians(30)), .6)
+    if VAR in 'CD': lum('AREA', (1.5, -1.6, 1.4), 25, (1, .25, .15) if COUL == 'rouge' else (.6, .75, 1), (math.radians(80), 0, math.radians(30)), .6)
 else:            # le logo géant de Binance fendu en deux, le pirate seul devant son PC, les employés figés qui regardent
     g = logo((-.32, 2.6, 2.3), 3.6, (math.radians(90), 0, math.radians(-4)), OR_E, .35)
     d = logo((.32, 2.6, 2.3), 3.6, (math.radians(90), 0, math.radians(5)), OR_E, .35)
@@ -110,4 +112,4 @@ c.data.dof.focus_distance = (V(tgt) - V(loc)).length; c.data.dof.aperture_fstop 
 bpy.context.view_layer.update()
 pos = [[t, coul, round(world_to_camera_view(sc, c, p).x, 4), round(1 - world_to_camera_view(sc, c, p).y, 4)] for t, coul, p in ETIQ]
 json.dump(pos, open(f'{OUT}/etiquettes_{VAR}.json', 'w'), ensure_ascii=False)
-sc.render.filepath = f'{OUT}/mini_{VAR}{"_test" if TEST else ""}.png'; bpy.ops.render.render(write_still=True); print('OK', VAR, flush=True)
+sc.render.filepath = f'{OUT}/mini_{VAR}{"_" + COUL if COUL != "rouge" else ""}{"_4k" if K4 else ""}{"_test" if TEST else ""}.png'; bpy.ops.render.render(write_still=True); print('OK', VAR, flush=True)
