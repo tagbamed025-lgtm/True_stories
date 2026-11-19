@@ -3,6 +3,27 @@ Consulter avant de demander un téléchargement. Mettre à jour après chaque aj
 Règle : tout est sur GitHub (fichiers < 50 Mo). Les fichiers trop lourds sont **allégés** (textures retirées : notre style est une maquette grise sans textures) avant d'être versionnés.
 Dernier inventaire : 30 octobre 2026 (versement des assets du PC de Mo sur GitHub).
 
+
+## 0. Bibliothèque locale LIBRARY (PC de Mo) — à consulter EN PREMIER
+`C:\Users\HP\Documents\TRU Stories Blender\LIBRARY\` (mise à jour 19 nov. 2026, vérifiée sur le disque). Guide : `LIBRARY\LISEZ_MOI_LIBRARY.md`. Catalogue : `_INDEX.csv` (source + licence) ; chaque modèle CGTrader a un `_SOURCE.txt`.
+
+| Dossier | Contenu |
+|---|---|
+| `01_PERSONNAGES\` | `mixamo_HD\` (Ch18, Ch21, Ch22, Ch23, Ch31), `mixamo_LEGER\`, `bots_base\` (X/Y Bot), `autres\` (soldat FBI, « guy ») |
+| `02_ANIMATIONS\` | Mixamo Without Skin par type (`marche`, `assis_debout`, `bureau_clavier`, `telephone`, `conduite`, `idle`…) + `_A_RETELECHARGER_without_skin\` (11 fichiers With Skin) |
+| `03_VEHICULES\voitures\` | Mercedes S-Class W223 Brabus, Porsche 911 Turbo, McLaren P1 (riggée), McLaren F1 1993, Koenigsegg Agera, Audi R8, Audi 2008, Alpine A110, Toyota AE86, Nissan Figaro, Genesis G80 2022, Skoda Octavia RS 2025, Citroën e-C3 2024, Jeep Renegade 2016, Tesla Roadster (intérieur), voiture 1961 (animée), Generic Old Car 04, 2 sportives, voiture sci-fi, Opel Movano (van, intérieur), 2 vans, Quaternius car, Nissan GTR |
+| `03_VEHICULES\packs\` | Kenney car-kit, Kenney watercraft |
+| `04_DECORS\` | `ruelle.blend` |
+| `05_SCENES_BLEND\` | Silk Road (v3, v4_VALIDE, glenpark), kits persos, Binance |
+| `06_MEDIAS\` | stock vidéo, archives, captures, logos, exports finaux |
+| `07_REFERENCES\` | charte, tutos, `faceless-videos\` (skill Faceless Videos v2) |
+| `08_OUTILS\scripts\` | `LANCER_KIT_POLYHAVEN.bat` (HDRI, textures, décors CC0), `LANCER_RANGEMENT_CGTRADER.bat`, `TELECHARGER_MANQUANTS_console.txt` |
+| `99_CORBEILLE\` | doublons et hors-style : ne pas utiliser |
+
+**Repérés sur CGTrader mais PAS encore sur le disque (112)** : police (Peugeot 3008/5008 Police nationale, NYPD, Bearcat, ambulances), camions, motos, ville (New York, Sydney, San Francisco, Dallas, tour cyberpunk, entrepôt, kit routes, haussmannien, bâtiment gouvernemental), intérieurs (bureau, cellule de prison, chaînes), personnages (soldats tactiques, homme d'affaires), bateaux, avions. → console d'Edge connecté à CGTrader avec `TELECHARGER_MANQUANTS_console.txt`, puis `LANCER_RANGEMENT_CGTRADER.bat`.
+
+**Manques** : HDRI (aube, nuit, ville), cible de tir, salle d'interrogatoire, salle serveurs, salle de surveillance.
+
 ## Style visuel de référence → `references/style_visuel/`
 | Fichier | Contenu |
 |---|---|

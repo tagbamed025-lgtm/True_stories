@@ -1,5 +1,5 @@
 # BIBLE — TRU Stories
-Document de référence unique. Toute discussion (projet Claude ou Claude Code) le lit **avant** de répondre. Mise à jour : 21 octobre 2026 (leçons de Silk Road).
+Document de référence unique. Toute discussion (projet Claude ou Claude Code) le lit **avant** de répondre, puis **`ASSETS.md`** (où sont les assets et comment s'en servir). Mise à jour : 19 novembre 2026 (méthode Fern + bibliothèque LIBRARY).
 
 ## 1. La chaîne
 - **TRU Stories** : histoires vraies racontées comme des thrillers Netflix. 3D stylisée + footage + archives. Langue : **français**, et chaque vidéo a aussi sa **version anglaise** (stockée pour la future chaîne anglaise, lancée à partir de 10 vidéos).
@@ -20,6 +20,26 @@ Document de référence unique. Toute discussion (projet Claude ou Claude Code) 
 - Fin : une phrase forte, ironique ou philosophique, et une question laissée ouverte. Jamais de résumé.
 - Interdits : ton scolaire, ton Wikipédia, remplissage, listes à puces dans la narration.
 - **Vérité** : dates, noms et chiffres réels, chaque fait sourcé. Un fait incertain est retiré ou présenté comme « selon… ». Les dialogues reconstitués sont signalés comme tels dans les notes.
+
+### 2 bis. Hook style Fern (30 à 40 s)
+Hook style Fern : on entre par un témoin ordinaire (heure + lieu), une image anormale en 2 détails concrets, le témoin qui fige, un vrai son/document sur noir (911, écoute, rapport), puis l'expert qui « sait déjà » — coupe. Marqueurs dossier en machine à écrire (CAM 4 · REC, FBI WIRETAP, « 3 jours après… »).
+
+### 2 ter. Montage style Fern
+Montage style Fern : plans de 2 à 4 s, alternance large / subjectif intérieur / surveillance N&B / noir / changement d'échelle / personnage ; caméra toujours en mouvement lent ; une seule source de lumière par plan ; 2 écrans noirs avec texte machine à écrire ; titres : heure en italique, archives en machine à écrire, source en italique fin ; chaque plan pose une question sans y répondre.
+
+### 2 quater. Scène de référence (mini-doc « camping-car », ~26 s, à imiter pour chaque hook)
+| t | Plan | Rôle |
+|---|---|---|
+| 0 s | Noir + petit texte | respiration avant le film |
+| 2 s | Plan large de dos : voiture sur route de campagne à l'aube, danger petit au loin, titre « 5:30 AM » | heure précise, in medias res |
+| 4 s | Subjectif depuis la banquette arrière, intérieur sombre éclairé en bleu, danger à travers le pare-brise | on est dans la voiture avec le témoin (voiture **avec intérieur**) |
+| 6 s | Caméra de surveillance N&B, « REC », « 3 days after abduction » en machine à écrire | bascule « dossier réel » |
+| 10 s | Travelling avant lent dans les phares, on découvre le corps sous le véhicule | la lumière révèle l'info |
+| 13 s | Plan bas, lignes de route en diagonale | malaise |
+| 15 s | Retour intérieur, fixe 4 s, silence | le témoin fige |
+| 19 s | Noir : « Operator: "911, what's your emergency?" » | vrai son sur noir |
+| 21 s | Avion militaire au-dessus de montagnes, « FBI WIRETAP » | changement d'échelle |
+| 24 s | Agent en chemise, fond noir, lumière latérale, puis cible de tir | l'expert qui sait — indice non expliqué — coupe |
 
 ## 3. Format du script
 - Code couleur : **[3D]** (jaune) Blender · **[STOCK]** (cyan) footage générique · **[ARCHIVE]** (vert) vraie image · **[CODE]** écrans, cartes, chronologies, titres animés.
@@ -58,8 +78,17 @@ Document de référence unique. Toute discussion (projet Claude ou Claude Code) 
 ### Livrables par vidéo
 Vidéo FR 2K · vidéo EN 2K · 2 miniatures · 2 titres FR + 2 EN · description FR + EN (avec chapitres et sources) · **3 à 4 reels 9:16 de 30 à 40 s** (accroche en haut, extraits de tension) via `livrables/reels.py`.
 
+### Méthode de production « Fern » (scènes cinématographiques plongeantes)
+1. **Vrais modèles 3D d'abord** : pour chaque scène, on prend les objets dans LIBRARY (route, voiture avec intérieur, véhicule suspect, personnage, décor). Ce qui manque se télécharge gratuitement (CGTrader « Free », Poly Haven), jamais généré.
+2. **Dossier de références de la scène** : on copie les modèles utiles dans `videos/<slug>/references_3d/`.
+3. **Blender piloté par Claude via MCP for Blender** : un prompt par scène qui donne (a) la description, (b) l'ambiance et la lumière (ex. aube, phares seuls), (c) résolution et FPS, (d) le budget de rendu.
+4. **Vérification avant rendu** : scène et caméra montées, Mo regarde et corrige **avant** le rendu.
+5. **Voix off** puis **montage** : l'agent reçoit l'emplacement des clips, de la bibliothèque musique et de la bibliothèque d'effets sonores ; il fait un premier montage que Mo retouche.
+
 ## 6. Assets
 - Inventaire de tout ce qu'on possède : **`ASSETS.md`**. On le consulte avant de demander un téléchargement, et on le met à jour après chaque ajout.
+- **Bibliothèque locale (PC de Mo)** : `C:\Users\HP\Documents\TRU Stories Blender\LIBRARY\` (01_PERSONNAGES, 02_ANIMATIONS, 03_VEHICULES, 04_DECORS, 05_SCENES_BLEND, 06_MEDIAS, 07_REFERENCES, 08_OUTILS, 99_CORBEILLE), catalogue `_INDEX.csv`, guide `LISEZ_MOI_LIBRARY.md`. Tout asset 3D vient d'abord de LIBRARY ; on ne télécharge que ce qui manque (Poly Haven puis CGTrader / Sketchfab, licence libre de droits, jamais « Editorial »), avec source et licence dans `_INDEX.csv`. Jamais de personnage de marque (Spider-Man, Marvel, Star Wars…). Un téléchargement n'est « fait » que s'il est **vérifié sur le disque**.
+- Outil annexe : skill Claude Code **Faceless Videos v2** (5 styles dont « Red Ghost » true crime) dans `LIBRARY\07_REFERENCES\faceless-videos\` (procédure : `INSTALL_PROMPT.txt`).
 - Stockage : sur GitHub dans `assets3d/<catégorie>/` (fichier de moins de 50 Mo, à alléger avec `outils/`). Sur Google Drive « TRU_Stories_Assets/ » avec la même arborescence pour les fichiers plus lourds.
 - **Vidéos sur GitHub = copies de référence légères** (pas de Drive : espace insuffisant). Chaque fichier < 50 Mo (limite dure GitHub : 100 Mo). Vidéo finale FR et EN ré-encodées en **1080p, CRF 24, AAC 128k** (≈ 40-45 Mo pour 5 min) + reels, dans `videos/<slug>/archive_video/` ; scène .blend validée dans `assets3d/<slug>/scenes/`. Si une vidéo dépasse 50 Mo : monter le CRF (26-28) ou la découper par temps (`ffmpeg -f segment -segment_time 120 -reset_timestamps 1`), jamais un découpage binaire. Les masters 2K/4K et les rendus intermédiaires restent sur le PC de Mo (le `.gitignore` exclut `rendu/*.mp4`, `partie*/final*/`, `partie*/brouillon*/`) — ajouter les archives avec `git add -f`.
 - Git : pousser avec le compte **tagbamed025-lgtm** (propriétaire). Le dépôt local force ce compte (`credential.https://github.com.username`).
@@ -96,7 +125,7 @@ Le **bon de production** (`videos/<slug>/BON_DE_PRODUCTION.md`) fait le lien ent
 - `outils/alleger_personnages.py` : à lancer **uniquement dans un fichier Blender vide**, sinon il efface la scène. `outils/preparer_kit.py` : pour alléger un kit d'objets.
 
 ## 9. Production en cours
-Voir le tableau d'état dans `videos/<slug>/BON_DE_PRODUCTION.md`. Silk Road : terminée (FR publiée sur YouTube, EN stockée).
+Voir le tableau d'état dans `videos/<slug>/BON_DE_PRODUCTION.md`. **En cours : NVIDIA** (novembre 2026). Silk Road : terminée (FR publiée sur YouTube, EN stockée).
 Idées proposées le 16 oct. 2026 (à choisir par Mo) : Malone Lam (casse bitcoin de 245 M$), Corée du Nord / Bitget (351 M$), Toni Musulin (convoyeur, 11 M€), fraude foncière à Dakar (5,5 M$).
 
 ## 10. Veille hebdomadaire (à activer)
