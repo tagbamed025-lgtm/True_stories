@@ -1,5 +1,5 @@
 # BIBLE — TRU Stories
-Document de référence unique. Toute discussion (projet Claude ou Claude Code) le lit **avant** de répondre, puis **`ASSETS.md`** (où sont les assets et comment s'en servir). Mise à jour : 19 novembre 2026 (méthode Fern + bibliothèque LIBRARY).
+Document de référence unique. Toute discussion (projet Claude ou Claude Code) le lit **avant** de répondre, puis **`ASSETS.md`** (où sont les assets et comment s'en servir). Mise à jour : 21 novembre 2026 (procédure LIBRARY §6 bis, 97 modèles CGTrader rangés) — précédente : 20 novembre 2026 (ouverture voix immédiate, règles de rétention, style Fern + rouge, méthode Blender validée sur NVIDIA).
 
 ## 1. La chaîne
 - **TRU Stories** : histoires vraies racontées comme des thrillers Netflix. 3D stylisée + footage + archives. Langue : **français**, et chaque vidéo a aussi sa **version anglaise** (stockée pour la future chaîne anglaise, lancée à partir de 10 vidéos).
@@ -15,13 +15,20 @@ Document de référence unique. Toute discussion (projet Claude ou Claude Code) 
 - **Ouverture in medias res.** On commence dans la tension (un danger, une décision, un compte à rebours), jamais par une date ou une biographie. Une heure précise et un lieu (« 2 décembre 1993. 15 h 17. »).
 - Écriture **au présent**, phrases courtes, pauses (« … »), description visuelle et sonore : le spectateur voit le film.
 - Le **« tu »** est réservé aux passages clés, pour projeter le spectateur.
-- **Structure en remparts** : cold open → qui est cet homme → escalade → point de rupture → conséquence → fin philosophique. Toutes les 20 à 40 s : une révélation, un danger ou une question nouvelle. Des boucles ouvertes et des rappels du cold open.
+- **Structure en remparts** : promesse (p0) → scène d'ouverture → qui est cet homme → escalade → point de rupture → conséquence → fin philosophique. Toutes les 20 à 40 s : une révélation, un danger ou une question nouvelle. Des boucles ouvertes et des rappels du cold open.
 - Petits dialogues réalistes (radio, agents, gardiens).
 - Fin : une phrase forte, ironique ou philosophique, et une question laissée ouverte. Jamais de résumé.
 - Interdits : ton scolaire, ton Wikipédia, remplissage, listes à puces dans la narration.
 - **Vérité** : dates, noms et chiffres réels, chaque fait sourcé. Un fait incertain est retiré ou présenté comme « selon… ». Les dialogues reconstitués sont signalés comme tels dans les notes.
 
-### 2 bis. Hook style Fern (30 à 40 s)
+### 2 bis. Ouverture et rétention (validé le 20 nov. 2026, vidéo NVIDIA)
+- **Pas de cold open muet.** 0 à 2 s : lieu et heure tapés à la machine (« Santa Clara, Californie · 23:47 ») sur un plan d'ouverture lent. **La voix démarre entre 1,5 et 3 s.**
+- **La première phrase est une promesse**, jamais une date : l'enjeu en une ligne (ex. « Il a mis 33 ans à construire l'empire de l'IA. Il l'a perdu en deux semaines. »). La date et le lieu viennent juste après.
+- Les plans de tension (surveillance N&B, document sur noir, changement d'échelle) passent **sous la voix**, pas avant.
+- **Rétention** : promesse dans les 5 premières secondes ; une boucle ouverte toutes les 20 à 40 s ; une nouvelle image toutes les 2 à 4 s (jamais un plan fixe de plus de 5 s) ; la preuve réelle (photo d'archive) avant 1:30 ; tic-tac continu et coupures sèches sur les révélations ; la miniature et le titre tiennent la même promesse que la première phrase sans la répéter.
+- **Respect du script à l'image** : si la voix dit qu'une chaise est vide, on ne montre personne dedans. Le suspense passe par des étiquettes en motion design (ex. « PDG · NVIDIA » sur la chaise vide) sans donner le nom avant la voix.
+
+### 2 bis (b). Grammaire des plans style Fern (référence `references/style_visuel/ref_fern_tension.mp4`)
 Hook style Fern : on entre par un témoin ordinaire (heure + lieu), une image anormale en 2 détails concrets, le témoin qui fige, un vrai son/document sur noir (911, écoute, rapport), puis l'expert qui « sait déjà » — coupe. Marqueurs dossier en machine à écrire (CAM 4 · REC, FBI WIRETAP, « 3 jours après… »).
 
 ### 2 ter. Montage style Fern
@@ -51,7 +58,7 @@ Montage style Fern : plans de 2 à 4 s, alternance large / subjectif intérieur 
 - **Économie de crédits** : un essai fait 100 caractères maximum. Une seule génération par passage (generations_count = 1). On génère par parties (p1, p2…) pour pouvoir refaire un seul passage.
 - Fichiers : `videos/<slug>/voix/p1.mp3…` + `VO_complete.mp3`.
 - **Anglais** : voix **Nathan — Deep Podcast Narrator** (ElevenLabs), script `SCRIPT_EN.md` adapté (pas une traduction mot à mot), mêmes parties p1…p6. Fichier : `voix/VO_EN_<voix>.mp3`.
-- **Cold open sans voix** : la voix démarre vers **0:18** (après titre + date).
+- **La voix démarre entre 1,5 et 3 s** (voir 2 bis). Première partie = `p0` : la phrase-promesse (< 100 caractères), puis p1, p2…
 - **Calage au mot** : transcription horodatée ElevenLabs (Scribe) de la voix → `voix/transcription_*.md`. Chaque plan est calé sur sa phrase.
 
 ## 5. Style visuel de marque
@@ -64,7 +71,7 @@ Montage style Fern : plans de 2 à 4 s, alternance large / subjectif intérieur 
 - **Étalonnage (charte)** : presets ffmpeg dans `outils/etalonnage.py`. Référence validée : `nuit_enquete` (homme devant ses écrans la nuit : désaturé, ombres bleutées, coins sombres). Autres : `tech_froide`, `jour_doux`, `objet_terne`, `souvenir`. Ajouter un preset nommé à chaque nouveau look validé.
 
 ### Rythme et mise en scène (validé)
-- **Cold open ≤ 10 s d'images** puis titre (3 s) et date (2 s). Le personnage principal est **déjà en place** : ne jamais révéler trop tôt l'objet clé (ex. l'ordinateur).
+- **Ouverture ≤ 2 s d'images avant la voix** (lieu + heure tapés), pas de titre plein écran au début. Le personnage principal est **déjà en place** : ne jamais révéler trop tôt l'objet clé (ex. l'ordinateur).
 - Personnages secondaires **toujours figés**, assis ou debout dans une pose ; c'est la caméra qui bouge (travellings lents, contre-plongées, plongée zénithale) et les coupes qui rythment.
 - Chaque phrase importante de la voix a **son image** (motion design qui suit la parole : liste ✓/✗, compteur, fenêtres qui s'ouvrent, fils rouges qui se tendent).
 - Utiliser les **vraies photos** de la personne (archives) aux moments clés : portrait, prison, libération.
@@ -85,6 +92,14 @@ Vidéo FR 2K · vidéo EN 2K · 2 miniatures · 2 titres FR + 2 EN · descriptio
 4. **Vérification avant rendu** : scène et caméra montées, Mo regarde et corrige **avant** le rendu.
 5. **Voix off** puis **montage** : l'agent reçoit l'emplacement des clips, de la bibliothèque musique et de la bibliothèque d'effets sonores ; il fait un premier montage que Mo retouche.
 
+### Style 3D validé (20 nov. 2026, NVIDIA)
+- **Deux références** : `ref_video_1011.mp4` (maquette grise) et `ref_fern_tension.mp4` (hook Fern). Le style par défaut devient **Fern** : décors réalistes faits de **vrais modèles** (LIBRARY / BlenderKit : tables, chaises, portables, tasses, voitures), une seule lumière principale par plan, caméra lente ; **signature TRU** : personnage principal en rouge émissif, les autres en blanc low poly.
+- **Décors soignés** : objets sur les tables (portables, cahiers + stylo, papiers, tasses, bouteilles), noms en lettres simples au mur (jamais de logo dessiné), extérieurs avec parking et plusieurs voitures, façades travaillées (mur-rideau, hall d'entrée éclairé).
+- **Personnages variés** : jamais le même modèle partout. Mélanger hommes et femmes (Ch18, Ch21, Ch22, Ch23, Ch31, Ch02, Ch26…), poses différentes (en train de taper, assis au repos, sans rien devant eux), assis **contre** la table. Os Mixamo : aligner le préfixe (mixamorig, mixamorig4…) avant d'appliquer une animation, puis figer le maillage posé.
+- **Angles** : chaque scène se filme sous plusieurs angles (face, contrechamp depuis l'écran, par-dessus l'épaule gauche/droite, surveillance N&B). L'histoire ne réutilise jamais les plans de l'ouverture.
+- Extérieur de nuit : assez de lumière (façade éclairée, réverbères, phares) pour lire les voitures et le bâtiment.
+- Script de référence : `videos/nvidia-huang/blender/cold_open.py` (scènes) et `montage_minute1.py` (montage calé sur la voix). Sans GPU : rendu d'une image par plan en Cycles (1280 px, 24 échantillons) puis mouvement de caméra lent au montage ; sur la P2000 : vrais travellings en EEVEE.
+
 ## 6. Assets
 - Inventaire de tout ce qu'on possède : **`ASSETS.md`**. On le consulte avant de demander un téléchargement, et on le met à jour après chaque ajout.
 - **Bibliothèque locale (PC de Mo)** : `C:\Users\HP\Documents\TRU Stories Blender\LIBRARY\` (01_PERSONNAGES, 02_ANIMATIONS, 03_VEHICULES, 04_DECORS, 05_SCENES_BLEND, 06_MEDIAS, 07_REFERENCES, 08_OUTILS, 99_CORBEILLE), catalogue `_INDEX.csv`, guide `LISEZ_MOI_LIBRARY.md`. Tout asset 3D vient d'abord de LIBRARY ; on ne télécharge que ce qui manque (Poly Haven puis CGTrader / Sketchfab, licence libre de droits, jamais « Editorial »), avec source et licence dans `_INDEX.csv`. Jamais de personnage de marque (Spider-Man, Marvel, Star Wars…). Un téléchargement n'est « fait » que s'il est **vérifié sur le disque**.
@@ -93,6 +108,7 @@ Vidéo FR 2K · vidéo EN 2K · 2 miniatures · 2 titres FR + 2 EN · descriptio
 - **Vidéos sur GitHub = copies de référence légères** (pas de Drive : espace insuffisant). Chaque fichier < 50 Mo (limite dure GitHub : 100 Mo). Vidéo finale FR et EN ré-encodées en **1080p, CRF 24, AAC 128k** (≈ 40-45 Mo pour 5 min) + reels, dans `videos/<slug>/archive_video/` ; scène .blend validée dans `assets3d/<slug>/scenes/`. Si une vidéo dépasse 50 Mo : monter le CRF (26-28) ou la découper par temps (`ffmpeg -f segment -segment_time 120 -reset_timestamps 1`), jamais un découpage binaire. Les masters 2K/4K et les rendus intermédiaires restent sur le PC de Mo (le `.gitignore` exclut `rendu/*.mp4`, `partie*/final*/`, `partie*/brouillon*/`) — ajouter les archives avec `git add -f`.
 - Git : pousser avec le compte **tagbamed025-lgtm** (propriétaire). Le dépôt local force ce compte (`credential.https://github.com.username`).
 - Sources : Mixamo (personnages + animations : **Without Skin, 30 fps**), BlenderKit, Poly Haven (HDRI, textures), Sketchfab, MPFB. Footage gratuit : Pexels, Pixabay.
+- Véhicules réutilisables : `LIBRARY\03_VEHICULES\voitures\RangeRover_Sport_2018.blend` (échelle ×1,62). Attention : le kit BlenderKit « modern-white-conference-room-set », « rack-shelving », « leme-dining-table » et « paper-coffee-cup » sont corrompus sur le PC (à retélécharger).
 - Personnages figés pour Three.js : `videos/silk-road/3d/exporter_glb.py` → `assets3d/<slug>/glb/`. Archives (photos) : `assets3d/<slug>/archives/`.
 
 ### 6 bis. Utiliser LIBRARY pour une nouvelle vidéo (procédure obligatoire)
@@ -134,7 +150,7 @@ Le **bon de production** (`videos/<slug>/BON_DE_PRODUCTION.md`) fait le lien ent
 - `outils/alleger_personnages.py` : à lancer **uniquement dans un fichier Blender vide**, sinon il efface la scène. `outils/preparer_kit.py` : pour alléger un kit d'objets.
 
 ## 9. Production en cours
-Voir le tableau d'état dans `videos/<slug>/BON_DE_PRODUCTION.md`. **En cours : NVIDIA** (novembre 2026). Silk Road : terminée (FR publiée sur YouTube, EN stockée).
+Voir le tableau d'état dans `videos/<slug>/BON_DE_PRODUCTION.md`. **En cours : NVIDIA** (`videos/nvidia-huang/`, novembre 2026) : script, voix p0–p7, découpage, ouverture et première minute montées le 20 nov. ; prochaine étape : p3 (bar de Taipei, Megaspeed). Silk Road : terminée (FR publiée sur YouTube, EN stockée).
 Idées proposées le 16 oct. 2026 (à choisir par Mo) : Malone Lam (casse bitcoin de 245 M$), Corée du Nord / Bitget (351 M$), Toni Musulin (convoyeur, 11 M€), fraude foncière à Dakar (5,5 M$).
 
 ## 10. Veille hebdomadaire (à activer)
