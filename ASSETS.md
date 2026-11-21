@@ -24,6 +24,18 @@ Dernier inventaire : 30 octobre 2026 (versement des assets du PC de Mo sur GitHu
 
 **Manques** : HDRI (aube, nuit, ville), cible de tir, salle d'interrogatoire, salle serveurs, salle de surveillance.
 
+### 0 bis. Modèles CGTrader rangés le 20-21 nov. 2026 (97 modèles, vérifiés sur le disque)
+Liste complète : `LIBRARY\_INDEX_CGTRADER_3.csv`. Un dossier = un modèle + ses textures.
+- **Police / urgence (10)** : Peugeot 5008 et 3008 Police Nationale, Ford Crown Victoria Interceptor, NYPD Toyota Camry, Police Car NYPD, SWAT, GTA5 Police Car, Police Car 8, Police 3d-model, Ambulance QC.
+- **Voitures (18)** : Mercedes AMG GT, C63, C W206, S63 Brabus, S W222 AMG ; Brabus G700 6x6 ; Tesla Model S (6 couleurs) et Cybertruck ; Porsche 911 ; Range Rover Sport 2018 ; Volvo S90 ; Jaguar MK2 1962 ; Nissan Frontier 2004 ; Hafei ; Royal, LP2cls53, Voiture 01, Car Free 01.
+- **Motos (2)** : Kawasaki Ninja, moto post-apo Badlands. **Engins (9)** : Caterpillar 797 et 789c, engins de chantier, chariot élévateur, camions JAC et truck, quad, un véhicule à identifier.
+- **Avions (4)** : F-104 Starfighter, avion de chasse, 2 avions. **Bateaux (4)** : 2 bateaux en bois, bateau FBX, bateau de pêche.
+- **Personnages (7)** : ingénieur, femme, soldat militaire, soldat tactique (+ Maps.zip), survivant, homme, bricoleur (Handyman, avec animations idle/marche/course).
+- **Villes (10)** : Dallas, San Francisco, Sydney, ville cyberpunk + immeuble cyberpunk, ville apocalyptique, Simple City Building Pack, kit modulaire city builder, skyline, désert Tatooine. 3 packs de textures de villes non associés : `ville\_textures_villes_a_associer`.
+- **Bâtiments (11)** : bâtiment gouvernemental, bâtiment classique, vieux bâtiment, 2 maisons anciennes, façade haussmannienne, entrepôt, Building B09 et 3 autres.
+- **Intérieurs (2)** : intérieur boisé (bureau), chambre d'hôpital. **Objets (14)** : chaises de bureau, gaming, haute ; fauteuil ; tables ; livres ; lampe ; lit ; trousse de secours ; chaînes, entraves, boulet (prison).
+- **Manques connus** : HDRI de nuit, salle d'interrogatoire, salle serveurs, salle de surveillance, cible de tir, textures `POLICE.rar` de la Peugeot 5008.
+
 ## Style visuel de référence → `references/style_visuel/`
 | Fichier | Contenu |
 |---|---|

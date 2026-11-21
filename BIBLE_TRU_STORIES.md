@@ -95,6 +95,15 @@ Vidéo FR 2K · vidéo EN 2K · 2 miniatures · 2 titres FR + 2 EN · descriptio
 - Sources : Mixamo (personnages + animations : **Without Skin, 30 fps**), BlenderKit, Poly Haven (HDRI, textures), Sketchfab, MPFB. Footage gratuit : Pexels, Pixabay.
 - Personnages figés pour Three.js : `videos/silk-road/3d/exporter_glb.py` → `assets3d/<slug>/glb/`. Archives (photos) : `assets3d/<slug>/archives/`.
 
+### 6 bis. Utiliser LIBRARY pour une nouvelle vidéo (procédure obligatoire)
+1. **Chercher d'abord dans LIBRARY** : lire `ASSETS.md` §0 puis `LIBRARY\_INDEX_CGTRADER_3.csv` (un dossier par modèle : 03_VEHICULES\police_urgence | voitures | motos | autres | avions | bateaux ; 01_PERSONNAGES\humains ; 04_DECORS\ville | batiments | interieurs | objets). Chaque dossier contient le modèle **et ses textures**, déjà extraites.
+2. **Choisir le plus propre, c'est à Claude de décider** : préférer `.blend` > `.fbx` > `.glb` > `.obj` ; préférer un modèle avec intérieur pour les plans POV voiture ; vérifier le nombre de polygones (alléger au-delà de ~500 k pour un objet de fond) ; faire **une image test EEVEE** du modèle choisi et la montrer à Mo avant de construire la scène. Si deux modèles conviennent, prendre le plus léger qui tient le plan.
+3. **Copier, ne jamais déplacer** : copier le dossier choisi dans `videos/<slug>/references_3d/`. LIBRARY reste intacte.
+4. **Textures** : après import, `Fichier > Données externes > Rechercher les fichiers manquants` sur le dossier du modèle ; puis `Empaqueter les ressources` dans la copie de travail.
+5. **Style de marque** : personnages restylés (principal rouge émissif, autres blancs) ; véhicules, décors et objets gardent leurs textures mais en lumière sombre et contrastée (nuit, néons, éclairage latéral).
+6. **Ce qui manque** : seulement après l'étape 1, chercher dans cet ordre : Poly Haven (CC0 : HDRI, textures, petits props, via API ou MCP Blender) → BlenderKit gratuit (MCP Blender) → Sketchfab « Downloadable » CC-BY (créditer l'auteur en description) → CGTrader gratuit **téléchargé par Mo à la main** (jamais d'automatisation : le compte a déjà été suspendu ; Claude dit seulement quel fichier prendre). Toujours « Royalty Free », jamais « Editorial ». Après tout ajout : ranger dans LIBRARY, mettre à jour `_INDEX` et `ASSETS.md`, et vérifier sur le disque.
+7. **À ne pas utiliser** : `00_A_TRIER` (modèles non identifiés, à vérifier d'abord) et `99_CORBEILLE`.
+
 ## 7. Chaîne de production (qui fait quoi)
 | Étape | Où | Résultat |
 |---|---|---|
